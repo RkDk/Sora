@@ -31,10 +31,16 @@ void CGraphicsContext::SwapBuffers()
 void CGraphicsContext::LoadShader( std::string vertexfile, std::string fragfile )
 {
 
+	Log::Debug( "Loading shader" );
+
 	m_pCurShader = new CShaderProgram;
 	m_pCurShader->Load( vertexfile, fragfile );
 
+	Log::Debug( "Shader loaded" );
+
 	glUseProgram( m_pCurShader->GetProgramID() );
+
+	m_pDrawContext->SetShaderProgramID( m_pCurShader->GetProgramID() );
 
 }
 
@@ -42,11 +48,14 @@ void CGraphicsContext::CreateDrawContext()
 {
 
 	m_pDrawContext = new CDrawContext;
+	m_pDrawContext->Initialize();
 
 }
 
 void CGraphicsContext::InitializeOpenGL()
 {
+
+	Log::Debug( "Initializing OpenGL" );
 
 	m_OGLContext = SDL_GL_CreateContext( m_pWndHandle );
  
@@ -65,12 +74,6 @@ void CGraphicsContext::InitializeOpenGL()
 	glShadeModel( GL_SMOOTH );
  
 	glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
- 
-	glEnable( GL_DEPTH_TEST );
-	glDepthFunc( GL_LEQUAL );
- 
-	glClearColor( 0.1f, 0.1f, 0.1f, 0.0f );
-	glClearDepth( 1.0f );
  
 	glEnable( GL_COLOR_MATERIAL );
  
@@ -92,6 +95,8 @@ void CGraphicsContext::CreateHandle( std::string wndTitle )
 
 void CGraphicsContext::CreateHandle( std::string wndTitle, int x, int y, int width, int height, bool fullscreen )
 {
+
+	Log::Debug( "Creating windows handle" );
 
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{

@@ -28,6 +28,13 @@ private:
 
 public:
 
+	CDrawContext * GetDrawContext()
+	{
+
+		return m_pDrawContext;
+
+	}
+
 	void ClearBuffer();
 	void SwapBuffers();
 

@@ -6,7 +6,9 @@
 
 namespace FileUtil
 {
-
+	
+	void AppendToFile( std::string, std::string );
+	bool FileExists( std::string );
 	std::string ReadContentIntoString( std::string );
 
 };

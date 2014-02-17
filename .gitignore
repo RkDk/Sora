@@ -13,3 +13,4 @@ Sora.vcxproj.filters
 *.cache
 d
 *.filters
+*.user

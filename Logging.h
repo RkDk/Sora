@@ -1,6 +1,7 @@
 #ifndef LOGGING_H_
 #define LOGGING_H_
 
+#include "FileUtil.h"
 #include <string>
 
 namespace Log

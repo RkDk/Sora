@@ -11,15 +11,15 @@ GLuint CShaderProgram::GetShader( int mode, std::string file )
 {
 
 	GLuint shader = glCreateShader( mode );
-       
+ 
 	std::string src = FileUtil::ReadContentIntoString( file );
-       
+
 	const char * c_src = src.c_str();
-       
+
 	glShaderSource( shader, 1, &c_src, NULL );
        
 	glCompileShader( shader );
-       
+
 	GLint status;
 	glGetShaderiv( shader, GL_COMPILE_STATUS, &status );
        
@@ -37,7 +37,7 @@ GLuint CShaderProgram::GetShader( int mode, std::string file )
                
 		sprintf( output, "Error loading shader '%s':\n%s", file.c_str(), c );
                
-		Log::Debug( output );
+		Log::Log( output );
                
 		delete [] output;
 		delete [] c;
@@ -45,7 +45,7 @@ GLuint CShaderProgram::GetShader( int mode, std::string file )
 	} else
 	{
                
-		Log::Debug( "Successfully loaded shader: " + file );
+		Log::Log( "Successfully loaded shader: " + file );
                
 	}
        
