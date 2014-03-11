@@ -26,17 +26,20 @@ std::string FileUtil::ReadContentIntoString( std::string dir )
 
 	if( !f )
 	{
+
 		Log::Debug( "Attempted to read non-existant file: " + dir );
 		return "";
+
 	}
+
     f.seekg( 0, std::ios_base::end );
     contents.resize( f.tellg() );
     f.seekg( 0, std::ios_base::beg );
-       
+
     f.read( &contents[0], contents.length() );
-       
+
     f.close();
-       
+
     return contents;
 
 }

@@ -7,20 +7,28 @@ class CDrawContext
 {
 
 private:
-	
-	int m_ShaderProgramID;
-	GLuint m_VertexBuffer, m_ElementBuffer;
 
-	void CreateVertexBuffer();
+	int m_ShaderProgramID;
+	GLuint m_2DVertexBuffer, m_2DElementBuffer;
+
+	void Create2DVertexBuffer();
 
 public:
 
-	void CalculateProjectionMatrix( int, int );
-	void DrawVertexBuffer();
-	void BindVertexBuffer();
-	void UnbindVertexBuffer();
+	void Calculate2DProjectionMatrix( int, int );
+	void Draw2DVertexBuffer();
+	void Bind2DVertexBuffer();
+	void Unbind2DVertexBuffer();
 
-	void SetShaderProgramID( int id )
+	void UseShaderProgram( int id )
+	{
+
+	    m_ShaderProgramID = id;
+	    glUseProgram( id );
+
+	}
+
+	void SetShaderProgram( int id )
 	{
 
 		m_ShaderProgramID = id;

@@ -19,6 +19,8 @@ private:
 
 public:
 
+    void Bind();
+
 	~CTextureImage();
 
 };

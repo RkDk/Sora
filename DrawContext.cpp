@@ -3,12 +3,12 @@
 CDrawContext::~CDrawContext()
 {
 
-	glDeleteBuffers( 1, &m_VertexBuffer );
-	glDeleteBuffers( 1, &m_ElementBuffer );
+	glDeleteBuffers( 1, &m_2DVertexBuffer );
+	glDeleteBuffers( 1, &m_2DElementBuffer );
 
 }
 
-void CDrawContext::CalculateProjectionMatrix( int width, int height )
+void CDrawContext::Calculate2DProjectionMatrix( int width, int height )
 {
 
 	GLfloat fWidth = width;
@@ -29,55 +29,55 @@ void CDrawContext::CalculateProjectionMatrix( int width, int height )
 
 }
 
-void CDrawContext::DrawVertexBuffer()
+void CDrawContext::Draw2DVertexBuffer()
 {
 
 	glDrawElements( GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_SHORT, ( void * )0 );
 
 }
 
-void CDrawContext::BindVertexBuffer()
+void CDrawContext::Bind2DVertexBuffer()
 {
 
-	glBindBuffer( GL_ARRAY_BUFFER, m_VertexBuffer );
-	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_ElementBuffer );
+	glBindBuffer( GL_ARRAY_BUFFER, m_2DVertexBuffer );
+	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_2DElementBuffer );
 
 	glEnableVertexAttribArray( 0 );
 	glVertexAttribPointer( 0, 2, GL_FLOAT, GL_FALSE, 0, ( void * )0 );
 
 }
 
-void CDrawContext::UnbindVertexBuffer()
+void CDrawContext::Unbind2DVertexBuffer()
 {
 
 	glDisableVertexAttribArray( 0 );
 
 }
 
-void CDrawContext::CreateVertexBuffer()
+void CDrawContext::Create2DVertexBuffer()
 {
 
 	GLfloat vertex_buffer_data[] = {
-               
+
 		0.0f, 0.0f,
 		1.0f, 0.0f,
 		1.0f, 1.0f,
 		0.0f, 1.0f
-               
+
 	};
-       
+
 	GLushort element_buffer_data[] = {
-               
+
 		3, 0, 1, 3, 2, 1
-               
+
 	};
-       
-	glGenBuffers( 1, &m_VertexBuffer );
-	glBindBuffer( GL_ARRAY_BUFFER, m_VertexBuffer );
+
+	glGenBuffers( 1, &m_2DVertexBuffer );
+	glBindBuffer( GL_ARRAY_BUFFER, m_2DVertexBuffer );
 	glBufferData( GL_ARRAY_BUFFER, sizeof( vertex_buffer_data ), vertex_buffer_data, GL_STATIC_DRAW );
-       
-	glGenBuffers( 1, &m_ElementBuffer );
-	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_ElementBuffer );
+
+	glGenBuffers( 1, &m_2DElementBuffer );
+	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_2DElementBuffer );
 	glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( element_buffer_data ), element_buffer_data, GL_STATIC_DRAW );
 
 }
@@ -85,6 +85,6 @@ void CDrawContext::CreateVertexBuffer()
 void CDrawContext::Initialize()
 {
 
-	CreateVertexBuffer();
+	Create2DVertexBuffer();
 
 }

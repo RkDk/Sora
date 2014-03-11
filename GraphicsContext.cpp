@@ -3,8 +3,6 @@
 CGraphicsContext::~CGraphicsContext()
 {
 
-	delete m_pDrawContext;
-	delete m_pCurShader;
 
 	SDL_GL_DeleteContext( m_OGLContext );
 	SDL_DestroyRenderer( m_pSDLRenderer );
@@ -28,27 +26,19 @@ void CGraphicsContext::SwapBuffers()
 
 }
 
-void CGraphicsContext::LoadShader( std::string vertexfile, std::string fragfile )
+int CGraphicsContext::LoadShaderProgram( std::string vertexfile, std::string fragfile )
 {
 
 	Log::Debug( "Loading shader" );
 
-	m_pCurShader = new CShaderProgram;
-	m_pCurShader->Load( vertexfile, fragfile );
+	CShaderProgram * pShader = new CShaderProgram;
+	pShader->Load( vertexfile, fragfile );
 
 	Log::Debug( "Shader loaded" );
 
-	glUseProgram( m_pCurShader->GetProgramID() );
+	m_pShaderPrograms.push_back( pShader );
 
-	m_pDrawContext->SetShaderProgramID( m_pCurShader->GetProgramID() );
-
-}
-
-void CGraphicsContext::CreateDrawContext()
-{
-
-	m_pDrawContext = new CDrawContext;
-	m_pDrawContext->Initialize();
+	return pShader->GetProgramID();
 
 }
 
@@ -58,31 +48,56 @@ void CGraphicsContext::InitializeOpenGL()
 	Log::Debug( "Initializing OpenGL" );
 
 	m_OGLContext = SDL_GL_CreateContext( m_pWndHandle );
- 
+
 	glViewport( 0, 0, m_WindowWidth, m_WindowHeight );
 
-	glMatrixMode( GL_PROJECTION );
+	glEnable( GL_TEXTURE_2D );
+
+	glShadeModel( GL_SMOOTH );
+
+	glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+
+	glEnable( GL_COLOR_MATERIAL );
+
+	glEnable( GL_BLEND );
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
+	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+
+	glewInit();
+
+}
+
+void CGraphicsContext::SetDrawMode( int mode )
+{
+
+    glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
- 
-	gluOrtho2D( 0, m_WindowWidth, m_WindowHeight, 0 );
+
+    switch( mode )
+    {
+
+    case DRAW_MODE_2D:
+        gluOrtho2D( 0, m_WindowWidth, m_WindowHeight, 0 );
+        break;
+    case DRAW_MODE_3D:
+    default:
+        //Insert 3d code
+        break;
+
+    }
+
 
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
- 
-	glEnable( GL_TEXTURE_2D );
- 
-	glShadeModel( GL_SMOOTH );
- 
-	glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
- 
-	glEnable( GL_COLOR_MATERIAL );
- 
-	glEnable( GL_BLEND );
-	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
- 
-	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
-                
-	glewInit();
+
+}
+
+void CGraphicsContext::GetWindowSize( int * width, int * height )
+{
+
+    *width = m_WindowWidth;
+    *height = m_WindowHeight;
 
 }
 
@@ -116,19 +131,17 @@ void CGraphicsContext::CreateHandle( std::string wndTitle, int x, int y, int wid
 
 	if( fullscreen )
 		flags |= SDL_WINDOW_FULLSCREEN;
- 
+
 	if( !( m_pWndHandle = SDL_CreateWindow( wndTitle.c_str(), x, y, width, height, flags ) ) )
 	{
 
 		Log::Log( "Creating SDL Window handle has failed" );
 		return;
-   
+
 	}
 
 	SDL_GetWindowSize( m_pWndHandle, &m_WindowWidth, &m_WindowHeight );
 
 	InitializeOpenGL();
-
-	CreateDrawContext();
 
 }

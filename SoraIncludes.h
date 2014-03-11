@@ -14,5 +14,7 @@
 #include "Macros.h"
 #include "ShaderProgram.h"
 #include "FileUtil.h"
+#include "Factory.h"
+#include "TextureFactory.h"
 
 #endif
