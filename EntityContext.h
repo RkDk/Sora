@@ -14,9 +14,17 @@ private:
 
 public:
 
-    CEntityContext( CGraphicsContext * GraphicsContext, CDrawContext * DrawContext ) : m_pGraphicsContext( GraphicsContext ),
-                                                                                       m_pDrawContext( DrawContext )
+    void SetDrawContext( CDrawContext * pDrawContext )
     {
+
+        m_pDrawContext = pDrawContext;
+
+    }
+
+    void SetGraphicsContext( CGraphicsContext * pGraphicsContext )
+    {
+
+        m_pGraphicsContext = pGraphicsContext;
 
     }
 

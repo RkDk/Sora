@@ -84,7 +84,7 @@ public:
         if( FactoryObject )
             return FactoryObject->GetContent();
 
-        return FactoryObject;
+        return NULL;
 
     }
 
