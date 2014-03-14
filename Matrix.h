@@ -13,6 +13,13 @@ private:
 
 public:
 
+    T * GetRawMatrix()
+    {
+
+        return m_RawMatrix;
+
+    }
+
 	void Identity()
 	{
 
@@ -58,23 +65,25 @@ public:
 	void Rotate( float theta, float x, float y, float z )
 	{
 
-		float s = sin( theta * RAD_CONSTANT );
-		float c = cos( theta * RAD_CONSTANT );
-		float oc = ( 1 - c );
-		float oczx = oc * ( z * x );
-		float ocxy = oc * ( x * y );
-		float oczy = oc * ( y * z );
-		float zs = z * s;
-		float ys = y * s;
-		float xs = x * s;
+		T s = sin( theta * RAD_CONSTANT );
+		T c = cos( theta * RAD_CONSTANT );
+		T oc = ( 1 - c );
+		T oczx = oc * ( z * x );
+		T ocxy = oc * ( x * y );
+		T oczy = oc * ( y * z );
+		T zs = z * s;
+		T ys = y * s;
+		T xs = x * s;
+        T ze = ( T )0;
+        T o = ( T )1;
 
-		T rotMat[] = 
+		T rotMat[] =
 		{
 
-			oc * ( x * x ) + c, ocxy + zs, oczx - ys, 0,
-			ocxy - zs, oc * ( y * y ) + c, oczy + xs, 0,
-			oczx + ys, oczy - xs, oc * ( z * z ) + c, 0,
-			0, 0, 0, 1
+			oc * ( x * x ) + c, ocxy + zs, oczx - ys, ze,
+			ocxy - zs, oc * ( y * y ) + c, oczy + xs, ze,
+			oczx + ys, oczy - xs, oc * ( z * z ) + c, ze,
+			ze, ze, ze, o
 
 		};
 
@@ -91,7 +100,7 @@ public:
 
 		for( int j = 0; j < 4; j++ )
 		{
-			
+
 			for( int i = 0; i < 4; i++ )
 			{
 

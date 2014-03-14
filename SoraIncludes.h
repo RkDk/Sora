@@ -17,5 +17,6 @@
 #include "Factory.h"
 #include "TextureFactory.h"
 #include "LuaObject.h"
+#include "Matrix.h"
 
 #endif

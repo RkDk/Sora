@@ -5,6 +5,7 @@ void CTextureFactoryObject::LoadTexture( std::string texture )
 
     m_pContent = new CTextureImage;
     m_pContent->Load( texture );
+    m_UniqueTag = texture;
 
 }
 
