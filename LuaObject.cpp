@@ -33,8 +33,8 @@ void CLuaObject::Read( const char * file )
 int LUA_include( lua_State * pLuaState )
 {
 
-    std::string luafile = lua_tostring( s, 1 );
-    Read( luafile.c_str() );
+    std::string luafile = lua_tostring( pLuaState, 1 );
+   // Read( luafile.c_str() );
 
     return 0;
 

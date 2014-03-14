@@ -1,6 +1,7 @@
 #include "Factory.h"
 
-CFactoryObject::~CFactoryObject()
+template< typename T >
+CFactoryObject<T>::~CFactoryObject()
 {
 
     delete m_pContent;

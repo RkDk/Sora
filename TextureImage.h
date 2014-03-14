@@ -15,10 +15,9 @@ private:
 	int m_FrameWidth, m_FrameHeight;
 	GLuint m_Texture;
 
-	void Load( std::string );
-
 public:
 
+	void Load( std::string );
     void Bind();
 
 	~CTextureImage();

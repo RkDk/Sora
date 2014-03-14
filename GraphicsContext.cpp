@@ -144,4 +144,7 @@ void CGraphicsContext::CreateHandle( std::string wndTitle, int x, int y, int wid
 
 	InitializeOpenGL();
 
+	if( m_pDrawContext )
+		m_pDrawContext->Initialize();
+
 }

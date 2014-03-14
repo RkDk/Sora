@@ -62,7 +62,7 @@ public:
 
 	int LoadShaderProgram( std::string, std::string );
 
-	CGraphicsContext() : m_pWndHandle( NULL ), m_pSDLRenderer( NULL ), m_pDrawContext( NULL ), m_pCurShader( NULL )
+	CGraphicsContext() : m_pWndHandle( NULL ), m_pSDLRenderer( NULL ), m_pDrawContext( NULL )
 	{
 
 	}
