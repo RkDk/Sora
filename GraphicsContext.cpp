@@ -29,12 +29,12 @@ void CGraphicsContext::SwapBuffers()
 int CGraphicsContext::LoadShaderProgram( std::string vertexfile, std::string fragfile )
 {
 
-	Log::Debug( "Loading shader" );
+	Log::Log( "Loading shaders: " + vertexfile + ", " + fragfile );
 
 	CShaderProgram * pShader = new CShaderProgram;
 	pShader->Load( vertexfile, fragfile );
 
-	Log::Debug( "Shader loaded" );
+	Log::Log( "Shaders loaded" );
 
 	m_pShaderPrograms.push_back( pShader );
 
@@ -45,7 +45,7 @@ int CGraphicsContext::LoadShaderProgram( std::string vertexfile, std::string fra
 void CGraphicsContext::InitializeOpenGL()
 {
 
-	Log::Debug( "Initializing OpenGL" );
+	Log::Log( "Initializing OpenGL" );
 
 	m_OGLContext = SDL_GL_CreateContext( m_pWndHandle );
 
@@ -111,7 +111,7 @@ void CGraphicsContext::CreateHandle( std::string wndTitle )
 void CGraphicsContext::CreateHandle( std::string wndTitle, int x, int y, int width, int height, bool fullscreen )
 {
 
-	Log::Debug( "Creating windows handle" );
+	Log::Log( "Creating windows handle" );
 
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{

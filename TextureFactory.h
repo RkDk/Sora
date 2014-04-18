@@ -13,7 +13,7 @@ public:
 
 };
 
-class CTextureFactory : public CFactory< CTextureFactoryObject, CTextureImage >
+class CTextureFactory : public CMappedFactory< CTextureFactoryObject, CTextureImage >
 {
 
 private:

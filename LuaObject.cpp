@@ -7,34 +7,54 @@ CLuaObject::CLuaObject()
 
     luaL_openlibs( m_pLuaState );
 
-    CreateBaseLuaHooks();
+}
 
-    Log::Log( "Lua initialized" );
+CLuaObject::~CLuaObject()
+{
+
+    if( m_pLuaState )
+        lua_close( m_pLuaState );
 
 }
 
-void CLuaObject::Read( const char * file )
+void CLuaObject::Initialize()
 {
 
-    int r = luaL_dofile( m_pLuaState, file );
+    CreateBaseLuaHooks();
+    CreateLuaHooks();
+
+    Log::Log( "Lua Initialized" );
+
+}
+
+void LuaStateOpenFile( lua_State * pLuaState, const char * file )
+{
+
+    int r = luaL_dofile( pLuaState, file );
 
     if( r == 1 )
     {
 
         Log::Log( "ERROR loading " + std::string( file ) );
-        Log::Log( lua_tostring( m_pLuaState, -1 ) );
+        Log::Log( lua_tostring( pLuaState, -1 ) );
 
     } else
         Log::Log( "Successfully opened lua script: " + std::string( file ) );
 
+}
+
+void CLuaObject::ReadFile( const char * file )
+{
+
+    LuaStateOpenFile( m_pLuaState, file );
 
 }
 
-int LUA_include( lua_State * pLuaState )
+LuaCallBackFunction( include )
 {
 
-    std::string luafile = lua_tostring( pLuaState, 1 );
-   // Read( luafile.c_str() );
+    std::string luaFile = LString( 1 );
+    LuaStateOpenFile( pLuaState, luaFile.c_str() );
 
     return 0;
 
@@ -43,15 +63,6 @@ int LUA_include( lua_State * pLuaState )
 void CLuaObject::CreateBaseLuaHooks()
 {
 
-    LuaFunction( m_pLuaState, "include", LUA_include );
-
-}
-
-
-CLuaObject::~CLuaObject()
-{
-
-    if( m_pLuaState )
-        lua_close( m_pLuaState );
+    LuaFunction( m_pLuaState, include );
 
 }

@@ -23,6 +23,13 @@ public:
 
     virtual ~CFactoryObject();
 
+    void SetContent( T * content )
+    {
+
+        m_pContent = content;
+
+    }
+
     T * GetContent()
     {
 
@@ -47,7 +54,94 @@ public:
 };
 
 template< typename T, typename P >
-class CFactory
+class CVectorFactory
+{
+
+protected:
+
+    typedef boost::ptr_vector< T > ObjMap;
+    ObjMap m_pFactoryObjects;
+
+public:
+
+    void AddObject( T * object )
+    {
+
+        m_pFactoryObjects.push_back( object );
+
+    }
+
+    T * GetObject( int i )
+    {
+
+        return m_pFactoryObjects.at( i );
+
+    }
+
+    T * GetObject( std::string tag )
+    {
+
+        BOOST_FOREACH( T * obj, m_pFactoryObjects )
+        {
+
+            if( obj->GetTag() == tag )
+                return obj;
+
+        }
+
+        return NULL;
+
+    }
+
+    P * GetObjectContent( int i )
+    {
+
+        T * FactoryObject = GetObject( i );
+
+        if( FactoryObject )
+            return FactoryObject->GetContent();
+
+        return NULL;
+
+    }
+
+    P * GetObjectContent( std::string tag )
+    {
+
+        T * FactoryObject = GetObject( tag );
+
+        if( FactoryObject )
+            return FactoryObject->GetContent();
+
+        return NULL;
+
+    }
+
+    void RemoveObject( std::string tag )
+    {
+
+        ObjMap::iterator i = m_pFactoryObjects.begin();
+
+        for( ; i != m_pFactoryObjects.end(); i++ )
+        {
+
+            if( ( *iter )->GetTag() == tag )
+            {
+
+                m_pFactoryObjects.erase( iter );
+                return;
+
+            }
+
+        }
+
+    }
+
+
+};
+
+template< typename T, typename P >
+class CMappedFactory
 {
 
 protected:

@@ -15,7 +15,7 @@ public:
 
 	void Poll();
 
-	bool InitialKeyDown( int i )
+	bool KeyDownOnce( int i )
 	{
 
 		return ( m_InputEvent.key.keysym.sym == i );

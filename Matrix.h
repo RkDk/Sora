@@ -43,22 +43,24 @@ public:
 	void Translate( T x, T y, T z )
 	{
 
-		m_RawMatrix[12] += x * m_RawMatrix[0];
-		m_RawMatrix[13] += y * m_RawMatrix[5] * -1.0f;
-		m_RawMatrix[14] += z * m_RawMatrix[10];
+		m_RawMatrix[12] += x;
+		m_RawMatrix[13] += y;
+		m_RawMatrix[14] += z;
 
 	}
 
 	void Scale( T x, T y, T z )
 	{
 
-		m_RawMatrix[0] *= x;
-		m_RawMatrix[5] *= y;
-		m_RawMatrix[10] *= z;
+		m_RawMatrix[0] = x;
+		m_RawMatrix[5] = -y;
+		m_RawMatrix[10] = z;
 
+        /*
 		m_RawMatrix[12] *= x;
 		m_RawMatrix[13] *= y;
 		m_RawMatrix[14] *= z;
+        */
 
 	}
 

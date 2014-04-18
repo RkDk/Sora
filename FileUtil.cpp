@@ -27,7 +27,7 @@ std::string FileUtil::ReadContentIntoString( std::string dir )
 	if( !f )
 	{
 
-		Log::Debug( "Attempted to read non-existant file: " + dir );
+		Log::Log( "Attempted to read non-existant file: " + dir );
 		return "";
 
 	}
