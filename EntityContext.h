@@ -7,8 +7,9 @@
 class CEntityContext
 {
 
-private:
+protected:
 
+	float m_FrameDelta;
     CGraphicsContext * m_pGraphicsContext;
     CDrawContext * m_pDrawContext;
 
@@ -41,6 +42,19 @@ public:
         return m_pGraphicsContext;
 
     }
+
+	virtual float GetFrameDelta()
+	{
+
+		return m_FrameDelta;
+
+	}
+
+	CEntityContext() : m_FrameDelta( 0.0f )
+	{
+
+	}
+
 
 
 };

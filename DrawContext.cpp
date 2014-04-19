@@ -29,6 +29,17 @@ void CDrawContext::Calculate2DProjectionMatrix( int width, int height )
 
 }
 
+void CDrawContext::UpdateCameraMatrix()
+{
+
+	GLint modelMatUniform = glGetUniformLocation( m_ShaderProgramID, "ModelMat" );
+	GLint viewMatUniform = glGetUniformLocation( m_ShaderProgramID, "ViewMat" );
+
+	glUniformMatrix4fv( viewMatUniform, 1, GL_FALSE, m_pViewMatrix->GetRawMatrix() );
+	glUniformMatrix4fv( modelMatUniform, 1, GL_FALSE, m_pModelMatrix->GetRawMatrix() );
+
+}
+
 void CDrawContext::Draw2DVertexBuffer()
 {
 

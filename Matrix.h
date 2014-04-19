@@ -1,7 +1,7 @@
 #ifndef MATRIX_H_
 #define MATRIX_H_
 
-#define RAD_CONSTANT 0.017453f
+#define RAD_CONSTANT 0.017453
 
 template< typename T >
 class CMatrix
@@ -43,9 +43,9 @@ public:
 	void Translate( T x, T y, T z )
 	{
 
-		m_RawMatrix[12] += x * m_RawMatrix[0];
-		m_RawMatrix[13] += y * m_RawMatrix[5] * -1.0f;
-		m_RawMatrix[14] += z * m_RawMatrix[10];
+		m_RawMatrix[12] = x;
+		m_RawMatrix[13] = y;
+		m_RawMatrix[14] = z;
 
 	}
 

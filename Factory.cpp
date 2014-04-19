@@ -1,9 +1,10 @@
 #include "Factory.h"
-
+/*
 template< typename T >
-CFactoryObject<T>::~CFactoryObject()
+virtual CFactoryObject<T>::~CFactoryObject()
 {
 
     delete m_pContent;
 
 }
+*/

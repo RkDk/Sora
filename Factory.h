@@ -21,7 +21,12 @@ public:
 
     }
 
-    virtual ~CFactoryObject();
+	virtual ~CFactoryObject()
+	{
+
+		delete m_pContent;
+
+	}
 
     T * GetContent()
     {
@@ -70,7 +75,7 @@ public:
         ObjMap::iterator i = m_pFactoryObjects.find( tag );
 
         if( i != m_pFactoryObjects.end() )
-            return *i;
+            return ( *i ).second;
 
         return NULL;
 
