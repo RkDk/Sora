@@ -4,7 +4,7 @@ void CEntityFactory::AddEntity( CEntity * ent )
 {
 
     CEntityObject * entObj = new CEntityObject;
-    entObj->SetTag( "PLACEHOLDER" );
+    entObj->SetTag( ent->GetClassType() );
     entObj->SetContent( ent );
 
     AddObject( entObj );

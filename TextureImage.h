@@ -7,17 +7,26 @@
 
 #include "Logging.h"
 
-class CTextureImage
+class CTextureFrame
 {
 
 private:
 
-	int m_FrameWidth, m_FrameHeight;
+ 	int m_FrameWidth, m_FrameHeight;
 	GLuint m_Texture;
 
 public:
 
-	void GetSize( int * width, int * height )
+    void Load( std::string );
+
+    GLuint GetTexture()
+    {
+
+        return m_Texture;
+
+    }
+
+ 	void GetSize( int * width, int * height )
 	{
 
 		*width = m_FrameWidth;
@@ -25,8 +34,36 @@ public:
 
 	}
 
+	~CTextureFrame();
+
+};
+
+class CTextureImage
+{
+
+private:
+
+    CTextureFrame * m_pFrames;
+    int m_FrameCount;
+
+public:
+
+	CTextureFrame & GetFrame( int i )
+	{
+
+	    return m_pFrames[i];
+
+	}
+
+	int GetFrameCount()
+	{
+
+	    return m_FrameCount;
+
+	}
+
 	void Load( std::string );
-    void Bind();
+    void Bind( int );
 
 	~CTextureImage();
 

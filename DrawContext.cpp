@@ -29,14 +29,22 @@ void CDrawContext::Calculate2DProjectionMatrix( int width, int height )
 
 }
 
-void CDrawContext::UpdateCameraMatrix()
+void CDrawContext::UpdateModelMatrix()
 {
 
-	GLint modelMatUniform = glGetUniformLocation( m_ShaderProgramID, "ModelMat" );
-	GLint viewMatUniform = glGetUniformLocation( m_ShaderProgramID, "ViewMat" );
+    if( m_ModelMatUniform < 0 )
+        m_ModelMatUniform = glGetUniformLocation( m_ShaderProgramID, "ModelMat" );
 
-	glUniformMatrix4fv( viewMatUniform, 1, GL_FALSE, m_pViewMatrix->GetRawMatrix() );
-	glUniformMatrix4fv( modelMatUniform, 1, GL_FALSE, m_pModelMatrix->GetRawMatrix() );
+	glUniformMatrix4fv( m_ModelMatUniform, 1, GL_FALSE, m_pModelMatrix->GetRawMatrix() );
+
+}
+
+void CDrawContext::UpdateViewMatrix()
+{
+    if( m_ViewMatUniform < 0 )
+        m_ViewMatUniform = glGetUniformLocation( m_ShaderProgramID, "ViewMat" );
+
+	glUniformMatrix4fv( m_ViewMatUniform, 1, GL_FALSE, m_pViewMatrix->GetRawMatrix() );
 
 }
 
@@ -97,5 +105,6 @@ void CDrawContext::Initialize()
 {
 
 	Create2DVertexBuffer();
+	m_ShaderProgramID = -1;
 
 }

@@ -12,6 +12,7 @@ private:
 
 	int m_ShaderProgramID;
 	GLuint m_2DVertexBuffer, m_2DElementBuffer;
+	GLint m_ModelMatUniform, m_ViewMatUniform;
 
 	CMatrix< float > * m_pViewMatrix, * m_pModelMatrix;
 
@@ -20,10 +21,12 @@ private:
 public:
 
 	void Calculate2DProjectionMatrix( int, int );
-	void UpdateCameraMatrix();
 	void Draw2DVertexBuffer();
 	void Bind2DVertexBuffer();
 	void Unbind2DVertexBuffer();
+
+	void UpdateViewMatrix();
+    void UpdateModelMatrix();
 
 	void SetViewMatrix( CMatrix< float > * pViewMatrix )
 	{
@@ -42,15 +45,16 @@ public:
 	void UseShaderProgram( int id )
 	{
 
-	    m_ShaderProgramID = id;
-	    glUseProgram( id );
+	    if( m_ShaderProgramID != id )
+        {
 
-	}
+            glUseProgram( id );
 
-	void SetShaderProgram( int id )
-	{
+            m_ShaderProgramID = id;
+            m_ViewMatUniform = -1;
+            m_ModelMatUniform = -1;
 
-		m_ShaderProgramID = id;
+        }
 
 	}
 

@@ -1,21 +1,14 @@
 #include "TextureImage.h"
 
-
-CTextureImage::~CTextureImage()
+CTextureFrame::~CTextureFrame()
 {
 
-	glDeleteTextures( 1, &m_Texture );
+    glDeleteTextures( 1, &m_Texture );
 
 }
 
-void CTextureImage::Bind()
-{
 
-    glBindTexture( GL_TEXTURE_2D, m_Texture );
-
-}
-
-void CTextureImage::Load( std::string file )
+void CTextureFrame::Load( std::string file )
 {
 
     SDL_Surface * i = IMG_Load( file.c_str() );
@@ -71,3 +64,43 @@ void CTextureImage::Load( std::string file )
 
 
 }
+
+CTextureImage::~CTextureImage()
+{
+
+	delete [] m_pFrames;
+
+}
+
+void CTextureImage::Bind( int i )
+{
+
+    glBindTexture( GL_TEXTURE_2D, m_pFrames[i].GetTexture() );
+
+}
+
+void CTextureImage::Load( std::string file )
+{
+
+    std::vector< std::string > frameFiles;
+
+    if( file.find( ".txt" ) != std::string::npos )
+    {
+
+        //Read sprite file
+
+    } else
+    {
+
+        frameFiles.push_back( file );
+        m_FrameCount = 1;
+
+    }
+
+    m_pFrames = new CTextureFrame[m_FrameCount];
+
+    for( int j = 0; j < m_FrameCount; j++ )
+        m_pFrames[j].Load( frameFiles[j] );
+
+}
+
