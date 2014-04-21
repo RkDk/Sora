@@ -17,6 +17,14 @@ private:
 
 public:
 
+	void GetSize( int * width, int * height )
+	{
+
+		*width = m_FrameWidth;
+		*height = m_FrameHeight;
+
+	}
+
 	void Load( std::string );
     void Bind();
 
