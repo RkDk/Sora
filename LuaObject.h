@@ -13,7 +13,7 @@ extern "C"
 
 #include "Logging.h"
 
-#ifndef RegisterNameSpace
+#ifndef LuaNameSpace
 
 //Macros for defining Lua namespaces and functions.
 #define LuaNameSpace( l, n ) \
