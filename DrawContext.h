@@ -25,8 +25,22 @@ public:
 	void Bind2DVertexBuffer();
 	void Unbind2DVertexBuffer();
 
-	void UpdateViewMatrix();
-    void UpdateModelMatrix();
+	void UpdateViewMatrix( CMatrix< float > * );
+    void UpdateModelMatrix( CMatrix< float > * );
+
+	void UpdateViewMatrix()
+	{
+
+	    UpdateViewMatrix( m_pViewMatrix );
+
+	}
+
+    void UpdateModelMatrix()
+	{
+
+	    UpdateModelMatrix( m_pModelMatrix );
+
+	}
 
 	void SetViewMatrix( CMatrix< float > * pViewMatrix )
 	{

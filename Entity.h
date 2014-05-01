@@ -88,6 +88,13 @@ public:
 
     }
 
+    virtual void Update()
+    {
+
+
+
+    }
+
     CEntity() : m_ClassType( "ENTITY" ), m_bIsTracked( false ), m_GlobalCount( 0 )
     {
 

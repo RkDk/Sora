@@ -13,6 +13,7 @@ class CTextureFrame
 private:
 
  	int m_FrameWidth, m_FrameHeight;
+ 	int m_FrameDelay;
 	GLuint m_Texture;
 
 public:
@@ -31,6 +32,20 @@ public:
 
 		*width = m_FrameWidth;
 		*height = m_FrameHeight;
+
+	}
+
+	void SetDelay( int delay )
+	{
+
+	    m_FrameDelay = delay;
+
+	}
+
+	int GetDelay()
+	{
+
+	    return m_FrameDelay;
 
 	}
 
@@ -55,10 +70,24 @@ public:
 
 	}
 
+    int GetFrameDelay( int i )
+    {
+
+        return m_pFrames[i].GetDelay();
+
+    }
+
 	int GetFrameCount()
 	{
 
 	    return m_FrameCount;
+
+	}
+
+	void GetFrameSize( int i, int * width, int * height )
+	{
+
+	    m_pFrames[i].GetSize( width, height );
 
 	}
 

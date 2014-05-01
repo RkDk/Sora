@@ -2,7 +2,7 @@
 #define VECTOR_H_
 
 template< class T >
-class Vector
+class Vector3
 {
 
 private:
@@ -10,6 +10,22 @@ private:
 	T x, y, z;
 
 public:
+
+    Vector3( T _x, T _y ) : x( _x ), y( _y ), z( ( T )0 )
+    {
+
+    }
+
+    Vector3( T_x, T_y, T_z ) : x( _x ), y( _y ), z( _z )
+    {
+
+    }
+
+    Vector3() : x( ( T )0 ), y( ( T )0 ), z( ( T )0 )
+    {
+
+
+    }
 
 	void Set( T _x, T _y ) { x = _x; y = _y; }
 	void Set( T _x, T _y, T _z ) { x = _x; y = _y; z = _z; }

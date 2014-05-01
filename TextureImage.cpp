@@ -92,15 +92,14 @@ void CTextureImage::Load( std::string file )
     } else
     {
 
-        frameFiles.push_back( file );
         m_FrameCount = 1;
+
+        m_pFrames = new CTextureFrame[1];
+        m_pFrames[0].Load( file );
+        m_pFrames[0].SetDelay( -1 );
 
     }
 
-    m_pFrames = new CTextureFrame[m_FrameCount];
-
-    for( int j = 0; j < m_FrameCount; j++ )
-        m_pFrames[j].Load( frameFiles[j] );
 
 }
 
