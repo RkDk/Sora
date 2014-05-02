@@ -1,6 +1,20 @@
 #include "PhysicsWorld.h"
 
 
+void CPhysicsWorld::Initialize( float x, float y )
+{
+
+	m_pPhysWorld = new b2World( b2Vec2( x, y ) );
+
+}
+
+CPhysicsWorld::~CPhysicsWorld()
+{
+
+	delete m_pPhysWorld;
+
+}
+
 void CPhysicsWorld::Update( int velIter, int posIter )
 {
 
@@ -13,7 +27,7 @@ void CPhysicsWorld::Update( int velIter, int posIter )
     for( int j = 0; j < itercount; j++ )
     {
 
-        m_PhysWorld.Step( TIMESTEP, velIter, posIter );
+        m_pPhysWorld->Step( TIMESTEP, velIter, posIter );
 
     }
 

@@ -17,7 +17,7 @@ private:
 
 public:
 
-    CSprite() : m_Texture( NULL ), m_Speed( 1.0f ), m_CurFrameIndex( 0 ), m_NextFrameTime( 0 ), m_bActive( false )
+    CSprite() : m_pTexture( NULL ), m_Speed( 1.0f ), m_CurFrameIndex( 0 ), m_NextFrameTime( 0 ), m_bActive( false )
     {
 
 
@@ -28,14 +28,14 @@ public:
 
         m_Speed = 1.0f;
         m_CurFrameIndex = 0;
-        m_NextFrameTime = SDL_GetTicks() + pTexture->GetFrameDelay;
+        m_NextFrameTime = SDL_GetTicks() + pTexture->GetFrameDelay( 0 );
         m_bActive = ( pTexture->GetFrameCount() > 1 ) ? true : false;
         m_pTexture = pTexture;
 
     }
 
     void Think();
-    void Draw( CDrawContext *, CMatrix * );
+    void Draw( CDrawContext *, CMatrix< float > * );
 
 
 };

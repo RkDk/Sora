@@ -39,7 +39,7 @@ protected:
 
 public:
 
-    EntityVec & GetTrackedEntityList( std::string type )
+    std::vector< CEntity * > & GetTrackedEntityList( std::string type )
     {
 
         return m_pTrackedEntityList[type];

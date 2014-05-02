@@ -7,6 +7,8 @@
 #include "TextureImage.h"
 #include "Matrix.h"
 
+#include <Box2D/Box2D.h>
+
 //1 meter in Box2d = 6 pixels
 //Maybe make configurable per game project?
 #define BOX2D_PIXEL_MUL 6.0f
@@ -19,7 +21,7 @@ private:
 
     Vector3< float > m_Size;
 
-    b2World * m_pRefWorld
+    b2World * m_pRefWorld;
     b2Body * m_pBoxBody;
     b2Fixture * m_pBoxFixture;
 
@@ -39,7 +41,7 @@ public:
 
     }
 
-    void SetSize( Vector3 v )
+    void SetSize( Vector3< float > v )
     {
 
         m_Size = v;
@@ -49,7 +51,7 @@ public:
     void SetPos( float x, float y )
     {
 
-        m_pBoxBody->SetPosition( b2Vec2( x, y ) );
+		m_pBoxBody->SetTransform( b2Vec2( x, y ), m_pBoxBody->GetAngle() );
 
     }
 
@@ -81,7 +83,7 @@ public:
     {
 
         m_Position = v;
-        m_bExplicitPhysicsBodySet = true;
+        m_bExplicitPhysicsBodyPosSet = true;
 
     }
 
@@ -89,7 +91,7 @@ public:
     {
 
         m_Position.Set( x, y );
-        m_bExplicitPhysicsBodySet = true;
+        m_bExplicitPhysicsBodyPosSet = true;
 
     }
 
@@ -97,7 +99,7 @@ public:
     {
 
         m_Position.Set( x, y, z );
-        m_bExplicitPhysicsBodySet = true;
+        m_bExplicitPhysicsBodyPosSet = true;
 
     }
 

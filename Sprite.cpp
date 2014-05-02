@@ -20,7 +20,7 @@ void CSprite::Think()
 
 }
 
-void CSprite::Draw( CDrawContext * pDrawContext, CMatrix * pModelMat )
+void CSprite::Draw( CDrawContext * pDrawContext, CMatrix< float > * pModelMat )
 {
 
     if( m_pTexture )

@@ -1,6 +1,9 @@
 #ifndef PHYSICSWORLD_H_
 #define PHYSICSWORLD_H_
 
+#include <SDL.h>
+#include <Box2D/Box2D.h>
+
 //Run physics simulation every <TIMESTEP> ms
 #define TIMESTEP 16.667f
 #define DEFAULT_VEL_ITERATIONS 8
@@ -11,7 +14,7 @@ class CPhysicsWorld
 
 private:
 
-    b2World m_PhysWorld;
+    b2World * m_pPhysWorld;
     int m_LastIteration;
 
 public:
@@ -25,18 +28,14 @@ public:
 
     }
 
-    void SetGravitySpeed( float x, float y )
-    {
-
-        b2Vec2 gravSpeed( x, y );
-        m_PhysWorld.SetGravity( gravSpeed );
-
-    }
+    void Initialize( float, float );
 
     CPhysicsWorld() : m_LastIteration( 0 )
     {
 
     }
+
+	~CPhysicsWorld();
 
 };
 

@@ -26,7 +26,7 @@ protected:
 
 public:
 
-    bool SetBeingTracked( bool b )
+    void SetBeingTracked( bool b )
     {
 
         m_bIsTracked = b;

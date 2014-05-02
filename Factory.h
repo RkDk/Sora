@@ -3,6 +3,7 @@
 
 #include <string>
 #include <boost/ptr_container/ptr_map.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 
 template< typename T >
 class CFactoryObject
@@ -130,10 +131,10 @@ public:
         for( ; i != m_pFactoryObjects.end(); i++ )
         {
 
-            if( ( *iter )->GetTag() == tag )
+            if( ( *i ).GetTag() == tag )
             {
 
-                m_pFactoryObjects.erase( iter );
+                m_pFactoryObjects.erase( i );
                 return;
 
             }

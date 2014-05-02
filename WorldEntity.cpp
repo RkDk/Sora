@@ -7,13 +7,13 @@ void CPhysBody::Initialize()
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set( 0.0f, 0.0f );
 
-    m_pBoxBody = m_pRefWorld.CreateBody( &bodyDef );
+    m_pBoxBody = m_pRefWorld->CreateBody( &bodyDef );
 
     float sizex = m_Size.GetX() * .5f;
-    float sizey = m_Size.GetY() * .5f
+    float sizey = m_Size.GetY() * .5f;
 
     b2PolygonShape bodyShape;
-    bodyShape.SetAsBox( sizex, sizey, b2Vec( -sizex, sizey ) );
+    bodyShape.SetAsBox( sizex, sizey, b2Vec2( -sizex, sizey ), 0.0f );
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &bodyShape;
@@ -39,7 +39,7 @@ CPhysBody::~CPhysBody()
 void CWorldEntity::CreatePhysicsBody( float x, float y )
 {
 
-    m_PhysicsBody.SetSize( Vector3( x, y ) );
+    m_PhysicsBody.SetSize( Vector3< float >( x, y ) );
     m_PhysicsBody.Initialize();
     m_bPhysicsBodyInit = true;
 
@@ -74,10 +74,10 @@ void CWorldEntity::Update()
 void CWorldEntity::Draw()
 {
 
-    CMatrix mat;
+    CMatrix< float > mat;
 
     mat.Identity();
-    mat.Translate( m_Position.GetX(), m_Position.GetY() );
+    mat.Translate( m_Position.GetX(), m_Position.GetY(), 0.0f );
 
     m_Sprite.Draw( m_pContext->GetDrawContext(), &mat );
 
