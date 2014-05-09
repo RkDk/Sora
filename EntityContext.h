@@ -3,6 +3,7 @@
 
 #include "DrawContext.h"
 #include "GraphicsContext.h"
+#include "TextureFactory.h"
 
 class CEntityContext
 {
@@ -12,8 +13,16 @@ protected:
 	float m_FrameDelta;
     CGraphicsContext * m_pGraphicsContext;
     CDrawContext * m_pDrawContext;
+    CTextureFactory * m_pTextureFactory;
 
 public:
+
+    void SetTextureFactory( CTextureFactory * pTextureFactory )
+    {
+
+        m_pTextureFactory = pTextureFactory;
+
+    }
 
     void SetDrawContext( CDrawContext * pDrawContext )
     {
@@ -29,17 +38,24 @@ public:
 
     }
 
-    CDrawContext * GetDrawContext()
+    CDrawContext * DrawContext()
     {
 
         return m_pDrawContext;
 
     }
 
-    CGraphicsContext * GetGraphicsContext()
+    CGraphicsContext * GraphicsContext()
     {
 
         return m_pGraphicsContext;
+
+    }
+
+    CTextureFactory * TextureFactory()
+    {
+
+        return m_pTextureFactory;
 
     }
 
