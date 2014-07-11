@@ -79,6 +79,6 @@ void CWorldEntity::Draw()
     mat.Identity();
     mat.Translate( m_Position.GetX(), m_Position.GetY(), 0.0f );
 
-    m_Sprite.Draw( m_pContext->GetDrawContext(), &mat );
+    m_Sprite.Draw( m_pContext->DrawContext(), &mat );
 
 }

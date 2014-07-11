@@ -9,6 +9,8 @@
 class CState
 {
 
+protected:
+
     CGameContext * m_pGameContext;
     bool m_bContinue;
 
