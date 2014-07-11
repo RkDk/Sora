@@ -45,7 +45,7 @@ void CWorldEntity::CreatePhysicsBody( float x, float y )
 
 }
 
-void CWorldEntity::Update()
+void CWorldEntity::BaseUpdate()
 {
 
     m_Sprite.Think();
@@ -53,7 +53,7 @@ void CWorldEntity::Update()
     //Either update the position of our entity depending on the physics, or update the physics body if explicitly set.
     if( m_bPhysicsBodyInit )
     {
-        if( m_bExplicitPhysicsBodyPosSet )
+        if( m_bExplicitPhysicsBodyPosSet || !m_bFollowPhysics )
         {
 
             m_PhysicsBody.SetPos( m_Position.GetX() * BOX2D_METER_MUL, -m_Position.GetY() * BOX2D_METER_MUL );
@@ -71,7 +71,7 @@ void CWorldEntity::Update()
 
 }
 
-void CWorldEntity::Draw()
+void CWorldEntity::BaseDraw()
 {
 
     CMatrix< float > mat;

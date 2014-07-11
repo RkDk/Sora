@@ -54,6 +54,13 @@ public:
 
     }
 
+    std::string SetClassType( std::string t )
+    {
+
+        m_ClassType = s;
+
+    }
+
     std::string GetClassType()
     {
 
@@ -101,6 +108,8 @@ public:
         SetGlobalCount();
 
     }
+
+    virtual ~CEntity() { }
 
 };
 

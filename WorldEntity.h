@@ -74,10 +74,41 @@ protected:
     CSprite m_Sprite;
 
     Vector3< float > m_Position;
-    bool m_bPhysicsBodyInit, m_bExplicitPhysicsBodyPosSet;
+    bool m_bPhysicsBodyInit, m_bExplicitPhysicsBodyPosSet, m_bFollowPhysics;
     CPhysBody m_PhysicsBody;
 
 public:
+
+    void Displace2( float x, float y )
+    {
+        x *= m_pContext->GetFrameDelta();
+        y *= m_pContext->GetFrameDelta();
+
+        Displace( x, y );
+
+    }
+
+    void Displace( float x, float y )
+    {
+
+        m_Position.Set( m_Postion.x + x, m_Position.y + y );
+        m_bExplicitPhysicsBodyPosSet = true;
+
+    }
+
+    void EnablePhysics()
+    {
+
+        m_bFollowPhysics = true;
+
+    }
+
+    void DisablePhysics()
+    {
+
+        m_bFollowPhysics = false;
+
+    }
 
     void SetPos( Vector3< float > & v )
     {
@@ -112,14 +143,33 @@ public:
 
     void CreatePhysicsBody( float, float );
 
-    virtual void Update();
-    virtual void Draw();
+    void UpdateSprite();
+    void DrawSprite();
 
-    CWorldEntity() : CEntity(), m_bPhysicsBodyInit( false ), m_bExplicitPhysicsBodyPosSet( false )
+    void BaseUpdate();
+    void BaseDraw();
+
+    virtual void Update()
+    {
+
+        BaseUpdate();
+
+    }
+
+    virtual void Draw()
+    {
+
+        BaseDraw();
+
+    }
+
+    CWorldEntity() : CEntity(), m_bPhysicsBodyInit( false ), m_bExplicitPhysicsBodyPosSet( false ), m_bFollowPhysics( true )
     {
 
 
     }
+
+    virtual ~CWorldEntity() { }
 
 };
 

@@ -28,9 +28,24 @@ bool CStateMachine::RunState()
     if( !m_pCurState )
         return false;
 
-    m_pCurState->Input();
-    m_pCurState->Think();
-    m_pCurState->Draw();
+    if( m_pCurState->DidPostInit() )
+    {
+
+        m_pCurState->Input();
+        m_pCurState->Think();
+        m_pCurState->Draw();
+
+    } else if( m_pCurState->DidInit() )
+    {
+
+        m_pCurState->PostInit();
+
+    } else
+    {
+
+        m_pCurState->Init();
+
+    }
 
     return m_pCurState->Continue();
 

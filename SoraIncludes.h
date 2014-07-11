@@ -42,5 +42,8 @@
 #include "PhysicsWorld.h"
 #include "Sprite.h"
 #include "WorldEntity.h"
+#include "Util.h"
+#include "AIController.h"
+#include "AIEntity.h"
 
 #endif
