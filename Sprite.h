@@ -23,8 +23,21 @@ public:
 
     }
 
+	bool IsSet()
+	{
+
+		return ( m_pTexture );
+
+	}
+
     void SetTexture( CTextureImage * pTexture )
     {
+
+		if( !pTexture )
+		{
+			Log::Error( "Tried to set sprite to invalid texture" );
+			return;
+		}
 
         m_Speed = 1.0f;
         m_CurFrameIndex = 0;

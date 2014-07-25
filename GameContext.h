@@ -5,32 +5,45 @@
 #include "EntityManager.h"
 #include "SDL.h"
 
+template< class T = CEntityManager>
 class CGameContext : public CEntityContext
 {
 
-private:
+protected:
 
 	Uint32 m_BeginFrameTime;
-	CEntityManager * m_pEntityManager;
+	T * m_pEntityManager;
 
 public:
 
-    void SetEntityManager( CEntityManager * pEntityManager )
+    void SetEntityManager( T * pEntityManager )
     {
 
         m_pEntityManager = pEntityManager;
 
     }
 
-    CEntityManager * EntityManager()
+    T * EntityManager()
     {
 
         return m_pEntityManager;
 
     }
 
-	void BeginFrame();
-	void EndFrame();
+
+	void BeginFrame()
+	{
+
+		m_BeginFrameTime = SDL_GetTicks();
+
+	}
+
+	void EndFrame()
+	{
+
+		m_FrameDelta = ( SDL_GetTicks() - m_BeginFrameTime ) * .001f;
+
+	}
 
 	CGameContext() : m_BeginFrameTime( 0 ), CEntityContext()
 	{

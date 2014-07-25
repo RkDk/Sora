@@ -1,6 +1,6 @@
 #include "AIEntity.h"
 
-void AIEntity::Update()
+void CAIEntity::Update()
 {
 
     BaseUpdate();

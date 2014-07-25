@@ -54,10 +54,10 @@ public:
 
     }
 
-    std::string SetClassType( std::string t )
+    void SetClassType( std::string t )
     {
 
-        m_ClassType = s;
+        m_ClassType = t;
 
     }
 

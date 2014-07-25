@@ -1,26 +1,40 @@
 #include "WorldEntity.h"
 
-void CPhysBody::Initialize()
+bool CPhysBody::Initialize()
 {
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set( 0.0f, 0.0f );
 
-    m_pBoxBody = m_pRefWorld->CreateBody( &bodyDef );
+	if( !m_pRefWorld )
+	{
 
-    float sizex = m_Size.GetX() * .5f;
-    float sizey = m_Size.GetY() * .5f;
+		Log::Error( "Cannot find physics body reference world" );
 
-    b2PolygonShape bodyShape;
-    bodyShape.SetAsBox( sizex, sizey, b2Vec2( -sizex, sizey ), 0.0f );
+	} else
+	{
 
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &bodyShape;
-    fixtureDef.density = 1.0f;
-    fixtureDef.friction = .5f;
+		m_pBoxBody = m_pRefWorld->CreateBody( &bodyDef );
 
-    m_pBoxFixture = m_pBoxBody->CreateFixture( &fixtureDef );
+		float sizex = m_Size.GetX() * .5f;
+		float sizey = m_Size.GetY() * .5f;
+
+		b2PolygonShape bodyShape;
+		bodyShape.SetAsBox( sizex, sizey, b2Vec2( -sizex, sizey ), 0.0f );
+
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &bodyShape;
+		fixtureDef.density = 1.0f;
+		fixtureDef.friction = .5f;
+
+		m_pBoxFixture = m_pBoxBody->CreateFixture( &fixtureDef );
+
+		return true;
+
+	}
+
+	return false;
 
 }
 
@@ -40,8 +54,9 @@ void CWorldEntity::CreatePhysicsBody( float x, float y )
 {
 
     m_PhysicsBody.SetSize( Vector3< float >( x, y ) );
-    m_PhysicsBody.Initialize();
-    m_bPhysicsBodyInit = true;
+    
+	if( m_PhysicsBody.Initialize() )
+		m_bPhysicsBodyInit = true;
 
 }
 
@@ -74,11 +89,16 @@ void CWorldEntity::BaseUpdate()
 void CWorldEntity::BaseDraw()
 {
 
-    CMatrix< float > mat;
+	if( m_Sprite.IsSet() )
+	{
 
-    mat.Identity();
-    mat.Translate( m_Position.GetX(), m_Position.GetY(), 0.0f );
+		CMatrix< float > mat;
 
-    m_Sprite.Draw( m_pContext->DrawContext(), &mat );
+		mat.Identity();
+		mat.Translate( m_Position.GetX(), m_Position.GetY(), 0.0f );
+
+		m_Sprite.Draw( m_pContext->DrawContext(), &mat );
+
+	}
 
 }

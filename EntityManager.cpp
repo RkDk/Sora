@@ -24,7 +24,7 @@ void CEntityManager::TrackEntity( std::string type, CEntity * ent )
 void CEntityManager::AddEntity( CEntity * ent )
 {
 
-    m_pRawEntityList->AddEntity( ent );
+    m_pRawEntityList.AddEntity( ent );
 
 }
 
@@ -59,6 +59,6 @@ void CEntityManager::RemoveEntity( CEntity * ent )
 
     }
 
-    m_pRawEntityList->RemoveObject( ent->GetUniqueID() );
+    m_pRawEntityList.RemoveObject( ent->GetUniqueID() );
 
 }

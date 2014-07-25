@@ -27,7 +27,7 @@ private:
 
 public:
 
-    void Initialize();
+    bool Initialize();
 
     CPhysBody() : m_pRefWorld( NULL ), m_pBoxBody( NULL ), m_pBoxFixture( NULL )
     {
@@ -91,7 +91,7 @@ public:
     void Displace( float x, float y )
     {
 
-        m_Position.Set( m_Postion.x + x, m_Position.y + y );
+        m_Position.Set( m_Position.GetX() + x, m_Position.GetY() + y );
         m_bExplicitPhysicsBodyPosSet = true;
 
     }

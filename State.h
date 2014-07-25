@@ -6,12 +6,12 @@
 #include "DrawContext.h"
 #include "EntityManager.h"
 
+
 class CState
 {
 
 protected:
 
-    CGameContext * m_pGameContext;
     bool m_bContinue, m_bInit, m_bPostInit;
 
 public:
@@ -36,13 +36,6 @@ public:
 	{
 
 	    return m_bPostInit;
-
-	}
-
-	virtual void SetGameContext( CGameContext * pGameContext )
-	{
-
-	    m_pGameContext = pGameContext;
 
 	}
 

@@ -22,6 +22,14 @@ void Log::Debug( std::string log )
 
 }
 
+void Log::Error( std::string log )
+{
+
+	log = "[ERROR]" + log + "\n";
+	FileUtil::AppendToFile( "log.txt", log );
+
+}
+
 void Log::Log( std::string log )
 {
 

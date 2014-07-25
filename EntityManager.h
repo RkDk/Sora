@@ -33,7 +33,7 @@ class CEntityManager
 
 protected:
 
-    CEntityFactory * m_pRawEntityList;
+    CEntityFactory m_pRawEntityList;
 
     std::map< std::string, std::vector< CEntity * > > m_pTrackedEntityList;
 
@@ -49,7 +49,7 @@ public:
     boost::ptr_vector< CEntityObject > & GetEntityObjects()
     {
 
-        return m_pRawEntityList->GetEntityObjects();
+        return m_pRawEntityList.GetEntityObjects();
 
     }
 
