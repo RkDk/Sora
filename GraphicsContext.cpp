@@ -116,7 +116,7 @@ void CGraphicsContext::CreateHandle( std::string wndTitle, int x, int y, int wid
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
 
-		Log::Log( "Initializing SDL has failed" );
+		Log::Error( "Initializing SDL has failed" );
 		return;
 
 	}
@@ -135,7 +135,7 @@ void CGraphicsContext::CreateHandle( std::string wndTitle, int x, int y, int wid
 	if( !( m_pWndHandle = SDL_CreateWindow( wndTitle.c_str(), x, y, width, height, flags ) ) )
 	{
 
-		Log::Log( "Creating SDL Window handle has failed" );
+		Log::Error( "Creating SDL Window handle has failed" );
 		return;
 
 	}

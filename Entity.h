@@ -7,6 +7,7 @@
 
 #include <boost/lexical_cast.hpp>
 
+
 class CEntity
 {
 
@@ -20,6 +21,7 @@ protected:
 
     CEntityContext * m_pContext;
     std::string m_ClassType;
+    int m_ClassTypeID;
 
     bool m_bIsTracked;
     std::vector< std::string > m_TrackedTypes;
@@ -68,6 +70,20 @@ public:
 
     }
 
+    int GetClassTypeID()
+    {
+
+        return m_ClassTypeID;
+
+    }
+
+    void SetClassTypeID( int i )
+    {
+
+        m_ClassTypeID = i;
+
+    }
+
     std::string GetUniqueID()
     {
 
@@ -102,7 +118,7 @@ public:
 
     }
 
-    CEntity() : m_ClassType( "ENTITY" ), m_bIsTracked( false ), m_GlobalCount( 0 )
+    CEntity() : m_ClassType( "ENTITY" ), m_bIsTracked( false ), m_GlobalCount( 0 ), m_ClassTypeID( 0 )
     {
 
         SetGlobalCount();

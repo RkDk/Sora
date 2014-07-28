@@ -2,6 +2,14 @@
 
 bool g_bDebugEnabled = false;
 
+void Log::ClearLog()
+{
+
+    std::ofstream f( "log.txt", std::ios_base::trunc );
+    f.close();
+
+}
+
 void Log::SetDebugLoggingEnabled( bool b )
 {
 

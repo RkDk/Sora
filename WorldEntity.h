@@ -41,6 +41,13 @@ public:
 
     }
 
+    void SetGravity( int g )
+    {
+
+        m_pBoxBody->SetGravityScale( 0 );
+
+    }
+
     void SetSize( Vector3< float > v )
     {
 
@@ -59,6 +66,13 @@ public:
     {
 
         return m_pBoxBody->GetPosition();
+
+    }
+
+    void SetBodyData( void * data )
+    {
+
+        m_pBoxBody->SetUserData( data );
 
     }
 
@@ -96,17 +110,24 @@ public:
 
     }
 
-    void EnablePhysics()
+    void EnablePhysicsMovement()
     {
 
         m_bFollowPhysics = true;
 
     }
 
-    void DisablePhysics()
+    void DisablePhysicsMovement()
     {
 
         m_bFollowPhysics = false;
+
+    }
+
+    void SetGravity( int g )
+    {
+
+        m_PhysicsBody.SetGravity( 0 );
 
     }
 
@@ -141,7 +162,7 @@ public:
 
     }
 
-    void CreatePhysicsBody( float, float );
+    void CreatePhysicsBody( b2World *, float, float );
 
     void UpdateSprite();
     void DrawSprite();

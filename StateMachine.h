@@ -10,14 +10,14 @@ class CStateMachine
 
 private:
 
-    boost::ptr_map< std::string, CState > m_pStates;
+    boost::ptr_map< std::string, CStateBase > m_pStates;
     CState * m_pCurState;
 
 public:
 
-    void AddState( std::string, CState *, bool );
+    void AddState( std::string, CStateBase *, bool );
 
-    void AddState( std::string stateName, CState * pState )
+    void AddState( std::string stateName, CStateBase * pState )
     {
 
         AddState( stateName, pState, false );

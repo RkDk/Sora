@@ -13,12 +13,12 @@
 void CStateMachine::SetActiveState( std::string stateName )
 {
 
-    boost::ptr_map< std::string, CState >::iterator i = m_pStates.find( stateName );
+    boost::ptr_map< std::string, CStateBase >::iterator i = m_pStates.find( stateName );
 
     if( i != m_pStates.end() )
         m_pCurState = ( *i ).second;
     else
-        Log::Log( "Failed to set active state to " + stateName );
+        Log::Error( "Failed to set active state to " + stateName );
 
 }
 

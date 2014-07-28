@@ -50,14 +50,19 @@ CPhysBody::~CPhysBody()
 
 }
 
-void CWorldEntity::CreatePhysicsBody( float x, float y )
+void CWorldEntity::CreatePhysicsBody( b2World * physWorld, float x, float y )
 {
 
+    m_PhysicsBody.SetReferenceWorld( physWorld );
     m_PhysicsBody.SetSize( Vector3< float >( x, y ) );
-    
-	if( m_PhysicsBody.Initialize() )
-		m_bPhysicsBodyInit = true;
 
+	if( m_PhysicsBody.Initialize( physWorld ) )
+    {
+
+        m_PhysicsBody.SetBodyData( ( CWorldEntity * )this );
+        m_bPhysicsBodyInit = true;
+
+    }
 }
 
 void CWorldEntity::BaseUpdate()

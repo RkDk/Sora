@@ -66,6 +66,18 @@ public:
 
 	}
 
+	virtual void HandlePlayerContact( void * pPlayer, void * pEntity )
+	{
+
+
+	}
+
+	virtual void HandleEntityContact( void * pEntityA, void * pEntityB )
+	{
+
+
+	}
+
 	CEntityContext() : m_FrameDelta( 0.0f )
 	{
 

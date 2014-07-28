@@ -8,6 +8,7 @@ namespace Log
 {
 
 	void SetDebugLoggingEnabled( bool );
+	void ClearLog();
 	void Debug( std::string );
 	void Error( std::string );
 	void Log( std::string );

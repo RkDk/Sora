@@ -7,7 +7,7 @@
 #include "EntityManager.h"
 
 
-class CState
+class CStateBase
 {
 
 protected:
@@ -39,12 +39,40 @@ public:
 
 	}
 
-	CState() : m_bContinue( true ), m_bInit( false ), m_bPostInit( false )
+	CStateBase() : m_bContinue( true ), m_bInit( false ), m_bPostInit( false )
 	{
 
 
 
 	}
+
+	virtual ~CStateBase() { }
+
+};
+
+template< classname C = CGameContext<> >
+class CState
+{
+
+protected:
+
+    C * m_pGameContext;
+
+public:
+
+	void SetGameContext( C * pGameContext )
+	{
+
+		m_pGameContext = pGameContext;
+
+	}
+
+	CState() : CStateBase()
+	{
+
+	}
+
+	virtual ~CState() { }
 
 };
 

@@ -35,8 +35,8 @@ void LuaStateOpenFile( lua_State * pLuaState, const char * file )
     if( r == 1 )
     {
 
-        Log::Log( "ERROR loading " + std::string( file ) );
-        Log::Log( lua_tostring( pLuaState, -1 ) );
+        Log::Error( "Could not load lua script: " + std::string( file ) );
+        Log::Error( lua_tostring( pLuaState, -1 ) );
 
     } else
         Log::Log( "Successfully opened lua script: " + std::string( file ) );

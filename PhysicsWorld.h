@@ -28,6 +28,13 @@ public:
 
     }
 
+    void SetContactListener( b2ContactListener * contactListener )
+    {
+
+        m_pPhysWorld->SetContactListener( contactListener );
+
+    }
+
     void Initialize( float, float );
 
     CPhysicsWorld() : m_LastIteration( 0 )
