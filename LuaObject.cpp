@@ -27,6 +27,38 @@ void CLuaObject::Initialize()
 
 }
 
+void CLuaObject::CallLuaFunction( const char * f, const char * n )
+{
+
+    lua_getglobal( m_pLuaState, n );
+
+    if( !LuaNil( m_pLuaState ) )
+    {
+
+        lua_getfield( m_pLuaState, -1, f );
+
+        if( !LuaNil( m_pLuaState ) )
+        {
+
+            if( lua_pcall( m_pLuaState, 0, 0, 0 ) > 0 )
+            {
+
+                Log::Debug( lua_tostring( m_pLuaState, -1 ) );
+                lua_pop( m_pLuaState, 1 );
+
+            }
+
+
+        } else
+            lua_pop( m_pLuaState, 1 );
+
+
+    }
+
+    lua_pop( m_pLuaState, 1 );
+
+}
+
 void LuaStateOpenFile( lua_State * pLuaState, const char * file )
 {
 

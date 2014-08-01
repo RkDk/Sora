@@ -25,6 +25,13 @@ public:
 
     }
 
+    CAIController * GetAIController()
+    {
+
+        return m_pAIController;
+
+    }
+
     virtual void Update();
 
     virtual ~CAIEntity()

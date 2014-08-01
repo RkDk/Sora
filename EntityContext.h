@@ -66,13 +66,7 @@ public:
 
 	}
 
-	virtual void HandlePlayerContact( void * pPlayer, void * pEntity )
-	{
-
-
-	}
-
-	virtual void HandleEntityContact( void * pEntityA, void * pEntityB )
+	virtual void HandleEntityContact( void * pEntityA, int entTypeA, void * pEntityB, int entTypeB )
 	{
 
 

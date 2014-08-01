@@ -23,7 +23,7 @@ protected:
     std::string m_ClassType;
     int m_ClassTypeID;
 
-    bool m_bIsTracked;
+    bool m_bActive, m_bIsTracked;
     std::vector< std::string > m_TrackedTypes;
 
 public:
@@ -32,6 +32,20 @@ public:
     {
 
         m_bIsTracked = b;
+
+    }
+
+    void SetActive( bool b )
+    {
+
+        m_bActive = b;
+
+    }
+
+    bool IsActive()
+    {
+
+        return m_bActive;
 
     }
 
@@ -118,7 +132,7 @@ public:
 
     }
 
-    CEntity() : m_ClassType( "ENTITY" ), m_bIsTracked( false ), m_GlobalCount( 0 ), m_ClassTypeID( 0 )
+    CEntity() : m_ClassType( "ENTITY" ), m_bActive( true ), m_bIsTracked( false ), m_GlobalCount( 0 ), m_ClassTypeID( 0 )
     {
 
         SetGlobalCount();

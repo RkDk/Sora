@@ -131,6 +131,13 @@ public:
 
     }
 
+    const Vector< float > & GetPos()
+    {
+
+        return m_Position;
+
+    }
+
     void SetPos( Vector3< float > & v )
     {
 

@@ -66,6 +66,8 @@ public:
 
     void Initialize();
 
+    void CallLuaFunction( const char *, const char * );
+
 };
 
 #endif
