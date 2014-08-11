@@ -131,7 +131,7 @@ public:
 
     }
 
-    const Vector< float > & GetPos()
+    const Vector3< float > & GetPos()
     {
 
         return m_Position;

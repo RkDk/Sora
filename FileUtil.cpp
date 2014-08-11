@@ -5,7 +5,7 @@ bool FileUtil::FileExists( std::string dir )
 {
 
 	std::ifstream file( dir );
-	return ( file );
+	return ( file.is_open() );
 
 }
 
@@ -27,7 +27,7 @@ std::string FileUtil::ReadContentIntoString( std::string dir )
 	if( !f )
 	{
 
-		Log::Log( "Attempted to read non-existant file: " + dir );
+		Log::Error( "Attempted to read non-existant file: " + dir );
 		return "";
 
 	}

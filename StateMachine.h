@@ -11,7 +11,7 @@ class CStateMachine
 private:
 
     boost::ptr_map< std::string, CStateBase > m_pStates;
-    CState * m_pCurState;
+    CStateBase * m_pCurState;
 
 public:
 

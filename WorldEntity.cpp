@@ -56,7 +56,7 @@ void CWorldEntity::CreatePhysicsBody( b2World * physWorld, float x, float y )
     m_PhysicsBody.SetReferenceWorld( physWorld );
     m_PhysicsBody.SetSize( Vector3< float >( x, y ) );
 
-	if( m_PhysicsBody.Initialize( physWorld ) )
+	if( m_PhysicsBody.Initialize() )
     {
 
         m_PhysicsBody.SetBodyData( ( CWorldEntity * )this );

@@ -30,6 +30,8 @@ extern "C"
         lua_pushcfunction( l, LUAF_##s ); \
         lua_setglobal( l, #s )
 #define LuaCallBackFunction( f ) int LUAF_##f( lua_State * pLuaState )
+#define LuaNil( l ) \
+        ( lua_isnil( l, -1 ) == 0 ) ? false : true
 
 //Auxilary lua functions
 //Assumes pLuaState is defined already.

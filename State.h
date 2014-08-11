@@ -50,8 +50,8 @@ public:
 
 };
 
-template< classname C = CGameContext<> >
-class CState
+template< class C = CGameContext<> >
+class CState : public CStateBase
 {
 
 protected:

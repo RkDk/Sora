@@ -35,6 +35,13 @@ public:
 
     }
 
+	b2World * GetPhysicsWorld()
+	{
+
+		return m_pPhysWorld;
+
+	}
+
     void Initialize( float, float );
 
     CPhysicsWorld() : m_LastIteration( 0 )

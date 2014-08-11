@@ -1,6 +1,6 @@
 #include "StateMachine.h"
 
- void CStateMachine::AddState( std::string stateName, CState * pState, bool isActive )
+ void CStateMachine::AddState( std::string stateName, CStateBase * pState, bool isActive )
  {
 
      m_pStates.insert( stateName, pState );
