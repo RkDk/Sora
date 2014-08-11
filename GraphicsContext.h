@@ -62,6 +62,13 @@ public:
 
 	int LoadShaderProgram( std::string, std::string );
 
+	int GetShaderIDFromIndex( int i )
+	{
+
+	    return m_pShaderPrograms[i]->GetProgramID();
+
+	}
+
 	CGraphicsContext() : m_pWndHandle( NULL ), m_pSDLRenderer( NULL ), m_pDrawContext( NULL )
 	{
 

@@ -79,6 +79,14 @@ void CTextureImage::Bind( int i )
 
 }
 
+void CTextureImage::Bind()
+{
+
+    Bind( 0 );
+
+}
+
+
 void CTextureImage::Load( std::string file )
 {
 

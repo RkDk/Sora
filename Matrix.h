@@ -40,6 +40,15 @@ public:
 
 	}
 
+	void SetTranslate( T x, T y, T z )
+	{
+
+		m_RawMatrix[12] = x;
+		m_RawMatrix[13] = y;
+		m_RawMatrix[14] = z;
+
+	}
+
 	void Translate( T x, T y, T z )
 	{
 

@@ -93,7 +93,9 @@ public:
 	}
 
 	void Load( std::string );
+
     void Bind( int );
+    void Bind();
 
 	~CTextureImage();
 
