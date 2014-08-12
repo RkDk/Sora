@@ -21,7 +21,7 @@ bool CPhysBody::Initialize()
 		float sizey = m_Size.GetY() * .5f;
 
 		b2PolygonShape bodyShape;
-		bodyShape.SetAsBox( sizex, sizey, b2Vec2( -sizex, sizey ), 0.0f );
+		bodyShape.SetAsBox( sizex, sizey );
 
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &bodyShape;
@@ -54,7 +54,7 @@ void CWorldEntity::CreatePhysicsBody( b2World * physWorld, float x, float y )
 {
 
     m_PhysicsBody.SetReferenceWorld( physWorld );
-    m_PhysicsBody.SetSize( Vector3< float >( x, y ) );
+    m_PhysicsBody.SetSize( Vector3< float >( x * BOX2D_METER_MUL, y * BOX2D_METER_MUL ) );
 
 	if( m_PhysicsBody.Initialize() )
     {
@@ -76,7 +76,8 @@ void CWorldEntity::BaseUpdate()
         if( m_bExplicitPhysicsBodyPosSet || !m_bFollowPhysics )
         {
 
-            m_PhysicsBody.SetPos( m_Position.GetX() * BOX2D_METER_MUL, -m_Position.GetY() * BOX2D_METER_MUL );
+			const Vector2< int > & size = m_Sprite.GetSize();
+			m_PhysicsBody.SetPos2( m_Position.GetX(), m_Position.GetY(), size.GetX(), size.GetY() );
             m_bExplicitPhysicsBodyPosSet = false;
 
         } else

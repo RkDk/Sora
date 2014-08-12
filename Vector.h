@@ -25,12 +25,12 @@ public:
 	void Set( T _x, T _y ) { x = _x; y = _y; }
 
 	void SetX( T _x ) { x = _x; }
-	void SetY( T _y ) { y = _y; }
+	virtual void SetY( T _y ) { y = _y; }
 
 	void Get( T * _x, T * _y ) const { *_x = x; *_y = y; }
 
-	T GetX() { return x; }
-	T GetY() { return y; }
+	T GetX() const { return x; }
+	T GetY() const { return y; }
 
 
 };
@@ -39,7 +39,7 @@ template< class T >
 class Vector3 : public Vector2< T >
 {
 
-private:
+protected:
 
 	T z;
 
@@ -61,10 +61,13 @@ public:
 
     }
 
+	using Vector2::Set;
+	using Vector2::Get;
+
 	void Set( T _x, T _y, T _z ) { x = _x; y = _y; z = _z; }
 	void SetZ( T _z ) { z = _z; }
 	void Get( T * _x, T * _y, T * _z ) const { *_x = x; *_y = y; *_z = z; }
-	T GetZ() { return z; }
+	T GetZ() const { return z; }
 
 };
 
@@ -101,10 +104,17 @@ public:
 
     }
 
+
+	using Vector2::Set;
+	using Vector2::Get;
+
+	using Vector3::Set;
+	using Vector3::Get;
+
 	void Set( T _x, T _y, T _z, T _w ) { x = _x; y = _y; z = _z; w = _w; }
 	void SetW( T _w ) { w = _w; }
 	void Get( T * _x, T * _y, T * _z, T * _w ) const { *_x = x; *_y = y; *_z = z; *_w = w; }
-	T GetW() { return w; }
+	T GetW() const { return w; }
 
 };
 

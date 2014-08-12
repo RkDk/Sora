@@ -26,8 +26,7 @@ void CSprite::Draw( CDrawContext * pDrawContext, CMatrix< float > * pModelMat )
     if( m_pTexture )
     {
 
-        int sx, sy;
-        m_pTexture->GetFrameSize( m_CurFrameIndex, &sx, &sy );
+        int sx = m_Size.GetX(), sy = m_Size.GetY();
 
         pModelMat->Scale( sx, sy, 1 );
         m_pTexture->Bind( m_CurFrameIndex );

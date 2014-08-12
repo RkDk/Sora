@@ -9,10 +9,10 @@
 
 #include <Box2D/Box2D.h>
 
-//1 meter in Box2d = 6 pixels
+//10 meter in Box2d = 5 pixels
 //Maybe make configurable per game project?
-#define BOX2D_PIXEL_MUL 6.0f
-#define BOX2D_METER_MUL .1666f
+#define BOX2D_PIXEL_MUL .5f
+#define BOX2D_METER_MUL 2.0f
 
 class CPhysBody
 {
@@ -62,6 +62,16 @@ public:
 
     }
 
+    void SetPos2( float x, float y, float w, float h )
+    {
+
+		x = ( x + w * .5f ) * BOX2D_METER_MUL;
+		y = ( y + h * .5f ) * BOX2D_METER_MUL;
+
+		SetPos( x, y );
+
+    }
+
     b2Vec2 GetPos()
     {
 
@@ -104,6 +114,7 @@ public:
 
     void Displace( float x, float y )
     {
+			
 
         m_Position.Set( m_Position.GetX() + x, m_Position.GetY() + y );
         m_bExplicitPhysicsBodyPosSet = true;
@@ -131,7 +142,7 @@ public:
 
     }
 
-    const Vector3< float > & GetPos()
+    const Vector3< float > & GetPos() const
     {
 
         return m_Position;
@@ -168,6 +179,13 @@ public:
         m_Sprite.SetTexture( pTexImage );
 
     }
+
+	void SetSize( int x, int y )
+	{
+
+		m_Sprite.SetSize( x, y );
+
+	}
 
     void CreatePhysicsBody( b2World *, float, float );
 

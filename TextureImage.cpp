@@ -21,7 +21,7 @@ void CTextureFrame::Load( std::string file )
 
 
     } else
-            Log::Error( "Successfully loaded material: " + file );
+            Log::Log( "Successfully loaded material: " + file );
 
     int bpp = i->format->BytesPerPixel;
     int fmt = 0;
