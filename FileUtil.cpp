@@ -18,6 +18,15 @@ void FileUtil::AppendToFile( std::string dir, std::string content )
 
 }
 
+void FileUtil::WriteContentToFile( std::string dir, std::string content )
+{
+
+    std::ofstream f( dir.c_str(), std::ios_base::trunc );
+    f.write( content.c_str(), content.length() );
+    f.close();
+
+}
+
 std::string FileUtil::ReadContentIntoString( std::string dir )
 {
 

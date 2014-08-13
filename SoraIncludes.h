@@ -45,5 +45,6 @@
 #include "Util.h"
 #include "AIController.h"
 #include "AIEntity.h"
+#include "JsonObject.h"
 
 #endif
