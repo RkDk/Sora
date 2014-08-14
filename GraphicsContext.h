@@ -65,7 +65,7 @@ public:
 	int GetShaderIDFromIndex( int i )
 	{
 
-	    return m_pShaderPrograms[i]->GetProgramID();
+	    return m_pShaderPrograms[i].GetProgramID();
 
 	}
 

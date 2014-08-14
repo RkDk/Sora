@@ -1,6 +1,6 @@
-#include "JosnObject.h"
+#include "JsonObject.h"
 
-void JsonObject::Open( std::string file )
+void CJsonObject::Open( std::string file )
 {
 
     std::string json = FileUtil::ReadContentIntoString( file );
@@ -9,11 +9,11 @@ void JsonObject::Open( std::string file )
 
 }
 
-void JsonObject::SaveTo( std::string file )
+void CJsonObject::SaveTo( std::string file )
 {
 
     rapidjson::StringBuffer buffer;
-    rapidjson::Write< rapidjson::StringBuffer > writer( buffer );
+    rapidjson::Writer< rapidjson::StringBuffer > writer( buffer );
     m_Doc.Accept( writer );
 
     FileUtil::WriteContentToFile( file, buffer.GetString() );
