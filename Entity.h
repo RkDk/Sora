@@ -23,7 +23,8 @@ protected:
     std::string m_ClassType;
     int m_ClassTypeID;
 
-    bool m_bActive, m_bIsTracked;
+    bool m_bOverrideEntityManagerDraw;
+    bool m_bActive, m_bIsTracked, m_bKillMe;
     std::vector< std::string > m_TrackedTypes;
 
 public:
@@ -46,6 +47,13 @@ public:
     {
 
         return m_bActive;
+
+    }
+
+    bool KillMe()
+    {
+
+        return m_bKillMe;
 
     }
 
@@ -132,7 +140,21 @@ public:
 
     }
 
-    CEntity() : m_ClassType( "ENTITY" ), m_bActive( true ), m_bIsTracked( false ), m_GlobalCount( 0 ), m_ClassTypeID( 0 )
+    bool GetEntityManagerDrawOverride()
+    {
+
+        return m_bOverrideEntityManagerDraw;
+
+    }
+
+    void SetEntityManagerDrawOverride( bool b )
+    {
+
+        m_bOverrideEntityManagerDraw = b;
+
+    }
+
+    CEntity() : m_ClassType( "ENTITY" ), m_bActive( true ), m_bIsTracked( false ), m_GlobalCount( 0 ), m_ClassTypeID( 0 ), m_bOverrideEntityManagerDraw( false )
     {
 
         SetGlobalCount();

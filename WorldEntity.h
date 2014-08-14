@@ -114,7 +114,7 @@ public:
 
     void Displace( float x, float y )
     {
-			
+
 
         m_Position.Set( m_Position.GetX() + x, m_Position.GetY() + y );
         m_bExplicitPhysicsBodyPosSet = true;

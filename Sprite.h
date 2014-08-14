@@ -32,6 +32,13 @@ public:
 
 	}
 
+	bool IsOnLastFrame()
+	{
+
+	    return ( m_CurFrameIndex == m_pTexture->GetFrameCount() - 1 );
+
+	}
+
     void SetTexture( CTextureImage * pTexture )
     {
 

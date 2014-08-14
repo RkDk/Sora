@@ -12,6 +12,7 @@ void CSprite::Think()
             if( ++m_CurFrameIndex >= m_pTexture->GetFrameCount() )
                 m_CurFrameIndex = 0;
 
+
             m_NextFrameTime = SDL_GetTicks() + ( float )m_pTexture->GetFrameDelay( m_CurFrameIndex ) * m_Speed;
 
         }

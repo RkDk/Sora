@@ -93,12 +93,52 @@ void CTextureImage::Bind()
 void CTextureImage::Load( std::string file )
 {
 
-    std::vector< std::string > frameFiles;
 
     if( file.find( ".txt" ) != std::string::npos )
     {
 
-        //Read sprite file
+        std::ifstream spritefile( file.c_str() );
+
+        std::vector< std::string > spriteframes;
+        std::vector< int > spritedelay;
+        std::vector< Vector2< float > spriteoffset;
+
+        do
+        {
+
+            std::string temp;
+
+            spritefile >> temp;
+
+            if( temp != "END" )
+            {
+
+                int delay = 0;
+                float x = 0.0f, y = 0.0f;
+
+                spritefile >> delay >> x >> y;
+
+                spriteframes.push_back( temp );
+                spritedelay.push_back( delay );
+                spriteoffset.push_back( Vector2< float >( x, y ) );
+
+
+            } else
+                break;
+
+        } while( 1 )
+
+        m_FrameCount = spriteframes.size();
+        m_pFrames = new CTextureFrame[m_FrameCount];
+
+        for( int j = 0; j < m_FrameCount; j++ )
+        {
+
+            m_pFrames[j].Load( spriteframes[j] );
+            m_pFrames[j].SetDelay( spritedelay[j] );
+            //set sprite offsets here
+
+        }
 
     } else
     {
