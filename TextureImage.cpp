@@ -94,14 +94,14 @@ void CTextureImage::Load( std::string file )
 {
 
 
+    std::vector< std::string > spriteframes;
+    std::vector< int > spritedelay;
+    std::vector< Vector2< float > spriteoffset;
+
     if( file.find( ".txt" ) != std::string::npos )
     {
 
         std::ifstream spritefile( file.c_str() );
-
-        std::vector< std::string > spriteframes;
-        std::vector< int > spritedelay;
-        std::vector< Vector2< float > spriteoffset;
 
         do
         {
@@ -128,29 +128,27 @@ void CTextureImage::Load( std::string file )
 
         } while( 1 )
 
-        m_FrameCount = spriteframes.size();
-        m_pFrames = new CTextureFrame[m_FrameCount];
-
-        for( int j = 0; j < m_FrameCount; j++ )
-        {
-
-            m_pFrames[j].Load( spriteframes[j] );
-            m_pFrames[j].SetDelay( spritedelay[j] );
-            //set sprite offsets here
-
-        }
 
     } else
     {
 
-        m_FrameCount = 1;
-
-        m_pFrames = new CTextureFrame[1];
-        m_pFrames[0].Load( file );
-        m_pFrames[0].SetDelay( -1 );
+        spriteframes.push_back( file );
+        spritedelay.push_back( 0 );
+        spriteoffset.push_back( Vector2< float >() );
 
     }
 
+    m_FrameCount = spriteframes.size();
+    m_pFrames = new CTextureFrame[m_FrameCount];
+
+    for( int j = 0; j < m_FrameCount; j++ )
+    {
+
+        m_pFrames[j].Load( spriteframes[j] );
+        m_pFrames[j].SetDelay( spritedelay[j] );
+        m_pFrames[j].SetOffset( spriteoffset[j] );
+
+    }
 
 }
 

@@ -52,6 +52,20 @@ public:
 
 	void GetWindowSize( int *, int * );
 
+	int GetWindowWidth()
+	{
+
+	    return m_WindowWidth;
+
+	}
+
+	int GetWindowHeight()
+	{
+
+	    return m_WindowHeight;
+
+	}
+
 	void ClearBuffer();
 	void SwapBuffers();
 

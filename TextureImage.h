@@ -1,6 +1,8 @@
 #ifndef TEXTUREIMAGE_H_
 #define TEXTUREIMAGE_H_
 
+#include "Vector.h"
+
 #include <GL/glew.h>
 #include "SDL_image.h"
 #include <string>
@@ -12,6 +14,8 @@ class CTextureFrame
 {
 
 private:
+
+    Vector2< float > m_Offset;
 
  	int m_FrameWidth, m_FrameHeight;
  	int m_FrameDelay;
@@ -28,7 +32,7 @@ public:
 
     }
 
- 	void GetSize( int * width, int * height )
+ 	void GetSize( int * width, int * height ) const
 	{
 
 		*width = m_FrameWidth;
@@ -47,6 +51,20 @@ public:
 	{
 
 	    return m_FrameDelay;
+
+	}
+
+	const Vector2< float > & GetOffset() const
+	{
+
+	    return m_Offset;
+
+	}
+
+	void SetOffset( Vector2< float > & o )
+	{
+
+	    m_Offset = o;
 
 	}
 
@@ -71,21 +89,28 @@ public:
 
 	}
 
-    int GetFrameDelay( int i )
+    int GetFrameDelay( int i ) const
     {
 
         return m_pFrames[i].GetDelay();
 
     }
 
-	int GetFrameCount()
+	int GetFrameCount() const
 	{
 
 	    return m_FrameCount;
 
 	}
 
-	void GetFrameSize( int i, int * width, int * height )
+	const CVector2< float > & GetFrameOffset( int i ) const
+	{
+
+	    return m_pFrames[i].GetOffset();
+
+	}
+
+	void GetFrameSize( int i, int * width, int * height ) const
 	{
 
 	    m_pFrames[i].GetSize( width, height );

@@ -27,7 +27,23 @@ protected:
     bool m_bActive, m_bIsTracked, m_bKillMe;
     std::vector< std::string > m_TrackedTypes;
 
+    int m_DrawDepth;
+
 public:
+
+    int GetDrawDepth()
+    {
+
+        return m_DrawDepth;
+
+    }
+
+    void SetDrawDepth( int d )
+    {
+
+        m_DrawDepth = d;
+
+    }
 
     void SetBeingTracked( bool b )
     {
@@ -154,7 +170,7 @@ public:
 
     }
 
-    CEntity() : m_ClassType( "ENTITY" ), m_bActive( true ), m_bIsTracked( false ), m_GlobalCount( 0 ), m_ClassTypeID( 0 ), m_bOverrideEntityManagerDraw( false )
+    CEntity() : m_ClassType( "ENTITY" ), m_bActive( true ), m_bIsTracked( false ), m_GlobalCount( 0 ), m_ClassTypeID( 0 ), m_bOverrideEntityManagerDraw( false ), m_DrawDepth( 0 )
     {
 
         SetGlobalCount();
