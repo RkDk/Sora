@@ -142,6 +142,20 @@ public:
 
     }
 
+    float GetX()
+    {
+
+        return m_Position.GetX();
+
+    }
+
+    float GetY()
+    {
+
+        return m_Position.GetY();
+
+    }
+
     const Vector3< float > & GetPos() const
     {
 
@@ -206,6 +220,13 @@ public:
     {
 
         BaseDraw();
+
+    }
+
+    virtual bool IsDrawable()
+    {
+
+        return true;
 
     }
 

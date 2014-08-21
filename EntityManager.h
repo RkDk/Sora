@@ -4,6 +4,8 @@
 #include "Factory.h"
 #include "Entity.h"
 
+#define DRAW_DEPTH_MAX 10
+
 class CEntityObject : public CFactoryObject< CEntity >
 {
 
@@ -14,6 +16,10 @@ public:
 
 class CEntityFactory : public CVectorFactory< CEntityObject, CEntity >
 {
+
+private:
+
+
 
 public:
 
@@ -35,6 +41,8 @@ protected:
 
     CEntityFactory m_pRawEntityList;
 
+    std::vector< CEntity * > m_pDeletedEntities;
+    std::vector< CWorldEntity * > m_pDrawList[DRAW_DEPTH_MAX];
     std::map< std::string, std::vector< CEntity * > > m_pTrackedEntityList;
 
 public:
@@ -53,10 +61,19 @@ public:
 
     }
 
+    void RemoveFromDrawList( CWorldEntity * );
+    void SortDrawEntitiesBasedOnPosition( int );
+    void UpdateDrawListLayersForEntity( CWorldEntity *, int );
+    void UpdateDrawListLayers();
+
     void TrackEntity( std::string, CEntity * );
     void AddEntity( CEntity * );
+
     void RemoveEntity( CEntity * );
 
+    void DeleteEntity( CEntity * );
+    void RemoveAllDeletedEntities();
+    void DrawAllEntities();
 };
 
 #endif
