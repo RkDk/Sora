@@ -28,7 +28,7 @@ public:
 	bool IsSet()
 	{
 
-		return ( m_pTexture );
+        return ( m_pTexture == NULL )? false : true;
 
 	}
 

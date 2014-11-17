@@ -1,7 +1,8 @@
 #ifndef GAMEINPUT_H_
 #define GAMEINPUT_H_
 
-#include "SDL.h"
+#include "SDL_includes.h"
+
 
 class CGameInput
 {

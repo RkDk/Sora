@@ -1,7 +1,7 @@
 #ifndef PHYSICSWORLD_H_
 #define PHYSICSWORLD_H_
 
-#include <SDL.h>
+#include "SDL_includes.h"
 #include <Box2D/Box2D.h>
 
 //Run physics simulation every <TIMESTEP> ms

@@ -142,14 +142,14 @@ public:
 
     }
 
-    float GetX()
+    float GetX() const
     {
 
         return m_Position.GetX();
 
     }
 
-    float GetY()
+    float GetY() const
     {
 
         return m_Position.GetY();

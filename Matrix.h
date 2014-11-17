@@ -3,6 +3,9 @@
 
 #define RAD_CONSTANT 0.017453f
 
+#include <cmath>
+#include <cstring>
+
 template< typename T >
 class CMatrix
 {
@@ -36,7 +39,7 @@ public:
 
 		};
 
-		memcpy( m_RawMatrix, newMat, sizeof( T ) * 16 );
+        std::memcpy( m_RawMatrix, newMat, sizeof( T ) * 16 );
 
 	}
 

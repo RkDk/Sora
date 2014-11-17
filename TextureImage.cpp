@@ -1,4 +1,6 @@
 #include "TextureImage.h"
+#include <sstream>
+
 
 CTextureFrame::~CTextureFrame()
 {
@@ -24,6 +26,7 @@ void CTextureFrame::Load( std::string file )
             Log::Log( "Successfully loaded material: " + file );
 
     int bpp = i->format->BytesPerPixel;
+    int rgbtype = GL_RGBA;
     int fmt = 0;
 
     bool bmask = false;
@@ -34,25 +37,28 @@ void CTextureFrame::Load( std::string file )
     if( bpp == 4 )
     {
 
-            if( bmask )
-                    fmt = GL_BGRA;
-            else
-                    fmt = GL_RGBA;
+        if( bmask )
+                fmt = GL_BGRA;
+        else
+                fmt = GL_RGBA;
 
     } else
     {
+        
+        rgbtype = GL_RGB;
 
-            if( bmask )
-                    fmt = GL_BGR;
-            else
-                    fmt = GL_RGB;
+        if( bmask )
+                fmt = GL_BGR;
+        else
+                fmt = GL_RGB;
 
     }
 
     glGenTextures( 1, &m_Texture );
     glBindTexture( GL_TEXTURE_2D, m_Texture );
+  
 
-    glTexImage2D( GL_TEXTURE_2D, 0, bpp, i->w, i->h, 0, fmt, GL_UNSIGNED_BYTE, i->pixels );
+    glTexImage2D( GL_TEXTURE_2D, 0, rgbtype, i->w, i->h, 0, fmt, GL_UNSIGNED_BYTE, i->pixels );
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
@@ -96,7 +102,7 @@ void CTextureImage::Load( std::string file )
 
     std::vector< std::string > spriteframes;
     std::vector< int > spritedelay;
-    std::vector< Vector2< float > spriteoffset;
+    std::vector< Vector2< float > > spriteoffset;
 
     if( file.find( ".txt" ) != std::string::npos )
     {
@@ -126,8 +132,8 @@ void CTextureImage::Load( std::string file )
             } else
                 break;
 
-        } while( 1 )
-
+        } while( 1 );
+        
 
     } else
     {

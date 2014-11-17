@@ -2,6 +2,9 @@
 
 void CAnimEntity::Update()
 {
+    
+    if( !m_Sprite.IsSet() )
+        return;
 
     bool bSpriteThink = true;
 

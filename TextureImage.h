@@ -2,9 +2,9 @@
 #define TEXTUREIMAGE_H_
 
 #include "Vector.h"
+#include "SDL_includes.h"
 
 #include <GL/glew.h>
-#include "SDL_image.h"
 #include <string>
 #include <vector>
 
@@ -103,7 +103,7 @@ public:
 
 	}
 
-	const CVector2< float > & GetFrameOffset( int i ) const
+	const Vector2< float > & GetFrameOffset( int i ) const
 	{
 
 	    return m_pFrames[i].GetOffset();

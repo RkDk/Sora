@@ -2,6 +2,7 @@
 #define FACTORY_H_
 
 #include <string>
+#include <boost/foreach.hpp>
 #include <boost/ptr_container/ptr_map.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
@@ -86,8 +87,10 @@ public:
 
     T * GetObject( std::string tag )
     {
+        
+        T * obj = NULL;
 
-        BOOST_FOREACH( T * obj, m_pFactoryObjects )
+        BOOST_FOREACH( obj, m_pFactoryObjects )
         {
 
             if( obj->GetTag() == tag )
@@ -126,7 +129,7 @@ public:
     void RemoveObject( std::string tag )
     {
 
-        ObjMap::iterator i = m_pFactoryObjects.begin();
+        typename ObjMap::iterator i = m_pFactoryObjects.begin();
 
         for( ; i != m_pFactoryObjects.end(); i++ )
         {
@@ -167,7 +170,7 @@ public:
     T * GetObject( std::string tag )
     {
 
-        ObjMap::iterator i = m_pFactoryObjects.find( tag );
+        typename ObjMap::iterator i = m_pFactoryObjects.find( tag );
 
         if( i != m_pFactoryObjects.end() )
             return ( *i ).second;

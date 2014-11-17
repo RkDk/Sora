@@ -11,7 +11,7 @@ protected:
     CWorldEntity * m_pTargetEntity;
 
 public:
-
+    
     void SetTargetEntity( CWorldEntity * pEnt )
     {
 
@@ -26,6 +26,25 @@ public:
 
     }
 
+};
+
+template< typename T >
+class CTemplateAIController : public CAIController
+{
+    
+protected:
+    
+    T * m_pEntityContext;
+    
+public:
+    
+    void SetEntityContext( T * pEntityContext )
+    {
+        
+        m_pEntityContext = pEntityContext;
+        
+    }
+    
 };
 
 #endif

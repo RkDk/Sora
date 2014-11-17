@@ -6,6 +6,8 @@
 
 namespace Util
 {
+    
+    void FixAppleRelativeDirectory();
 
     int RandomNumber( int, int );
 

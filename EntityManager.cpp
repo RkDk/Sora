@@ -11,10 +11,10 @@ void CEntityFactory::AddEntity( CEntity * ent )
 
 }
 
-bool EntPositionSort( const CWorldEntity & l, const CWorldEntity & r )
+bool EntPositionSort( const CWorldEntity * l, const CWorldEntity * r )
 {
 
-    return ( l.GetY() < r.GetY() );
+    return ( l->GetY() < r->GetY() );
 
 }
 
@@ -85,19 +85,19 @@ void CEntityManager::DrawAllEntities()
 	for( int i = 0; i < DRAW_DEPTH_MAX; i++ )
     {
 
-        std::vector< CEntity * >::iterator iter = m_pDrawList[i].begin();
+        std::vector< CWorldEntity * >::iterator iter = m_pDrawList[i].begin();
 
         for( ; iter != m_pDrawList[i].end(); iter++ )
         {
 
-            CEntity * e = ( *i );
+            CWorldEntity * e = ( *iter );
 
             if( e->IsActive() && !e->GetEntityManagerDrawOverride() )
                 e->Draw();
 
         }
 
-        m_pDrawList[i].clear();
+    //    m_pDrawList[i].clear();
 
 
     }
@@ -185,9 +185,11 @@ void CEntityManager::RemoveEntity( CEntity * ent )
 
     if( ent->IsDrawable() )
     {
+        
+        CWorldEntity * wEnt = ( CWorldEntity * )ent;
 
         int depth = ent->GetDrawDepth();
-        RemoveFromDrawList( ent, depth );
+        RemoveFromDrawList( wEnt, depth );
 
     }
 

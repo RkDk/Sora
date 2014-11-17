@@ -3,7 +3,7 @@
 
 #include "EntityContext.h"
 #include "EntityManager.h"
-#include "SDL.h"
+#include "SDL_includes.h"
 
 class CGameContextBase : public CEntityContext
 {

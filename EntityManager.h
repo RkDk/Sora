@@ -2,6 +2,7 @@
 #define ENTITYMANAGER_H_
 
 #include "Factory.h"
+#include "WorldEntity.h"
 #include "Entity.h"
 
 #define DRAW_DEPTH_MAX 10
@@ -61,7 +62,7 @@ public:
 
     }
 
-    void RemoveFromDrawList( CWorldEntity * );
+    void RemoveFromDrawList( CWorldEntity *, int );
     void SortDrawEntitiesBasedOnPosition( int );
     void UpdateDrawListLayersForEntity( CWorldEntity *, int );
     void UpdateDrawListLayers();

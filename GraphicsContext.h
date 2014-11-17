@@ -1,8 +1,9 @@
 #ifndef GRAPHICSCONTEXT_H_
 #define GRAPHICSCONTEXT_H_
 
+#include "SDL_includes.h"
+
 #include <GL/glew.h>
-#include "SDL.h"
 
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <string>

@@ -5,6 +5,9 @@ CDrawContext::~CDrawContext()
 
 	glDeleteBuffers( 1, &m_2DVertexBuffer );
 	glDeleteBuffers( 1, &m_2DElementBuffer );
+    glDeleteBuffers( 1, &m_2DColorBuffer );
+    
+    glDeleteVertexArrays( 1, & m_2DVertexArray );
 
 }
 
@@ -60,9 +63,7 @@ void CDrawContext::Bind2DVertexBuffer()
 
 	glBindBuffer( GL_ARRAY_BUFFER, m_2DVertexBuffer );
 	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_2DElementBuffer );
-
-	glEnableVertexAttribArray( 0 );
-	glVertexAttribPointer( 0, 2, GL_FLOAT, GL_FALSE, 0, ( void * )0 );
+    glBindBuffer( GL_ARRAY_BUFFER, m_2DColorBuffer );
 
 }
 
@@ -70,7 +71,27 @@ void CDrawContext::Unbind2DVertexBuffer()
 {
 
 	glDisableVertexAttribArray( 0 );
+    glDisableVertexAttribArray( 1 );
+    
+}
 
+void CDrawContext::SetDrawColor( float r, float g, float b, float a )
+{
+    
+    GLfloat color_buffer_data[] = {
+      
+        r, g, b, a,
+        r, g, b, a,
+        r, g, b, a,
+        r, g, b, a,
+        r, g, b, a,
+        r, g, b, a
+        
+    };
+    
+    glBindBuffer( GL_ARRAY_BUFFER, m_2DColorBuffer );
+    glBufferData( GL_ARRAY_BUFFER, sizeof( color_buffer_data ), color_buffer_data, GL_STATIC_DRAW );
+    
 }
 
 void CDrawContext::Create2DVertexBuffer()
@@ -90,15 +111,29 @@ void CDrawContext::Create2DVertexBuffer()
 		3, 0, 1, 3, 2, 1
 
 	};
+    
+    glGenVertexArrays( 1, &m_2DVertexArray );
+    glBindVertexArray( m_2DVertexArray );
+    
+    glEnableVertexAttribArray( 0 );
+    glEnableVertexAttribArray( 1 );
 
 	glGenBuffers( 1, &m_2DVertexBuffer );
 	glBindBuffer( GL_ARRAY_BUFFER, m_2DVertexBuffer );
 	glBufferData( GL_ARRAY_BUFFER, sizeof( vertex_buffer_data ), vertex_buffer_data, GL_STATIC_DRAW );
 
+    glVertexAttribPointer( 0, 2, GL_FLOAT, GL_FALSE, 0, ( void * )0 );
+    
 	glGenBuffers( 1, &m_2DElementBuffer );
 	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_2DElementBuffer );
 	glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( element_buffer_data ), element_buffer_data, GL_STATIC_DRAW );
+    
+    glGenBuffers( 1, &m_2DColorBuffer );
+    SetDrawColor( 1.0f, 1.0f, 1.0f, 1.0f );
+    
+    glVertexAttribPointer( 1, 4, GL_FLOAT, GL_FALSE, 0, ( void * )0 );
 
+    
 }
 
 void CDrawContext::Initialize()

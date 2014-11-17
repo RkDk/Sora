@@ -45,6 +45,7 @@ int CGraphicsContext::LoadShaderProgram( std::string vertexfile, std::string fra
 void CGraphicsContext::InitializeOpenGL()
 {
 
+
 	Log::Log( "Initializing OpenGL" );
 
 	m_OGLContext = SDL_GL_CreateContext( m_pWndHandle );
@@ -64,12 +65,17 @@ void CGraphicsContext::InitializeOpenGL()
 
 	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 
-	glewInit();
+    #ifdef __APPLE__
+        glewExperimental = GL_TRUE;
+    #endif
+	
+    glewInit();
 
 }
 
 void CGraphicsContext::SetDrawMode( int mode )
 {
+    
 
     glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
@@ -78,7 +84,7 @@ void CGraphicsContext::SetDrawMode( int mode )
     {
 
     case DRAW_MODE_2D:
-        gluOrtho2D( 0, m_WindowWidth, m_WindowHeight, 0 );
+        glOrtho( 0, m_WindowWidth, m_WindowHeight, 0, -1, 1 );
         break;
     case DRAW_MODE_3D:
     default:
@@ -120,6 +126,12 @@ void CGraphicsContext::CreateHandle( std::string wndTitle, int x, int y, int wid
 		return;
 
 	}
+
+    #ifdef __APPLE__
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    #endif
 
 	if( x <= 0 )
 		x = SDL_WINDOWPOS_UNDEFINED;
