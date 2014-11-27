@@ -14,12 +14,15 @@ private:
     bool m_bActive;
     int m_CurFrameIndex, m_NextFrameTime;
     float m_Speed;
+    Vector2< float > m_Scale;
 	Vector2< int > m_Size;
     CTextureImage * m_pTexture;
 
+    Vector4< float > m_Color;
+    
 public:
 
-    CSprite() : m_pTexture( NULL ), m_Speed( 1.0f ), m_CurFrameIndex( 0 ), m_NextFrameTime( 0 ), m_bActive( false )
+    CSprite() : m_pTexture( NULL ), m_Speed( 1.0f ), m_CurFrameIndex( 0 ), m_NextFrameTime( 0 ), m_bActive( false ), m_Color( 1.0f, 1.0f, 1.0f, 1.0f ), m_Scale( 1.0f, 1.0f )
     {
 
 
@@ -38,6 +41,13 @@ public:
 	    return ( m_CurFrameIndex == m_pTexture->GetFrameCount() - 1 );
 
 	}
+
+    
+    void SetColor( float r, float g, float b, float a ) {
+     
+        m_Color.Set( r, g, b, a );
+        
+    }
 
     void SetTexture( CTextureImage * pTexture )
     {
@@ -59,6 +69,12 @@ public:
 
 		m_Size.Set( sx, sy );
 
+    }
+    
+    void SetScale( float x, float y ) {
+        
+        m_Scale.Set( x, y );
+        
     }
 
 	void SetSize( int x, int y )

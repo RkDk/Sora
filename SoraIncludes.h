@@ -47,5 +47,6 @@
 #include "AIEntity.h"
 #include "JsonObject.h"
 #include "AnimEntity.h"
+#include "InstancedParticleEngine.h"
 
 #endif

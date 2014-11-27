@@ -1,4 +1,4 @@
-#ifndef VECTOR_H_
+ #ifndef VECTOR_H_
 #define VECTOR_H_
 
 template< class T >

@@ -54,6 +54,7 @@ public:
         m_Size = v;
 
     }
+    
 
     void SetPos( float x, float y )
     {
@@ -162,6 +163,13 @@ public:
         return m_Position;
 
     }
+    
+    const Vector2< int > & GetSize() const
+    {
+        
+        return m_Sprite.GetSize();
+        
+    }
 
     void SetPos( Vector3< float > & v )
     {
@@ -187,6 +195,19 @@ public:
 
     }
 
+    void SetColor( float r, float g, float b, float a ) {
+        
+        
+        m_Sprite.SetColor( r, g, b, a );
+        
+    }
+    
+    void SetScale( float x, float y ) {
+     
+        m_Sprite.SetScale( x, y );
+        
+    }
+    
     void SetMaterial( CTextureImage * pTexImage )
     {
 
