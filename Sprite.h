@@ -22,7 +22,7 @@ private:
     
 public:
 
-    CSprite() : m_pTexture( NULL ), m_Speed( 1.0f ), m_CurFrameIndex( 0 ), m_NextFrameTime( 0 ), m_bActive( false ), m_Color( 1.0f, 1.0f, 1.0f, 1.0f ), m_Scale( 1.0f, 1.0f )
+    CSprite() : m_pTexture( NULL ), m_Speed( 1.0f ), m_CurFrameIndex( 0 ), m_NextFrameTime( 0 ), m_bActive( false ), m_Color( 1.0f, 1.0f, 1.0f, 1.0f ), m_Scale( 1.0f, 1.0f ), m_Size( 1.0f, 1.0f )
     {
 
 

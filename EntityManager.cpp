@@ -1,4 +1,4 @@
-#include "EntityManager.h"
+ #include "EntityManager.h"
 
 void CEntityFactory::AddEntity( CEntity * ent )
 {

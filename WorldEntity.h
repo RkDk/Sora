@@ -47,6 +47,12 @@ public:
         m_pBoxBody->SetGravityScale( 0 );
 
     }
+    
+    const Vector3< float > & GetSize() const {
+        
+        return m_Size;
+        
+    }
 
     void SetSize( Vector3< float > v )
     {
@@ -103,6 +109,34 @@ protected:
     CPhysBody m_PhysicsBody;
 
 public:
+    
+    void FitIn( float x1, float y1, float x2, float y2 ) {
+     
+        float curx = m_Position.GetX(), cury = m_Position.GetY();
+        
+        if( curx < x1 )
+            curx = x1;
+        else if( curx > x2 )
+            curx = x2;
+        
+        if( cury < y1 )
+            cury = y1;
+        else if( cury > y2 )
+            cury = y2;
+        
+        m_Position.Set( curx, cury );
+        
+    }
+    
+    void AddSize( float x, float y ) {
+        
+        Vector3< float > s = m_PhysicsBody.GetSize();
+        float newx = x * BOX2D_METER_MUL + s.GetX();
+        float newy = y * BOX2D_METER_MUL + s.GetY();
+     
+        m_PhysicsBody.SetSize( Vector3< float >( newx, newy ) );
+        
+    }
 
     void Displace2( float x, float y )
     {
