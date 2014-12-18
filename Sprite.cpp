@@ -34,7 +34,7 @@ void CSprite::Draw( CDrawContext * pDrawContext, CMatrix< float > * pModelMat )
 
         pModelMat->Translate( offset.GetX(), offset.GetY(), 0.0f );
 
-        pModelMat->Scale( sx * scx, sy * -scy, 1.0f );
+        pModelMat->Scale( sx * scx, sy * scy, 1.0f );
         m_pTexture->Bind( m_CurFrameIndex );
         
         m_Color.Get( &r, &g, &b, &a );

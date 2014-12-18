@@ -42,6 +42,7 @@ protected:
 
     CEntityFactory m_pRawEntityList;
 
+    std::vector< CEntity * > m_pQueuedEntities;
     std::vector< CEntity * > m_pDeletedEntities;
     std::vector< CWorldEntity * > m_pDrawList[DRAW_DEPTH_MAX];
     std::map< std::string, std::vector< CEntity * > > m_pTrackedEntityList;
@@ -61,6 +62,8 @@ public:
         return m_pRawEntityList.GetEntityObjects();
 
     }
+    
+    void QueueEntity( CEntity * );
 
     void RemoveFromDrawList( CWorldEntity *, int );
     void SortDrawEntitiesBasedOnPosition( int );
@@ -73,7 +76,10 @@ public:
     void RemoveEntity( CEntity * );
 
     void DeleteEntity( CEntity * );
+    void AddAllQueuedEntities();
     void RemoveAllDeletedEntities();
+    
+    void DrawAllEntitiesAtDepth( int );
     void DrawAllEntities();
 };
 

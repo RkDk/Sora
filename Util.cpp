@@ -58,6 +58,14 @@ float Util::Dist( Vector2< float > p1, Vector2< float > p2 ) {
     
 }
 
+
+float Util::AngleBetweenPoints( float x1, float y1, float x2,  float y2 ) {
+ 
+
+    return ( std::atan2( y2 - y1, x2 - x1 ) ) * RAD2DEG;
+    
+}
+
 void Util::FixAppleRelativeDirectory() {
 
 

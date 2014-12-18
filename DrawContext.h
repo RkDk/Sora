@@ -4,6 +4,7 @@
 #include "GL/glew.h"
 
 #include "Matrix.h"
+#include "TextureImage.h"
 
 class CDrawContext
 {
@@ -20,6 +21,8 @@ private:
 
 public:
 
+    void DrawGLTexture( GLuint, float, float, float, float, float, float, float, float );
+    void DrawMaterial( CTextureImage &, float, float, float, float, float, float, float, float );
 	void Calculate2DProjectionMatrix( int, int );
 	void Draw2DVertexBuffer();
 	void Bind2DVertexBuffer();

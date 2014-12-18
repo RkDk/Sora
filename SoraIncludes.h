@@ -48,5 +48,7 @@
 #include "JsonObject.h"
 #include "AnimEntity.h"
 #include "InstancedParticleEngine.h"
+#include "FrameBuffer.h"
+#include "TextureSheet.h"
 
 #endif

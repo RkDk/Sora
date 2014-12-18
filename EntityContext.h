@@ -16,6 +16,18 @@ protected:
     CTextureFactory * m_pTextureFactory;
 
 public:
+ 
+    int GetWindowWidth() {
+     
+        return m_pGraphicsContext->GetWindowWidth();
+        
+    }
+    
+    int GetWindowHeight() {
+     
+        return m_pGraphicsContext->GetWindowHeight();
+        
+    }
 
     void SetTextureFactory( CTextureFactory * pTextureFactory )
     {

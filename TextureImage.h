@@ -16,15 +16,31 @@ class CTextureFrame
 private:
 
     Vector2< float > m_Offset;
-
+    
  	int m_FrameWidth, m_FrameHeight;
  	int m_FrameDelay;
-	GLuint m_Texture;
+    int m_BytesPerPixel;
+    
+    GLuint m_Texture;
+    
+    GLubyte * m_pData;
 
 public:
 
     void Load( std::string );
 
+    int GetBytesPerPixel() {
+     
+        return m_BytesPerPixel;
+        
+    }
+    
+    GLubyte * GetPixelData() {
+     
+        return m_pData;
+        
+    }
+    
     GLuint GetTexture()
     {
 

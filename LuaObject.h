@@ -12,6 +12,7 @@ extern "C"
 }
 
 #include "Logging.h"
+#include "SDL_includes.h"
 
 #ifndef LuaNameSpace
 

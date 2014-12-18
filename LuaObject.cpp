@@ -82,6 +82,14 @@ void CLuaObject::ReadFile( const char * file )
 
 }
 
+LuaCallBackFunction( GetTicks ) {
+ 
+    lua_pushnumber( pLuaState, SDL_GetTicks() );
+    
+    return 1;
+    
+}
+
 LuaCallBackFunction( include )
 {
 
@@ -96,5 +104,6 @@ void CLuaObject::CreateBaseLuaHooks()
 {
 
     LuaFunction( m_pLuaState, include );
+    LuaFunction( m_pLuaState, GetTicks );
 
 }

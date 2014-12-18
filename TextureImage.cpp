@@ -4,6 +4,8 @@
 
 CTextureFrame::~CTextureFrame()
 {
+    
+    delete [] m_pData;
 
     glDeleteTextures( 1, &m_Texture );
 
@@ -68,7 +70,16 @@ void CTextureFrame::Load( std::string file )
 
     m_FrameWidth = i->w;
     m_FrameHeight = i->h;
-
+    m_BytesPerPixel = bpp;
+    
+    int size = m_FrameWidth * m_FrameHeight * m_BytesPerPixel;
+    
+    m_pData = new GLubyte[size];
+    
+    for( int j = 0; j < size; j++ )
+        m_pData[j] = ( ( GLubyte * )( i->pixels ) )[j];
+    
+    
     SDL_FreeSurface( i );
 
 

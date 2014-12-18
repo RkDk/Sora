@@ -11,6 +11,27 @@ CDrawContext::~CDrawContext()
 
 }
 
+void CDrawContext::DrawGLTexture( GLuint texture, float x, float y, float width, float height, float r, float g, float b, float a ) {
+    
+    glBindTexture( GL_TEXTURE_2D, texture );
+    
+    CMatrix< float > mat;
+    
+    mat.Identity();
+    mat.Translate( x, y, 0.0f );
+    mat.Scale( width, height, 1.0f );
+    
+    UpdateModelMatrix( &mat );
+    SetDrawColor( r, g, b, a );
+    Draw2DVertexBuffer();
+    
+}
+
+void CDrawContext::DrawMaterial( CTextureImage & material, float x, float y, float width, float height, float r, float g, float b, float a ) {
+    
+    DrawGLTexture( material.GetFrame( 0 ).GetTexture(), x, y, width, height, r, g, b, a );
+}
+
 void CDrawContext::Calculate2DProjectionMatrix( int width, int height )
 {
 

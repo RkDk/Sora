@@ -79,29 +79,56 @@ void CEntityManager::UpdateDrawListLayers()
 
 }
 
+void CEntityManager::DrawAllEntitiesAtDepth( int i ) {
+    
+    std::vector< CWorldEntity * >::iterator iter = m_pDrawList[i].begin();
+    
+    for( ; iter != m_pDrawList[i].end(); iter++ )
+    {
+        
+        CWorldEntity * e = ( *iter );
+        
+        if( e->IsActive() && !e->GetEntityManagerDrawOverride() )
+            e->Draw();
+        
+    }
+    
+}
+
 void CEntityManager::DrawAllEntities()
 {
 
 	for( int i = 0; i < DRAW_DEPTH_MAX; i++ )
     {
 
-        std::vector< CWorldEntity * >::iterator iter = m_pDrawList[i].begin();
-
-        for( ; iter != m_pDrawList[i].end(); iter++ )
-        {
-
-            CWorldEntity * e = ( *iter );
-
-            if( e->IsActive() && !e->GetEntityManagerDrawOverride() )
-                e->Draw();
-
-        }
+        DrawAllEntitiesAtDepth( i );
 
     //    m_pDrawList[i].clear();
 
 
     }
 
+}
+
+void CEntityManager::QueueEntity( CEntity * ent ) {
+    
+    m_pQueuedEntities.push_back( ent );
+    
+}
+
+void CEntityManager::AddAllQueuedEntities() {
+    
+    
+    BOOST_FOREACH( CEntity * e, m_pQueuedEntities )
+    {
+        
+        if( e != NULL )
+            AddEntity( e );
+        
+    }
+    
+    m_pQueuedEntities.clear();
+    
 }
 
 void CEntityManager::RemoveAllDeletedEntities()
@@ -120,6 +147,10 @@ void CEntityManager::RemoveAllDeletedEntities()
 
 void CEntityManager::DeleteEntity( CEntity * pEntity )
 {
+    
+    for( int j = 0; j < m_pDeletedEntities.size(); j++ )
+        if( m_pDeletedEntities[j]->GetGlobalCount() == pEntity->GetGlobalCount() )
+            return;
 
     pEntity->SetActive( false );
     m_pDeletedEntities.push_back( pEntity );
@@ -194,7 +225,7 @@ void CEntityManager::RemoveEntity( CEntity * ent )
     }
 
     m_pRawEntityList.RemoveObject( ent->GetUniqueID() );
-
+    
 }
 
 

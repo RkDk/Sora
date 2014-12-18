@@ -6,6 +6,10 @@
 #include <cmath>
 #include <cstdlib>
 
+
+#define DEG2RAD 0.017453f
+#define RAD2DEG 57.29577f
+
 namespace Util
 {
     
@@ -16,6 +20,7 @@ namespace Util
     float MaxF( float, float, float );
     float MinF( float, float, float );
     float MinMaxF( float, float, float );
+    float AngleBetweenPoints( float, float, float, float );
     
     int RandomNumber( int, int );
 
