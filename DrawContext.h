@@ -12,7 +12,7 @@ class CDrawContext
 private:
 
 	int m_ShaderProgramID;
-	GLuint m_2DVertexArray, m_2DVertexBuffer, m_2DElementBuffer, m_2DColorBuffer;
+	GLuint m_2DVertexArray, m_2DVertexBuffer, m_2DElementBuffer, m_2DColorBuffer, m_2DSTBuffer;
 	GLint m_ModelMatUniform, m_ViewMatUniform;
 
 	CMatrix< float > * m_pViewMatrix, * m_pModelMatrix;
@@ -27,6 +27,7 @@ public:
 	void Draw2DVertexBuffer();
 	void Bind2DVertexBuffer();
 	void Unbind2DVertexBuffer();
+    void SetTexCoord( float, float, float, float, float, float, float, float );
     void SetDrawColor( float, float, float, float );
 
 	void UpdateViewMatrix( CMatrix< float > * );

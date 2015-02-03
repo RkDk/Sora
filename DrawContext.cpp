@@ -6,6 +6,7 @@ CDrawContext::~CDrawContext()
 	glDeleteBuffers( 1, &m_2DVertexBuffer );
 	glDeleteBuffers( 1, &m_2DElementBuffer );
     glDeleteBuffers( 1, &m_2DColorBuffer );
+    glDeleteBuffers( 1, &m_2DSTBuffer );
     
     glDeleteVertexArrays( 1, & m_2DVertexArray );
 
@@ -84,6 +85,7 @@ void CDrawContext::Bind2DVertexBuffer()
     
     glEnableVertexAttribArray( 0 );
     glEnableVertexAttribArray( 1 );
+    glEnableVertexAttribArray( 2 );
 
 	glBindBuffer( GL_ARRAY_BUFFER, m_2DVertexBuffer );
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_2DElementBuffer );
@@ -92,6 +94,9 @@ void CDrawContext::Bind2DVertexBuffer()
     glBindBuffer( GL_ARRAY_BUFFER, m_2DColorBuffer );
     glVertexAttribPointer( 1, 4, GL_FLOAT, GL_FALSE, 0, ( void * )0 );
     
+    glBindBuffer( GL_ARRAY_BUFFER, m_2DSTBuffer );
+    glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, 0, ( void * )0 );
+    
 }
 
 void CDrawContext::Unbind2DVertexBuffer()
@@ -99,6 +104,25 @@ void CDrawContext::Unbind2DVertexBuffer()
 
 	glDisableVertexAttribArray( 0 );
     glDisableVertexAttribArray( 1 );
+    glDisableVertexAttribArray( 2 );
+    
+}
+
+void CDrawContext::SetTexCoord( float t1x, float t1y, float t2x, float t2y, float t3x, float t3y, float t4x, float t4y ) {
+ 
+    GLfloat st_buffer_data[] = {
+        
+        t4x, t4y,
+        t1x, t1y,
+        t2x, t2y,
+        t4x, t4y,
+        t3x, t3y,
+        t2x, t2y
+        
+    };
+    
+    glBindBuffer( GL_ARRAY_BUFFER, m_2DSTBuffer );
+    glBufferData( GL_ARRAY_BUFFER, sizeof( st_buffer_data ), st_buffer_data, GL_DYNAMIC_DRAW );
     
 }
 
@@ -152,6 +176,9 @@ void CDrawContext::Create2DVertexBuffer()
     
     glGenBuffers( 1, &m_2DColorBuffer );
     SetDrawColor( 1.0f, 1.0f, 1.0f, 1.0f );
+    
+    glGenBuffers( 1, &m_2DSTBuffer );
+    SetTexCoord( 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f );
     
 }
 

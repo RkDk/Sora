@@ -12,6 +12,8 @@ protected:
 
 public:
     
+    virtual ~CAIController() { }
+    
     void SetTargetEntity( CWorldEntity * pEnt )
     {
 

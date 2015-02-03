@@ -5,6 +5,41 @@
     #include "CoreFoundation/CoreFoundation.h"
 #endif
 
+int Util::RoundToPower( int number, int power ) {
+ 
+    
+    int t = 1;
+    
+    while( t < number ) {
+        
+        t *= power;
+    }
+    
+    return t;
+
+    
+}
+
+bool Util::DoesFileExist( std::string s )
+{
+    
+    std::ifstream f( s );
+    bool b = true;
+    
+    if( !f )
+    {
+        
+        b = false;
+        
+    }
+    
+    f.close();
+    
+    return b;
+    
+}
+
+
 int Util::RandomNumber( int min, int max )
 {
 

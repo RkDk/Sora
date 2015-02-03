@@ -2,6 +2,7 @@
 #define TEXTURESHEET_H_
 
 #include <GL/glew.h>
+#include <string>
 
 class CTextureSheet {
   
@@ -11,6 +12,7 @@ private:
     GLubyte * m_pPixels;
     
     int m_Width, m_Height;
+    long int m_MaxIndices;
     
 public:
     
@@ -21,6 +23,7 @@ public:
     void InitPixels( int, int );
     void CreateGLTexture();
     void AddPixelData( GLubyte *, int, int, int, int );
+    void AddPixelDataLuminance( GLubyte *, int, int, int, int );
     
 };
 

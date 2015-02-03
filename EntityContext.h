@@ -4,6 +4,8 @@
 #include "DrawContext.h"
 #include "GraphicsContext.h"
 #include "TextureFactory.h"
+#include "FreeTypeContext.h"
+#include "FontFactory.h"
 
 class CEntityContext
 {
@@ -12,7 +14,9 @@ protected:
 
 	float m_FrameDelta;
     CGraphicsContext * m_pGraphicsContext;
+    CFreeTypeContext * m_pFreeTypeContext;
     CDrawContext * m_pDrawContext;
+    CFontFactory * m_pFontFactory;
     CTextureFactory * m_pTextureFactory;
 
 public:
@@ -28,6 +32,13 @@ public:
         return m_pGraphicsContext->GetWindowHeight();
         
     }
+    
+    
+    void SetFontFactory( CFontFactory * pFontFactory ) {
+     
+        m_pFontFactory = pFontFactory;
+        
+    }
 
     void SetTextureFactory( CTextureFactory * pTextureFactory )
     {
@@ -36,6 +47,12 @@ public:
 
     }
 
+    void SetFTContext( CFreeTypeContext * pFreeTypeContext ) {
+     
+        m_pFreeTypeContext = pFreeTypeContext;
+        
+    }
+    
     void SetDrawContext( CDrawContext * pDrawContext )
     {
 
@@ -56,12 +73,24 @@ public:
         return m_pDrawContext;
 
     }
+    
+    CFreeTypeContext * FTContext() {
+     
+        return m_pFreeTypeContext;
+        
+    }
 
     CGraphicsContext * GraphicsContext()
     {
 
         return m_pGraphicsContext;
 
+    }
+    
+    CFontFactory * FontFactory() {
+     
+        return m_pFontFactory;
+        
     }
 
     CTextureFactory * TextureFactory()

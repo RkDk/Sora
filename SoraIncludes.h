@@ -50,5 +50,8 @@
 #include "InstancedParticleEngine.h"
 #include "FrameBuffer.h"
 #include "TextureSheet.h"
+#include "FontMaterial.h"
+#include "FreeTypeContext.h"
+#include "FontFactory.h"
 
 #endif

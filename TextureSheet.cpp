@@ -5,7 +5,37 @@ void CTextureSheet::InitPixels( int width, int height ) {
     m_Width = width;
     m_Height = height;
     
-    m_pPixels = new GLubyte[width * height * 4];
+    m_MaxIndices = width * height * 4;
+    
+    m_pPixels = new GLubyte[m_MaxIndices];
+    
+    for( long int i = 0; i < m_MaxIndices; i++ )
+        m_pPixels[i] = 0;
+}
+
+void CTextureSheet::AddPixelDataLuminance( GLubyte * pData, int x, int y, int width, int height ) {
+    
+    for( int i = 0; i < height; i++ ) {
+        
+        for( int j = 0; j < width; j++ ) {
+            
+            if( x + j < m_Width ) {
+                
+                int srcindex = 2 * ( j + i * width );
+                int dstindex = 4 * ( ( j + x ) + ( i + y ) * m_Width );
+                
+                for( int o = 0; o < 4; o++ )
+                    if( dstindex + o < m_MaxIndices )
+                        m_pPixels[dstindex + o] = pData[srcindex + ( ( o < 3 )? 1 : 0 )];
+                
+            } else
+                break;
+        }
+        
+        if( y + i >= m_Height )
+            break;
+        
+    }
     
 }
 
@@ -21,7 +51,8 @@ void CTextureSheet::AddPixelData( GLubyte * pData, int x, int y, int width, int 
                 int dstindex = 4 * ( ( j + x ) + ( i + y ) * m_Width );
                 
                 for( int o = 0; o < 4; o++ )
-                    m_pPixels[dstindex + o] = pData[srcindex + o];
+                    if( dstindex + o < m_MaxIndices )
+                        m_pPixels[dstindex + o] = pData[srcindex + o];
                 
             } else
                 break;

@@ -41,6 +41,7 @@ void CSprite::Draw( CDrawContext * pDrawContext, CMatrix< float > * pModelMat )
         
         pDrawContext->UpdateModelMatrix( pModelMat );
         pDrawContext->SetDrawColor( r, g, b, a );
+        pDrawContext->SetTexCoord( 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f );
         pDrawContext->Draw2DVertexBuffer();
 
     }
