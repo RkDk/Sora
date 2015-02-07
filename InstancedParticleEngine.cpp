@@ -30,8 +30,14 @@ void CInstancedParticleEngine::BindVertexBuffers() {
 
 void CInstancedParticleEngine::BindVertexBuffers( bool genbuffer, bool bufferdata ) {
     
-    if( genbuffer )
+    if( genbuffer ) {
+     
+        glGenVertexArrays( 1, &m_VertexArray );
         glGenBuffers( 1, &m_InstancedBuffer );
+    
+    }
+    
+    glBindVertexArray( m_VertexArray );
     
     glBindBuffer( GL_ARRAY_BUFFER, m_InstancedBuffer );
    
@@ -108,6 +114,7 @@ CInstancedParticleEngine::~CInstancedParticleEngine() {
     glDeleteBuffers( 1, &m_InstancedBuffer );
     glDeleteBuffers( 1, &m_InstancedRGBABuffer );
 
+    glDeleteVertexArrays( 1, &m_VertexArray );
     
     delete [] m_ViewMat;
     delete [] m_Color;
