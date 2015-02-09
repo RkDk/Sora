@@ -13,16 +13,17 @@
 #include "Vector.h"
 #include "Logging.h"
 #include "TextureSheet.h"
+#include "DrawContext.h"
 
 #define FONT_ALLOC 256
-#define DEFAULT_FONT_HEIGHT 128
 
 class CFontCharacter
 {
     
 public:
     
-    Vector2< float > m_Size, m_CoordMul;
+    Vector2< float > m_Size;
+    Vector2< float > m_UpperLeftST, m_LowerRightST;
     long int m_Trans;
     long int m_Down, m_Left;
     int m_Offset;
@@ -39,8 +40,12 @@ private:
 
     CFontCharacter m_Characters[FONT_ALLOC];
     CTextureSheet m_FontSheet;
+    
+    int m_FontSize;
   
 public:
+    
+    void DrawString( CDrawContext *, std::string, float, float, float, float, float, float );
     
     CTextureSheet & GetFontSheet() {
      
@@ -48,7 +53,7 @@ public:
         
     }
     
-    void Load( std::string, FT_Library & );
+    void Load( std::string, FT_Library &, int );
     
 };
 

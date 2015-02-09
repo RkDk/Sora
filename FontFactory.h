@@ -4,11 +4,13 @@
 #include "Factory.h"
 #include "FontMaterial.h"
 
+#include <sstream>
+
 class CFontFactoryObject : public CFactoryObject< CFontMaterial > {
     
 public:
     
-    void LoadFont( std::string, FT_Library & );
+    void LoadFont( std::string, FT_Library &, int );
     
 };
 
@@ -20,9 +22,10 @@ private:
     
 public:
     
-    void SetFontLibrary( FT_Library & );
+    CFontMaterial * GetFont( std::string, int );
     
-    void NewFont( std::string );
+    void SetFontLibrary( FT_Library & );
+    void NewFont( std::string, int );
     
 };
 

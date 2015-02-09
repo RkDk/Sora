@@ -31,14 +31,16 @@ void CSprite::Draw( CDrawContext * pDrawContext, CMatrix< float > * pModelMat )
         float scx = m_Scale.GetX(), scy = m_Scale.GetY();
         float r, g, b, a;
         const Vector2< float > & offset = m_pTexture->GetFrameOffset( m_CurFrameIndex );
+        const Vector2< float > & scale = pDrawContext->GetGlobalScale();
 
         pModelMat->Translate( offset.GetX(), offset.GetY(), 0.0f );
 
-        pModelMat->Scale( sx * scx, sy * scy, 1.0f );
+        pModelMat->Scale( sx * scx * scale.GetX(), sy * scy * scale.GetY(), 1.0f );
         m_pTexture->Bind( m_CurFrameIndex );
         
         m_Color.Get( &r, &g, &b, &a );
         
+        pDrawContext->Bind2DVertexArray();
         pDrawContext->UpdateModelMatrix( pModelMat );
         pDrawContext->SetDrawColor( r, g, b, a );
         pDrawContext->SetTexCoord( 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f );

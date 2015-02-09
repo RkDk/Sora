@@ -12,6 +12,36 @@ CDrawContext::~CDrawContext()
 
 }
 
+void CDrawContext::StartDraw() {
+ 
+    m_CurDrawingMatrix.Identity();
+    
+    glBindVertexArray( m_2DVertexArray );
+    
+}
+
+void CDrawContext::EndDraw() {
+    
+    UpdateModelMatrix( &m_CurDrawingMatrix );
+    
+    Bind2DVertexBuffer();
+    Draw2DVertexBuffer();
+    
+}
+
+void CDrawContext::SetTexture( GLuint texture ) {
+    
+    glBindTexture( GL_TEXTURE_2D, texture );
+    
+}
+
+
+void CDrawContext::SetGlobalScale( float x, float y ) {
+ 
+    m_DrawScale.Set( x, y );
+    
+}
+
 void CDrawContext::DrawGLTexture( GLuint texture, float x, float y, float width, float height, float r, float g, float b, float a ) {
     
     glBindTexture( GL_TEXTURE_2D, texture );
@@ -20,10 +50,14 @@ void CDrawContext::DrawGLTexture( GLuint texture, float x, float y, float width,
     
     mat.Identity();
     mat.Translate( x, y, 0.0f );
-    mat.Scale( width, height, 1.0f );
+    mat.Scale( width * m_DrawScale.GetX(), height * m_DrawScale.GetY(), 1.0f );
+    
+    glBindVertexArray( m_2DVertexArray );
     
     UpdateModelMatrix( &mat );
     SetDrawColor( r, g, b, a );
+    
+    Bind2DVertexBuffer();
     Draw2DVertexBuffer();
     
 }
@@ -80,6 +114,12 @@ void CDrawContext::Draw2DVertexBuffer()
 
 }
 
+void CDrawContext::Bind2DVertexArray() {
+ 
+    glBindVertexArray( m_2DVertexArray );
+    
+}
+
 void CDrawContext::Bind2DVertexBuffer()
 {
     
@@ -108,16 +148,26 @@ void CDrawContext::Unbind2DVertexBuffer()
     
 }
 
+void CDrawContext::SetScale( float width, float height ) {
+    
+    m_CurDrawingMatrix.Scale( width, height, 1.0f );
+    
+}
+
+void CDrawContext::SetPos( float x, float y ) {
+    
+    m_CurDrawingMatrix.SetTranslate( x, y, 0.0f );
+    
+}
+
 void CDrawContext::SetTexCoord( float t1x, float t1y, float t2x, float t2y, float t3x, float t3y, float t4x, float t4y ) {
  
     GLfloat st_buffer_data[] = {
         
-        t4x, t4y,
         t1x, t1y,
         t2x, t2y,
-        t4x, t4y,
         t3x, t3y,
-        t2x, t2y
+        t4x, t4y
         
     };
     
@@ -134,10 +184,7 @@ void CDrawContext::SetDrawColor( float r, float g, float b, float a )
         r, g, b, a,
         r, g, b, a,
         r, g, b, a,
-        r, g, b, a,
-        r, g, b, a,
         r, g, b, a
-        
     };
     
     glBindBuffer( GL_ARRAY_BUFFER, m_2DColorBuffer );
@@ -187,5 +234,7 @@ void CDrawContext::Initialize()
 
 	Create2DVertexBuffer();
 	m_ShaderProgramID = -1;
+    
+    m_DrawScale.Set( 1.0f, 1.0f );
 
 }
