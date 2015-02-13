@@ -41,6 +41,38 @@ void CFontMaterial::DrawString( CDrawContext * pDrawContext, std::string text, f
     
 }
 
+int CFontMaterial::GetStringWidth( std::string text ) {
+    
+    int width = 0;
+    int largestwidth = 0;
+    
+    for( int i = 0; i < text.length(); i++ ) {
+        
+        bool newline = false;
+        
+        if( text[i] == '\n' )
+            newline = true;
+        
+        if( !newline ) {
+            
+            int c = text[i];
+            CFontCharacter fchar = m_Characters[c];
+
+            width += fchar.m_Trans;
+            
+        } else
+            width = 0;
+            
+        if( largestwidth < width )
+            largestwidth = width;
+
+        
+    }
+    
+    return largestwidth;
+    
+}
+
 void CFontMaterial::Load( std::string dir, FT_Library & ftLib, int fontsize ) {
     
     if( !Util::DoesFileExist( dir ) ) {

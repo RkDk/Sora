@@ -191,6 +191,21 @@ public:
 
     }
 
+    float GetCenterX() const
+    {
+        
+        return m_Position.GetX() + ( float )m_Sprite.GetSize().GetX() * .5f;
+        
+    }
+    
+    float GetCenterY() const
+    {
+        
+        return m_Position.GetY() + ( float )m_Sprite.GetSize().GetY() * .5f;
+
+    }
+
+    
     const Vector3< float > & GetPos() const
     {
 

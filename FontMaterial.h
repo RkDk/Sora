@@ -45,6 +45,8 @@ private:
   
 public:
     
+    int GetStringWidth( std::string );
+    
     void DrawString( CDrawContext *, std::string, float, float, float, float, float, float );
     
     CTextureSheet & GetFontSheet() {
