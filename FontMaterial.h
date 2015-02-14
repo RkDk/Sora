@@ -26,9 +26,10 @@ public:
     Vector2< float > m_UpperLeftST, m_LowerRightST;
     long int m_Trans;
     long int m_Down, m_Left;
+    long int m_Height;
     int m_Offset;
     
-    CFontCharacter() : m_Trans( 0 ), m_Down( 0 ), m_Left( 0 ), m_Offset( 0 ) {
+    CFontCharacter() : m_Trans( 0 ), m_Down( 0 ), m_Left( 0 ), m_Offset( 0 ), m_Height( 0 ) {
     }
     
 };
@@ -40,10 +41,17 @@ private:
 
     CFontCharacter m_Characters[FONT_ALLOC];
     CTextureSheet m_FontSheet;
+    int m_LargestBearingY;
     
     int m_FontSize;
   
 public:
+    
+    Vector2< float > GetLowerRight( char t ) {
+     
+        return m_Characters[( int )t].m_LowerRightST;
+        
+    }
     
     int GetStringWidth( std::string );
     

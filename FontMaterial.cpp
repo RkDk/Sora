@@ -1,4 +1,5 @@
 #include "FontMaterial.h"
+#include <sstream>
 
 void CFontMaterial::DrawString( CDrawContext * pDrawContext, std::string text, float x, float y, float r, float g, float b, float a ) {
  
@@ -23,7 +24,7 @@ void CFontMaterial::DrawString( CDrawContext * pDrawContext, std::string text, f
             Vector2< float > v2 = fchar.m_LowerRightST;
             
             pDrawContext->StartDraw();
-                pDrawContext->SetPos( x + xtrans + fchar.m_Left, y + ytrans + m_FontSize + fchar.m_Down - size.GetY() );
+                pDrawContext->SetPos( x + xtrans + fchar.m_Left, y + ytrans - fchar.m_Down + m_LargestBearingY );
                 pDrawContext->SetScale( size.GetX() , size.GetY() );
                 pDrawContext->SetTexCoord( v1.GetX(), v1.GetY(), v2.GetX(), v1.GetY(), v2.GetX(), v2.GetY(), v1.GetX(), v2.GetY() );
             pDrawContext->EndDraw();
@@ -83,7 +84,8 @@ void CFontMaterial::Load( std::string dir, FT_Library & ftLib, int fontsize ) {
     }
     
     m_FontSize = fontsize;
-    
+    m_LargestBearingY = 0;
+
     FT_Face face;
     FT_New_Face( ftLib, dir.c_str(), 0, &face );
     FT_Set_Pixel_Sizes( face, 0, fontsize );
@@ -113,12 +115,10 @@ void CFontMaterial::Load( std::string dir, FT_Library & ftLib, int fontsize ) {
         FT_Load_Glyph( face, glyphindex, FT_LOAD_RENDER );
         FT_GlyphSlot slot = face->glyph;
         FT_Bitmap bitmap = slot->bitmap;
-        
-        long int down = ( slot->metrics.height - slot->metrics.horiBearingY ) >> 6;
-        
+       
         int w = bitmap.width;
         int h = bitmap.rows;
-        
+
         GLubyte * data = new GLubyte[2 * w * h];
         
         for( int y = 0; y < bitmap.rows; y++ )
@@ -137,10 +137,14 @@ void CFontMaterial::Load( std::string dir, FT_Library & ftLib, int fontsize ) {
         m_Characters[j].m_Trans = face->glyph->advance.x >> 6;
         m_Characters[j].m_Left = face->glyph->bitmap_left;
         m_Characters[j].m_Size.Set( bitmap.width, bitmap.rows );
-        m_Characters[j].m_Down = down;
+        m_Characters[j].m_Down = slot->metrics.horiBearingY >> 6;
+        m_Characters[j].m_Height = slot->metrics.height >> 6;
+        
+        if( m_LargestBearingY < m_Characters[j].m_Down )
+            m_LargestBearingY = m_Characters[j].m_Down;
         
         m_Characters[j].m_UpperLeftST.Set( ( float )offsetx / ( float )sheetwidth, 0.0f );
-        m_Characters[j].m_LowerRightST.Set( ( ( float )offsetx + ( float )w ) / ( float )sheetwidth, ( ( float )down + ( float )h ) / ( float )sheetheight );
+        m_Characters[j].m_LowerRightST.Set( ( ( float )offsetx + ( float )w ) / ( float )sheetwidth, ( ( float )h ) / ( float )sheetheight );
         
         m_FontSheet.AddPixelDataLuminance( data, offsetx, 0, w, h );
         
