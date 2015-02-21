@@ -191,6 +191,18 @@ public:
 
     }
 
+    float GetRightX() const {
+     
+        return m_Position.GetX() + ( float )m_Sprite.GetSize().GetX();
+        
+    }
+
+    float GetBottomY() const {
+        
+        return m_Position.GetY() + ( float )m_Sprite.GetSize().GetY();
+        
+    }
+    
     float GetCenterX() const
     {
         
@@ -242,6 +254,13 @@ public:
         m_Position.Set( x, y, z );
         m_bExplicitPhysicsBodyPosSet = true;
 
+    }
+    
+    void SetPos( Vector2< float > & v ) {
+     
+        m_Position.Set( v.GetX(), v.GetY() );
+        m_bExplicitPhysicsBodyPosSet = true;
+        
     }
 
     void SetColor( float r, float g, float b, float a ) {

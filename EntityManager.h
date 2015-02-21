@@ -75,6 +75,7 @@ public:
 
     void RemoveEntity( CEntity * );
 
+    void RemoveAllEntities();
     void DeleteEntity( CEntity * );
     void AddAllQueuedEntities();
     void RemoveAllDeletedEntities();

@@ -20,6 +20,18 @@ int Util::RoundToPower( int number, int power ) {
     
 }
 
+Vector2< int > Util::ConvertTicksIntoMS( long int time ) {
+    
+    long int totalseconds = time / 1000;
+    int min = totalseconds / 60;
+    int sec = totalseconds - min * 60;
+    
+    Vector2< int > v( min, sec );
+    
+    return v;
+    
+}
+
 bool Util::DoesFileExist( std::string s )
 {
     

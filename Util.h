@@ -26,6 +26,8 @@ namespace Util
     float MinMaxF( float, float, float );
     float AngleBetweenPoints( float, float, float, float );
     
+    Vector2< int > ConvertTicksIntoMS( long int );
+    
     int RoundToPower( int, int );
     int RandomNumber( int, int );
 

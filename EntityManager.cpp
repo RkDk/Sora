@@ -116,6 +116,22 @@ void CEntityManager::QueueEntity( CEntity * ent ) {
     
 }
 
+void CEntityManager::RemoveAllEntities() {
+    
+    boost::ptr_vector< CEntityObject > & objs = GetEntityObjects();
+    boost::ptr_vector< CEntityObject >::iterator i = objs.begin();
+    
+    for( ; i != objs.end(); ) {
+        
+        CEntity * e = ( *i ).GetContent();
+        RemoveEntity( e );
+        
+        i = objs.begin();
+        
+    }
+    
+}
+
 void CEntityManager::AddAllQueuedEntities() {
     
     

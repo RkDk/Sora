@@ -1,12 +1,32 @@
 #include "FontMaterial.h"
 #include <sstream>
 
-void CFontMaterial::DrawString( CDrawContext * pDrawContext, std::string text, float x, float y, float r, float g, float b, float a ) {
+void CFontMaterial::DrawString( CDrawContext * pDrawContext, std::string text, float x, float y, float r, float g, float b, float a, int type ) {
  
     float xtrans = 0.0f, ytrans = 0.0f;
+    float xoffset = 0.0f, yoffset = 0.0f;
     
     pDrawContext->SetTexture( m_FontSheet.GetTexture() );
     pDrawContext->SetDrawColor( r, g, b, a );
+    
+    if( type & ( DRAW_TEXT_HORIZ_CENTER | DRAW_TEXT_VERT_CENTER ) ) {
+     
+        Vector2< int > size = GetStringSize( text );
+        
+        if( type & DRAW_TEXT_HORIZ_CENTER ) {
+         
+            xoffset = ( float )-size.GetX() * .5f;
+            
+        }
+
+        if( type & DRAW_TEXT_VERT_CENTER ) {
+            
+            yoffset = ( float )-size.GetY() * .5f;
+            
+        }
+        
+    }
+    
     
     for( int i = 0; i < text.length(); i++ ) {
         
@@ -24,7 +44,7 @@ void CFontMaterial::DrawString( CDrawContext * pDrawContext, std::string text, f
             Vector2< float > v2 = fchar.m_LowerRightST;
             
             pDrawContext->StartDraw();
-                pDrawContext->SetPos( x + xtrans + fchar.m_Left, y + ytrans - fchar.m_Down + m_LargestBearingY );
+                pDrawContext->SetPos( x + xoffset + xtrans + fchar.m_Left, y + yoffset + ytrans - fchar.m_Down + m_LargestBearingY );
                 pDrawContext->SetScale( size.GetX() , size.GetY() );
                 pDrawContext->SetTexCoord( v1.GetX(), v1.GetY(), v2.GetX(), v1.GetY(), v2.GetX(), v2.GetY(), v1.GetX(), v2.GetY() );
             pDrawContext->EndDraw();
@@ -42,9 +62,17 @@ void CFontMaterial::DrawString( CDrawContext * pDrawContext, std::string text, f
     
 }
 
-int CFontMaterial::GetStringWidth( std::string text ) {
+
+void CFontMaterial::DrawString( CDrawContext * pDrawContext, std::string text, float x, float y, float r, float g, float b, float a ) {
+ 
+    DrawString( pDrawContext, text, x, y, r, g, b, a, DRAW_TEXT_LEFT );
     
-    int width = 0;
+}
+
+
+Vector2< int > CFontMaterial::GetStringSize( std::string text ) {
+
+    int width = 0, height = m_FontSize;
     int largestwidth = 0;
     
     for( int i = 0; i < text.length(); i++ ) {
@@ -58,19 +86,40 @@ int CFontMaterial::GetStringWidth( std::string text ) {
             
             int c = text[i];
             CFontCharacter fchar = m_Characters[c];
-
+            
             width += fchar.m_Trans;
             
-        } else
-            width = 0;
+        } else {
             
+            width = 0;
+            height += m_FontSize;
+        
+        }
+        
         if( largestwidth < width )
             largestwidth = width;
-
+        
         
     }
     
-    return largestwidth;
+    return Vector2< int >( largestwidth, height );
+    
+}
+
+
+int CFontMaterial::GetStringWidth( std::string text ) {
+    
+    Vector2< int > v = GetStringSize( text );
+    
+    return v.GetX();
+    
+}
+
+int CFontMaterial::GetStringHeight( std::string text ) {
+    
+    Vector2< int > v = GetStringSize( text );
+    
+    return v.GetY();
     
 }
 

@@ -100,10 +100,22 @@ LuaCallBackFunction( include )
 
 }
 
+LuaCallBackFunction( Log )
+{
+    
+    std::string log = LString( 1 );
+    
+    Log::Log( "[LUA]" + log );
+    
+    return 0;
+    
+}
+
+
 void CLuaObject::CreateBaseLuaHooks()
 {
 
     LuaFunction( m_pLuaState, include );
     LuaFunction( m_pLuaState, GetTicks );
-
+    LuaFunction( m_pLuaState, Log );
 }

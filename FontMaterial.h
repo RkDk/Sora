@@ -17,6 +17,14 @@
 
 #define FONT_ALLOC 256
 
+enum {
+  
+    DRAW_TEXT_HORIZ_CENTER = 0x01,
+    DRAW_TEXT_VERT_CENTER = 0x02,
+    DRAW_TEXT_LEFT = 0x04,
+    
+};
+
 class CFontCharacter
 {
     
@@ -46,16 +54,14 @@ private:
     int m_FontSize;
   
 public:
-    
-    Vector2< float > GetLowerRight( char t ) {
-     
-        return m_Characters[( int )t].m_LowerRightST;
-        
-    }
+
     
     int GetStringWidth( std::string );
-    
+    int GetStringHeight( std::string );
+    Vector2< int > GetStringSize( std::string );
+
     void DrawString( CDrawContext *, std::string, float, float, float, float, float, float );
+    void DrawString( CDrawContext *, std::string, float, float, float, float, float, float, int );
     
     CTextureSheet & GetFontSheet() {
      

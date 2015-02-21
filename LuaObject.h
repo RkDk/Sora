@@ -45,6 +45,8 @@ extern "C"
         lua_tointeger( pLuaState, n )
 #define LString( n ) \
         lua_tostring( pLuaState, n )
+#define LBoolean( n ) \
+        lua_toboolean( pLuaState, n )
 
 #endif
 
