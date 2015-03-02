@@ -31,6 +31,8 @@ private:
 	SDL_Renderer * m_pSDLRenderer;
 	SDL_GLContext m_OGLContext;
 
+    Vector4< float > m_ClearColor;
+    
 	int m_WindowWidth, m_WindowHeight;
 
 	void InitializeOpenGL();
@@ -66,6 +68,8 @@ public:
 	    return m_WindowHeight;
 
 	}
+    
+    void SetClearColor( float, float, float, float );
 
 	void ClearBuffer();
 	void SwapBuffers();

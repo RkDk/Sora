@@ -4,12 +4,18 @@ void CGameInput::Poll()
 {
 
 	m_pInputKeys = const_cast< Uint8 * >( SDL_GetKeyboardState( NULL ) );
-    SDL_PollEvent( &m_InputEvent );
+    PollEvent();
     
 }
 
 int CGameInput::PollEvent() {
-
-    return SDL_PollEvent( &m_InputEvent );
+    
+    SDL_Event ev;
+    int i  = SDL_PollEvent( &ev);
+    
+    m_EventType = ev.type;
+    m_KeyDown = ev.key.keysym.sym;
+    
+    return i; 
     
 }

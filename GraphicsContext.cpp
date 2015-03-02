@@ -11,10 +11,16 @@ CGraphicsContext::~CGraphicsContext()
 
 }
 
+void CGraphicsContext::SetClearColor( float r, float g, float b, float a ) {
+ 
+    m_ClearColor.Set( r, g, b, a );
+    
+}
+
 void CGraphicsContext::ClearBuffer()
 {
 
-	glClearColor( 0, 0, 0, 1 );
+	glClearColor( m_ClearColor.GetX(), m_ClearColor.GetY(), m_ClearColor.GetZ(), m_ClearColor.GetW() );
 	glClear( GL_COLOR_BUFFER_BIT );
 
 }
@@ -50,6 +56,8 @@ void CGraphicsContext::InitializeOpenGL()
 
 	m_OGLContext = SDL_GL_CreateContext( m_pWndHandle );
 
+    m_ClearColor.Set( 0.0f, 0.0f, 0.0f, 1.0f );
+    
 	glViewport( 0, 0, m_WindowWidth, m_WindowHeight );
 
 	glEnable( GL_TEXTURE_2D );

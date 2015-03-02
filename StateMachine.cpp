@@ -28,7 +28,9 @@ void CStateMachine::ParseMessage( int msg, std::string param ) {
      
         m_pCurState->ResetStateMessage();
         SetActiveState( param );
-        m_pCurState->OnStateSwitch();
+        
+        if( m_pCurState->DidPostInit() )
+            m_pCurState->OnStateSwitch();
         
     }
     

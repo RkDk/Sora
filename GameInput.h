@@ -9,24 +9,25 @@ class CGameInput
 
 private:
 
-	SDL_Event m_InputEvent;
 	Uint8 * m_pInputKeys;
-
+ 
+    SDL_Keycode m_KeyDown;
+    Uint32 m_EventType;
+    
 public:
 
 	void Poll();
     int PollEvent();
 
-	bool KeyDownOnce( int i )
-	{
+	bool KeyDownOnce( SDL_Keycode i ) {
 
-		return ( m_InputEvent.key.keysym.sym == i );
+		return ( m_KeyDown == i );
 
 	}
     
-    int EventType() {
+    Uint32 EventType() {
      
-        return m_InputEvent.type;
+        return m_EventType;
         
     }
 
@@ -44,6 +45,7 @@ public:
 
 	}
 
+    
 };
 
 #endif
