@@ -56,6 +56,7 @@ void CDrawContext::DrawGLTexture( GLuint texture, float x, float y, float width,
     
     UpdateModelMatrix( &mat );
     SetDrawColor( r, g, b, a );
+    SetTexCoord( 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f );
     
     Bind2DVertexBuffer();
     Draw2DVertexBuffer();

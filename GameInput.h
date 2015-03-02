@@ -15,6 +15,7 @@ private:
 public:
 
 	void Poll();
+    int PollEvent();
 
 	bool KeyDownOnce( int i )
 	{
@@ -22,6 +23,12 @@ public:
 		return ( m_InputEvent.key.keysym.sym == i );
 
 	}
+    
+    int EventType() {
+     
+        return m_InputEvent.type;
+        
+    }
 
 	bool KeyDown( int i )
 	{

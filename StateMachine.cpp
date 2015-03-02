@@ -22,11 +22,25 @@ void CStateMachine::SetActiveState( std::string stateName )
 
 }
 
+void CStateMachine::ParseMessage( int msg, std::string param ) {
+ 
+    if( msg == STATE_MSG_SWITCH ) {
+     
+        m_pCurState->ResetStateMessage();
+        SetActiveState( param );
+        m_pCurState->OnStateSwitch();
+        
+    }
+    
+}
+
 bool CStateMachine::RunState()
 {
 
     if( !m_pCurState )
         return false;
+    
+    ParseMessage( m_pCurState->GetStateMessage(), m_pCurState->GetStrStateMessageParam() );
 
     if( m_pCurState->DidPostInit() )
     {
@@ -39,6 +53,7 @@ bool CStateMachine::RunState()
     {
 
         m_pCurState->PostInit();
+        m_pCurState->OnStateSwitch();
 
     } else
     {

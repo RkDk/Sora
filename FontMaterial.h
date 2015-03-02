@@ -58,6 +58,7 @@ public:
     
     int GetStringWidth( std::string );
     int GetStringHeight( std::string );
+    std::string MakeFit( std::string, int );
     Vector2< int > GetStringSize( std::string );
 
     void DrawString( CDrawContext *, std::string, float, float, float, float, float, float );

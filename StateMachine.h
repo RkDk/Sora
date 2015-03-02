@@ -26,6 +26,7 @@ public:
 
     void SetActiveState( std::string );
 
+    void ParseMessage( int, std::string );
     bool RunState();
 
     CStateMachine() : m_pCurState( NULL )

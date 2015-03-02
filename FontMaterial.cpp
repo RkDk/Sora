@@ -69,6 +69,58 @@ void CFontMaterial::DrawString( CDrawContext * pDrawContext, std::string text, f
     
 }
 
+std::string CFontMaterial::MakeFit( std::string text, int maxwidth ) {
+ 
+    int width = 0;
+    int lastspace = -1;
+    int lastspacesize = 0;
+    
+    for( int i = 0; i < text.length(); i++ ) {
+        
+        bool newline = false;
+        
+        if( text[i] == '\n' )
+            newline = true;
+        
+        if( text[i] == ' ' ) {
+            
+            lastspace = i;
+            lastspacesize = width;
+            
+        }
+        
+        if( !newline ) {
+            
+            int c = text[i];
+            CFontCharacter fchar = m_Characters[c];
+            
+            width += fchar.m_Trans;
+    
+            if( width >= maxwidth ) {
+             
+                if( lastspace > -1 ) {
+                 
+                    text[lastspace] = '\n';
+                    width -= lastspacesize;
+                    lastspace = -1;
+                    
+                }
+                
+            }
+            
+        } else {
+            
+            width = 0;
+            lastspace = -1;
+            
+        }
+        
+    }
+    
+    return text;
+    
+}
+
 
 Vector2< int > CFontMaterial::GetStringSize( std::string text ) {
 
