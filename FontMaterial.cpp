@@ -261,6 +261,9 @@ void CFontMaterial::Load( std::string dir, FT_Library & ftLib, int fontsize ) {
     
     m_FontSheet.CreateGLTexture();
     
-    Log::Debug( "Successfully loaded font " + dir );
+    std::stringstream log;
+    log << "Successfully loaded font " << dir << " at size: " << fontsize;
+    
+    Log::Log( log.str() );
     
 }

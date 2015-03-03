@@ -52,3 +52,29 @@ std::string FileUtil::ReadContentIntoString( std::string dir )
     return contents;
 
 }
+
+
+void FileUtil::FindFilesInDirectory( std::string dir, std::string ext, std::vector< std::string > & fileList, bool recursive ) {
+    
+    boost::filesystem::directory_iterator end_itr;
+    for( boost::filesystem::directory_iterator i( dir ); i != end_itr; ++i )
+    {
+        std::string filename = i->path().filename().string();
+        
+        if( boost::filesystem::is_directory( i->status() ) ) {
+            
+            if( recursive )
+                FindFilesInDirectory( dir + filename + "/", ext, fileList, recursive );
+        
+        } else if( ext == "" || filename.find( ext ) != std::string::npos )
+            fileList.push_back( filename );
+        
+    }
+    
+}
+
+void FileUtil::FindFilesInDirectory( std::string dir, std::vector< std::string > & fileList ) {
+
+    FindFilesInDirectory( dir, "", fileList , false );
+    
+}

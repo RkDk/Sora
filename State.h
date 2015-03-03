@@ -108,6 +108,18 @@ public:
 		m_pGameContext = pGameContext;
 
 	}
+    
+    CTextureImage * GetTexture( std::string t ) {
+     
+        return m_pGameContext->GetTexture( t );
+        
+    }
+    
+    CFontMaterial * GetFont( std::string t, int s ) {
+     
+        return m_pGameContext->GetFont( t, s );
+        
+    }
 
 	CState() : CStateBase()
 	{

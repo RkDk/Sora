@@ -33,6 +33,7 @@ public:
         
     }
     
+    void LoadResources( std::string );
     
     void SetFontFactory( CFontFactory * pFontFactory ) {
      
@@ -106,6 +107,18 @@ public:
 		return m_FrameDelta;
 
 	}
+    
+    CTextureImage * GetTexture( std::string t ) {
+     
+        return m_pTextureFactory->GetObjectContent( t );
+        
+    }
+    
+    CFontMaterial * GetFont( std::string t, int s ) {
+     
+        return m_pFontFactory->GetFont( t, s );
+        
+    }
 
 	virtual void HandleEntityContact( void * pEntityA, int entTypeA, void * pEntityB, int entTypeB )
 	{

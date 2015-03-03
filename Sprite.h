@@ -48,6 +48,18 @@ public:
         m_Color.Set( r, g, b, a );
         
     }
+    
+    void SetSpeed( float s ) {
+     
+        m_Speed = s;
+        
+        if( IsSet() ) {
+         
+            m_NextFrameTime = SDL_GetTicks() + ( float )m_pTexture->GetFrameDelay( m_CurFrameIndex ) * m_Speed;
+            
+        }
+        
+    }
 
     void SetTexture( CTextureImage * pTexture )
     {
@@ -60,7 +72,7 @@ public:
 
         m_Speed = 1.0f;
         m_CurFrameIndex = 0;
-        m_NextFrameTime = SDL_GetTicks() + pTexture->GetFrameDelay( 0 );
+        m_NextFrameTime = SDL_GetTicks() + pTexture->GetFrameDelay( 0 ) * m_Speed;
         m_bActive = ( pTexture->GetFrameCount() > 1 ) ? true : false;
         m_pTexture = pTexture;
 
