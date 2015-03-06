@@ -39,6 +39,33 @@ extern "C"
 #define LuaCallBackFunction( f ) int LUAF_##f( lua_State * pLuaState )
 #define LuaNil( l ) \
         ( lua_isnil( l, -1 ) == 0 ) ? false : true
+#define LUA_FUNCTION_GET_VALUE( nn, t, f, d ) \
+t CLuaObject::GetLua##nn( const char * v, const char * n ) { \
+    lua_getglobal( m_pLuaState, n ); \
+    if( !LuaNil( m_pLuaState ) ) { \
+        lua_getfield( m_pLuaState, -1, v ); \
+        if( !LuaNil( m_pLuaState ) ) { \
+            t ret( f( m_pLuaState, -1 ) ); \
+            lua_pop( m_pLuaState, 2 ); \
+            return ret; \
+        } \
+        lua_pop( m_pLuaState, 1 ); \
+    } \
+    lua_pop( m_pLuaState, 1 ); \
+    return d; \
+}
+
+#define LUA_FUNCTION_SET_VALUE( nn, t, f ) \
+void CLuaObject::SetLua##nn( const char * v, const char * n, t val ) { \
+    lua_getglobal( m_pLuaState, n ); \
+    if( !LuaNil( m_pLuaState ) ) { \
+        f( m_pLuaState, val ); \
+        lua_setfield( m_pLuaState, -2, v ); \
+    }\
+    lua_pop( m_pLuaState, 1 );\
+}
+
+
 
 //Auxilary lua functions
 //Assumes pLuaState is defined already.
@@ -77,6 +104,18 @@ public:
 
     void Initialize();
 
+    void SetLuaBoolean( const char *, const char *, bool );
+    void SetLuaInt( const char *, const char *, int );
+    void SetLuaFloat( const char *, const char *, float );
+    void SetLuaString( const char *, const char *, const char * );
+    
+    bool GetLuaBoolean( const char *, const char * );
+    int GetLuaInt( const char *, const char * );
+    float GetLuaFloat( const char *, const char * );
+    std::string GetLuaString( const char *, const char * );
+
+    
+    void CallLuaFunction( const char * );
     void CallLuaFunction( const char *, const char * );
 
 };

@@ -56,6 +56,19 @@ public:
 
     }
 
+    boost::ptr_vector< CEntityObject >::iterator BeginIterate() {
+     
+        return m_pRawEntityList.GetEntityObjects().begin();
+        
+    }
+    
+    boost::ptr_vector< CEntityObject >::iterator EndIterate() {
+     
+        return m_pRawEntityList.GetEntityObjects().end();
+        
+    }
+    
+    
     boost::ptr_vector< CEntityObject > & GetEntityObjects()
     {
 

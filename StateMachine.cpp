@@ -15,9 +15,12 @@ void CStateMachine::SetActiveState( std::string stateName )
 
     boost::ptr_map< std::string, CStateBase >::iterator i = m_pStates.find( stateName );
 
-    if( i != m_pStates.end() )
+    if( i != m_pStates.end() ) {
+        
         m_pCurState = ( *i ).second;
-    else
+        m_pCurState->SetStateStartTime( SDL_GetTicks() );
+        
+    } else
         Log::Error( "Failed to set active state to " + stateName );
 
 }

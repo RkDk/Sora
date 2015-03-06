@@ -21,6 +21,7 @@ protected:
     bool m_bContinue, m_bInit, m_bPostInit;
     
     int m_StateMsg;
+    long int m_StateStartTicks;
     std::string m_strMsgParam;
 
 public:
@@ -80,8 +81,21 @@ public:
 	    return m_bPostInit;
 
 	}
+    
+    long int StateTicksElapsed() {
+     
+        return SDL_GetTicks() - m_StateStartTicks;
+        
+    }
+    
+    void SetStateStartTime( long int t ) {
+     
+        m_StateStartTicks = t;
+        
+    }
 
-    CStateBase() : m_bContinue( true ), m_bInit( false ), m_bPostInit( false ), m_StateMsg( STATE_MSG_NONE ), m_strMsgParam( "" )
+    CStateBase() : m_bContinue( true ), m_bInit( false ), m_bPostInit( false ), m_StateMsg( STATE_MSG_NONE ), m_strMsgParam( "" ),
+                    m_StateStartTicks( 0 )
 	{
 
 

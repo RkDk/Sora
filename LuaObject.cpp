@@ -27,6 +27,13 @@ void CLuaObject::Initialize()
 
 }
 
+void CLuaObject::CallLuaFunction( const char * f ) {
+ 
+    
+    CallLuaFunction( f, "_G" );
+    
+}
+
 void CLuaObject::CallLuaFunction( const char * f, const char * n )
 {
 
@@ -58,6 +65,16 @@ void CLuaObject::CallLuaFunction( const char * f, const char * n )
     lua_pop( m_pLuaState, 1 );
 
 }
+
+LUA_FUNCTION_GET_VALUE( String, std::string, lua_tostring, "" )
+LUA_FUNCTION_GET_VALUE( Boolean, bool, lua_toboolean, false )
+LUA_FUNCTION_GET_VALUE( Int, int, lua_tonumber, 0 )
+LUA_FUNCTION_GET_VALUE( Float, float, lua_tonumber, 0.0f )
+
+LUA_FUNCTION_SET_VALUE( String, const char *, lua_pushstring )
+LUA_FUNCTION_SET_VALUE( Boolean, bool, lua_pushboolean )
+LUA_FUNCTION_SET_VALUE( Float, float, lua_pushnumber )
+LUA_FUNCTION_SET_VALUE( Int, int, lua_pushnumber )
 
 void LuaStateOpenFile( lua_State * pLuaState, const char * file )
 {
