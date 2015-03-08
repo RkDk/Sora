@@ -32,6 +32,15 @@ public:
         
     }
     
+    void Clear() {
+     
+        BeginDrawingToFBO();
+            glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+            glClear( GL_COLOR_BUFFER_BIT );
+        EndDrawingToFBO();
+        
+    }
+    
     inline void BindTexture()
     {
         

@@ -54,7 +54,7 @@ void CWorldEntity::CreatePhysicsBody( b2World * physWorld, float x, float y )
 {
 
     m_PhysicsBody.SetReferenceWorld( physWorld );
-    m_PhysicsBody.SetSize( Vector3< float >( x * BOX2D_METER_MUL, y * BOX2D_METER_MUL ) );
+    m_PhysicsBody.SetSize( Vector3< float >( x * BOX2D_PIXEL2METER, y * BOX2D_PIXEL2METER ) );
 
 	if( m_PhysicsBody.Initialize() )
     {
@@ -84,7 +84,7 @@ void CWorldEntity::BaseUpdate()
         {
 
             b2Vec2 pos = m_PhysicsBody.GetPos();
-            m_Position.Set( pos.x * BOX2D_PIXEL_MUL, -pos.y * BOX2D_PIXEL_MUL );
+            m_Position.Set( pos.x * BOX2D_METER2PIXEL, -pos.y * BOX2D_METER2PIXEL );
 
         }
 

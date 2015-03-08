@@ -11,8 +11,8 @@
 
 //10 meter in Box2d = 5 pixels
 //Maybe make configurable per game project?
-#define BOX2D_PIXEL_MUL .5f
-#define BOX2D_METER_MUL 2.0f
+#define BOX2D_METER2PIXEL .5f
+#define BOX2D_PIXEL2METER 2.0f
 
 class CPhysBody
 {
@@ -72,8 +72,8 @@ public:
     void SetPos2( float x, float y, float w, float h )
     {
 
-		x = ( x + w * .5f ) * BOX2D_METER_MUL;
-		y = ( y + h * .5f ) * BOX2D_METER_MUL;
+		x = ( x + w * .5f ) * BOX2D_PIXEL2METER;
+		y = ( y + h * .5f ) * BOX2D_PIXEL2METER;
 
 		SetPos( x, y );
 
@@ -131,8 +131,8 @@ public:
     void AddSize( float x, float y ) {
         
         Vector3< float > s = m_PhysicsBody.GetSize();
-        float newx = x * BOX2D_METER_MUL + s.GetX();
-        float newy = y * BOX2D_METER_MUL + s.GetY();
+        float newx = x * BOX2D_PIXEL2METER + s.GetX();
+        float newy = y * BOX2D_PIXEL2METER + s.GetY();
      
         m_PhysicsBody.SetSize( Vector3< float >( newx, newy ) );
         
