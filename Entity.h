@@ -176,6 +176,8 @@ public:
         return false;
 
     }
+    
+
 
     CEntity() : m_ClassType( "ENTITY" ), m_bActive( true ), m_bIsTracked( false ), m_GlobalCount( 0 ), m_ClassTypeID( 0 ), m_bOverrideEntityManagerDraw( false ), m_DrawDepth( 0 )
     {
@@ -184,7 +186,10 @@ public:
 
     }
 
-    virtual ~CEntity() { }
+    virtual ~CEntity() {
+        
+    
+    }
 
 };
 

@@ -49,9 +49,11 @@
 #include "AnimEntity.h"
 #include "InstancedParticleEngine.h"
 #include "FrameBuffer.h"
+#include "CollisionBody.h"
 #include "TextureSheet.h"
 #include "FontMaterial.h"
 #include "FreeTypeContext.h"
 #include "FontFactory.h"
+#include "QuadTree.h"
 
 #endif

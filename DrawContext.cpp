@@ -44,8 +44,9 @@ void CDrawContext::SetGlobalScale( float x, float y ) {
 
 void CDrawContext::DrawGLTexture( GLuint texture, float x, float y, float width, float height, float r, float g, float b, float a ) {
     
-    glBindTexture( GL_TEXTURE_2D, texture );
-    
+    if( texture > 0 )
+        glBindTexture( GL_TEXTURE_2D, texture );
+
     CMatrix< float > mat;
     
     mat.Identity();

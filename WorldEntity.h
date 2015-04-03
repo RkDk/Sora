@@ -9,6 +9,88 @@
 
 #include <Box2D/Box2D.h>
 
+class CBaseQuadTreeEntity {
+    
+protected:
+    
+    
+    Vector2< float > m_Pos, m_Size;
+    int m_EntityID;
+    bool m_bShouldKill;
+    bool m_bShouldUpdate;
+    
+    
+public:
+    
+    CBaseQuadTreeEntity() : m_EntityID( -1 ), m_bShouldKill( false ), m_bShouldUpdate( false ) {
+        
+    }
+    
+    void SetEntityID( int id ) {
+        
+        m_EntityID = id;
+        
+    }
+    
+    int GetEntityID() {
+        
+        return m_EntityID;
+        
+    }
+    
+    void SetPos( float x, float y ) {
+        
+        m_Pos.Set( x, y );
+        
+    }
+    
+    void SetSize( float x, float y ) {
+        
+        m_Size.Set( x, y );
+        
+    }
+    
+    void GetPos( float * x, float * y ) {
+        
+        *x = m_Pos.GetX();
+        *y = m_Pos.GetY();
+        
+    }
+    
+    void GetSize( float * x, float * y ) {
+        
+        *x = m_Size.GetX();
+        *y = m_Size.GetY();
+        
+    }
+    
+    void SetShouldKill( bool b ) {
+    
+        m_bShouldKill = b;
+        
+    }
+    
+    bool GetShouldKill() {
+     
+        return m_bShouldKill;
+        
+    }
+    
+    void SetShouldUpdate( bool b ) {
+     
+        m_bShouldUpdate = b;
+        
+    }
+    
+    bool GetShouldUpdate() {
+     
+        return m_bShouldUpdate;
+        
+    }
+    
+};
+
+
 //10 meter in Box2d = 5 pixels
 //Maybe make configurable per game project?
 #define BOX2D_METER2PIXEL .5f
@@ -104,9 +186,12 @@ protected:
 
     CSprite m_Sprite;
 
+    bool m_bMoved;
+    
     Vector3< float > m_Position;
     bool m_bPhysicsBodyInit, m_bExplicitPhysicsBodyPosSet, m_bFollowPhysics;
     CPhysBody m_PhysicsBody;
+    CBaseQuadTreeEntity * m_pQuadTreeEntity;
 
 public:
     
@@ -150,10 +235,11 @@ public:
     void Displace( float x, float y )
     {
 
-
         m_Position.Set( m_Position.GetX() + x, m_Position.GetY() + y );
         m_bExplicitPhysicsBodyPosSet = true;
 
+        m_bMoved = true;
+        
     }
 
     void EnablePhysicsMovement()
@@ -237,6 +323,8 @@ public:
 
         m_Position = v;
         m_bExplicitPhysicsBodyPosSet = true;
+        
+        m_bMoved = true;
 
     }
 
@@ -245,6 +333,9 @@ public:
 
         m_Position.Set( x, y );
         m_bExplicitPhysicsBodyPosSet = true;
+        
+        m_bMoved = true;
+
 
     }
 
@@ -253,6 +344,9 @@ public:
 
         m_Position.Set( x, y, z );
         m_bExplicitPhysicsBodyPosSet = true;
+        
+        m_bMoved = true;
+
 
     }
     
@@ -260,6 +354,8 @@ public:
      
         m_Position.Set( v.GetX(), v.GetY() );
         m_bExplicitPhysicsBodyPosSet = true;
+        
+        m_bMoved = true;
         
     }
 
@@ -318,8 +414,28 @@ public:
         return true;
 
     }
+    
+    void UpdateQuadTreeEntityPos() {
+     
+        m_pQuadTreeEntity->SetPos( m_Position.GetX(), m_Position.GetY() ) ;
+        
+    }
 
-    CWorldEntity() : CEntity(), m_bPhysicsBodyInit( false ), m_bExplicitPhysicsBodyPosSet( false ), m_bFollowPhysics( true )
+    void UpdateQuadTreeEntitySize() {
+        
+        m_pQuadTreeEntity->SetSize( m_Sprite.GetSize().GetX(), m_Sprite.GetSize().GetY() ) ;
+        
+    }
+    
+    
+    void SetQuadTreeEntity( CBaseQuadTreeEntity * pQuadTreeEntity ) {
+        
+        m_pQuadTreeEntity = pQuadTreeEntity;
+        m_pQuadTreeEntity->SetEntityID( GetGlobalCount() );
+        
+    }
+
+    CWorldEntity() : CEntity(), m_bPhysicsBodyInit( false ), m_bExplicitPhysicsBodyPosSet( false ), m_bFollowPhysics( true ), m_pQuadTreeEntity( NULL ), m_bMoved( false )
     {
 
 

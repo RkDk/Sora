@@ -20,6 +20,19 @@ int Util::RoundToPower( int number, int power ) {
     
 }
 
+bool Util::ContainsPoint( float x1, float y1, float x2, float y2, float w, float h ) {
+    
+    if( x1 >= x2 && y1 >= y2 ) {
+     
+        if( x1 <= x2 + w && y1 <= y2 + h )
+            return true;
+        
+    }
+    
+    return false;
+    
+}
+
 Vector2< int > Util::ConvertTicksIntoMS( long int time ) {
     
     long int totalseconds = time / 1000;

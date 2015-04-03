@@ -2,10 +2,13 @@
 
 bool CPhysBody::Initialize()
 {
+    
+    float sizex = m_Size.GetX() * .5f;
+    float sizey = m_Size.GetY() * .5f;
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set( 0.0f, 0.0f );
+    bodyDef.position.Set( sizex, sizey );
 
 	if( !m_pRefWorld )
 	{
@@ -16,10 +19,7 @@ bool CPhysBody::Initialize()
 	{
 
 		m_pBoxBody = m_pRefWorld->CreateBody( &bodyDef );
-
-		float sizex = m_Size.GetX() * .5f;
-		float sizey = m_Size.GetY() * .5f;
-
+        
 		b2PolygonShape bodyShape;
 		bodyShape.SetAsBox( sizex, sizey );
 
@@ -67,6 +67,19 @@ void CWorldEntity::CreatePhysicsBody( b2World * physWorld, float x, float y )
 
 void CWorldEntity::BaseUpdate()
 {
+    
+    if( m_bMoved ) {
+        
+        if( m_pQuadTreeEntity ) {
+            
+            UpdateQuadTreeEntityPos();
+            m_pQuadTreeEntity->SetShouldUpdate( true );
+            
+        }
+        
+        m_bMoved = false;
+        
+    }
 
     m_Sprite.Think();
 

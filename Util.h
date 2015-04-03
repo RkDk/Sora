@@ -19,6 +19,7 @@ namespace Util
     
     bool DoesFileExist( std::string );
     
+    bool ContainsPoint( float, float, float, float, float, float );
     float Dist( float, float, float, float );
     float Dist( Vector2< float >, Vector2< float > );
     float MaxF( float, float, float );
