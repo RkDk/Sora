@@ -79,6 +79,8 @@ bool CCollisionBody::CheckSATCollision( CCollisionInfo & info, Vector3< float > 
         
     }
     
+    info.collision = true;
+    
     return true;
 
 }

@@ -6,7 +6,7 @@
 #include "Sprite.h"
 #include "TextureImage.h"
 #include "Matrix.h"
-
+#include "CollisionBody.h"
 #include <Box2D/Box2D.h>
 
 class CBaseQuadTreeEntity {
@@ -115,6 +115,7 @@ public:
     {
 
     }
+    
 
     void SetReferenceWorld( b2World * w )
     {
@@ -191,6 +192,7 @@ protected:
     Vector3< float > m_Position;
     bool m_bPhysicsBodyInit, m_bExplicitPhysicsBodyPosSet, m_bFollowPhysics;
     CPhysBody m_PhysicsBody;
+    CCollisionBody * m_pCollisionBody;
     CBaseQuadTreeEntity * m_pQuadTreeEntity;
 
 public:
@@ -210,6 +212,18 @@ public:
             cury = y2;
         
         m_Position.Set( curx, cury );
+        
+    }
+    
+    void SetCollisionBody( CCollisionBody * pCollisionBody ) {
+     
+        m_pCollisionBody = pCollisionBody;
+        
+    }
+    
+    CCollisionBody * GetCollisionBody() {
+     
+        return m_pCollisionBody;
         
     }
     
@@ -417,13 +431,23 @@ public:
     
     void UpdateQuadTreeEntityPos() {
      
-        m_pQuadTreeEntity->SetPos( m_Position.GetX(), m_Position.GetY() ) ;
+        Vector3< float > origin;
+        
+        if( m_pCollisionBody )
+            origin = m_pCollisionBody->GetOrigin();
+        
+        m_pQuadTreeEntity->SetPos( m_Position.GetX() + origin.GetX(), m_Position.GetY() + origin.GetY() ) ;
         
     }
 
     void UpdateQuadTreeEntitySize() {
         
-        m_pQuadTreeEntity->SetSize( m_Sprite.GetSize().GetX(), m_Sprite.GetSize().GetY() ) ;
+        Vector3< float > size;
+        
+        if( m_pCollisionBody )
+            size = m_pCollisionBody->GetSize();
+        
+        m_pQuadTreeEntity->SetSize( size.GetX(), size.GetY() ) ;
         
     }
     
@@ -435,13 +459,21 @@ public:
         
     }
 
-    CWorldEntity() : CEntity(), m_bPhysicsBodyInit( false ), m_bExplicitPhysicsBodyPosSet( false ), m_bFollowPhysics( true ), m_pQuadTreeEntity( NULL ), m_bMoved( false )
+    CWorldEntity() : CEntity(), m_bPhysicsBodyInit( false ), m_bExplicitPhysicsBodyPosSet( false ), m_bFollowPhysics( true ), m_pQuadTreeEntity( NULL ), m_bMoved( false ), m_pCollisionBody( NULL )
     {
 
 
     }
 
-    virtual ~CWorldEntity() { }
+    virtual ~CWorldEntity() {
+    
+        if( m_pQuadTreeEntity )
+            m_pQuadTreeEntity->SetShouldKill( true );
+        
+        if( m_pCollisionBody )
+            delete m_pCollisionBody;
+    
+    }
 
 };
 

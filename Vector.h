@@ -74,6 +74,12 @@ public:
         n->Set( tx, ty );
         
     }
+    
+    void Normalize() {
+     
+        GetNormal( this );
+        
+    }
 
 	T GetX() const { return x; }
 	T GetY() const { return y; }

@@ -55,5 +55,6 @@
 #include "FreeTypeContext.h"
 #include "FontFactory.h"
 #include "QuadTree.h"
+#include "CollisionEngine.h"
 
 #endif

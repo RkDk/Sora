@@ -18,6 +18,12 @@ private:
 
 
 public:
+    
+    CWorldEntity * GetEntity() {
+     
+        return m_pObject;
+        
+    }
 
     CQuadTreeObject() : CBaseQuadTreeEntity(), m_pObject( 0 ) {
         
@@ -65,6 +71,12 @@ private:
     bool IsEmpty() {
      
         return m_pQTObjects.size() == 0;
+        
+    }
+    
+    bool ContainsEntityCount( int n ) {
+     
+        return ( m_pQTObjects.size() >= n );
         
     }
     

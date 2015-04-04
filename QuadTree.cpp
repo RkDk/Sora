@@ -31,7 +31,7 @@ void CQuadTree::Draw( CDrawContext * pDrawContext ) {
  
     if( !m_pChildNodes ) {
      
-        if( !IsEmpty() ) {
+        if( ContainsEntityCount( 2 ) ) {
          
             pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY(), m_Size.GetX(), m_Size.GetY(), 1.0f, 0.0f, 0.0f, .3f );
             
@@ -94,7 +94,7 @@ void CQuadTree::InsertObject( CQuadTreeObject * obj ) {
     obj->GetPos( &x, &y );
     obj->GetSize( &w, &h );
     
-    if( ContainsSpace( x, y, w, h ) ) {
+    if( ContainsSpace( x, y, w, h ) || !m_pParentNode ) {
     
         m_pQTObjects.insert( std::make_pair( obj->GetEntityID(), obj ) );
  
