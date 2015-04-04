@@ -5,18 +5,17 @@ void CCollisionEngine::CheckForQuadTreeCollisions( CQuadTree * pQuadTree, CColli
     std::vector< CNodeList > nodeList;
     
     pQuadTree->GetObjectsInLayer( nodeList, -1 );
-    
+
     for( std::vector< CNodeList >::iterator nodeListIter = nodeList.begin();
         nodeListIter != nodeList.end(); nodeListIter++ ) {
      
         CNodeList & nodeList = ( *nodeListIter );
-        
         for( std::vector< CQuadTreeObject * >::iterator nodeObjIter = nodeList.m_pNodeObjects.begin();
             nodeObjIter != nodeList.m_pNodeObjects.end(); ) {
          
-            for( std::vector< CQuadTreeObject * >::iterator nodeObjIter2 = nodeList.m_pNodeObjects.begin() + 1;
+            for( std::vector< CQuadTreeObject * >::iterator nodeObjIter2 = ++nodeList.m_pNodeObjects.begin();
                 nodeObjIter2 != nodeList.m_pNodeObjects.end(); nodeObjIter2++ ) {
-            
+                
                 CQuadTreeObject * qtObj1 = ( *nodeObjIter );
                 CQuadTreeObject * qtObj2 = ( *nodeObjIter2 );
                 

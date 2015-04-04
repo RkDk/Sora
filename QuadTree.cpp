@@ -155,7 +155,7 @@ void CQuadTree::GetObjectsInLayer( std::vector< CNodeList > & results, int layer
         if( n.m_pNodeObjects.size() > 1 )
             results.push_back( n );
         
-    } else if( m_CurLayer < layer ) {
+    } else if( m_CurLayer < layer || layer < 0 ) {
 
         if( m_pChildNodes ) {
         

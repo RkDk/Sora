@@ -1,6 +1,6 @@
 #include "CollisionBody.h"
 
-void FindSATMinMax( const std::vector< Vector3< float > > & colOffset, Vector3< float > & pos, Vector3< float > & axis, float * min, float * max ) {
+void CCollisionBody::FindSATMinMax( const std::vector< Vector3< float > > & colOffset, Vector3< float > & pos, Vector3< float > & axis, float * min, float * max ) {
     
     
     unsigned long int offsetCount = colOffset.size();
@@ -51,9 +51,9 @@ bool CCollisionBody::CheckSATCollision( CCollisionInfo & info, Vector3< float > 
         double d;
         
         if( minA < minB )
-        d = minB - maxA;
+            d = minB - maxA;
         else
-        d = minA - maxB;
+            d = minA - maxB;
         
         if( d > 0 ) {
             

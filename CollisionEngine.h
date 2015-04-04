@@ -41,17 +41,20 @@ public:
     
     void * GetObjectB() {
      
-        return m_pObjectA;
+        return m_pObjectB;
         
     }
     
 };
 
 class CCollisionListener {
-  
+
+protected:
+
 public:
-    
+
     virtual void BeginContact( CCollisionContact & c ) = 0;
+    
     
 };
 
