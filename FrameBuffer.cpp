@@ -34,11 +34,15 @@ CFrameBufferObject::~CFrameBufferObject()
 void CFrameBufferObject::DrawTexture( CDrawContext * pDrawContext, CMatrix< float > * pModelMat )
 {
     
-    pModelMat->Scale( m_Width, -m_Height, 1.0f );
- 
+    float sx, sy, sz;
+    pModelMat->GetScale( &sx, &sy, &sz );
+    pModelMat->ScaleMul( m_Width, -m_Height, 1.0f );
     
     BindTexture();
+    pDrawContext->SetTexCoord( 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f );
     pDrawContext->UpdateModelMatrix( pModelMat );
     pDrawContext->Draw2DVertexBuffer();
+    
+    pModelMat->Scale( sx, -sy, sz );
     
 }

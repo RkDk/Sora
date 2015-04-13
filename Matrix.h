@@ -60,6 +60,14 @@ public:
 		m_RawMatrix[14] += z;
 
 	}
+    
+    void GetScale( T * x, T * y, T * z ) {
+     
+        *x = m_RawMatrix[0];
+        *y = m_RawMatrix[5];
+        *z = m_RawMatrix[10];
+        
+    }
 
 	void Scale( T x, T y, T z )
 	{
@@ -75,6 +83,14 @@ public:
         */
 
 	}
+    
+    void ScaleMul( T x, T y, T z ) {
+     
+        m_RawMatrix[0] *= x;
+        m_RawMatrix[5] *= y;
+        m_RawMatrix[10] *= z;
+        
+    }
 
 	void Rotate( float theta, float x, float y, float z )
 	{

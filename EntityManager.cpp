@@ -68,8 +68,9 @@ void CEntityManager::UpdateDrawListLayers()
             if( depth != j )
             {
 
+                CWorldEntity * e = ( *iter );
                 m_pDrawList[j].erase( iter );
-                m_pDrawList[depth].push_back( ( *iter) );
+                m_pDrawList[depth].push_back( static_cast< CWorldEntity * >( e ) );
 
             }
 
@@ -79,19 +80,27 @@ void CEntityManager::UpdateDrawListLayers()
 
 }
 
-void CEntityManager::DrawAllEntitiesAtDepth( int i ) {
+int CEntityManager::DrawAllEntitiesAtDepth( int i ) {
     
     std::vector< CWorldEntity * >::iterator iter = m_pDrawList[i].begin();
+    int c = 0;
     
     for( ; iter != m_pDrawList[i].end(); iter++ )
     {
         
         CWorldEntity * e = ( *iter );
         
-        if( e->IsActive() && !e->GetEntityManagerDrawOverride() )
+        if( e->IsActive() && !e->GetEntityManagerDrawOverride() ) {
+            
             e->Draw();
-        
+            c++;
+            
+        }
+            
+            
     }
+    
+    return c;
     
 }
 

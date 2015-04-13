@@ -90,6 +90,8 @@ public:
     
 };
 
+/*
+
 
 //10 meter in Box2d = 5 pixels
 //Maybe make configurable per game project?
@@ -179,6 +181,8 @@ public:
     ~CPhysBody();
 
 };
+ 
+ */
 
 class CWorldEntity : public CEntity
 {
@@ -190,8 +194,8 @@ protected:
     bool m_bMoved;
     
     Vector3< float > m_Position;
-    bool m_bPhysicsBodyInit, m_bExplicitPhysicsBodyPosSet, m_bFollowPhysics;
-    CPhysBody m_PhysicsBody;
+    //bool m_bPhysicsBodyInit, m_bExplicitPhysicsBodyPosSet, m_bFollowPhysics;
+    //CPhysBody m_PhysicsBody;
     CCollisionBody * m_pCollisionBody;
     CBaseQuadTreeEntity * m_pQuadTreeEntity;
 
@@ -227,15 +231,20 @@ public:
         
     }
     
+    /*
+    
     void AddSize( float x, float y ) {
         
+    
         Vector3< float > s = m_PhysicsBody.GetSize();
         float newx = x * BOX2D_PIXEL2METER + s.GetX();
         float newy = y * BOX2D_PIXEL2METER + s.GetY();
      
         m_PhysicsBody.SetSize( Vector3< float >( newx, newy ) );
-        
-    }
+      
+     
+     
+    }*/
 
     void Displace2( float x, float y )
     {
@@ -250,11 +259,13 @@ public:
     {
 
         m_Position.Set( m_Position.GetX() + x, m_Position.GetY() + y );
-        m_bExplicitPhysicsBodyPosSet = true;
+ //     m_bExplicitPhysicsBodyPosSet = true;
 
         m_bMoved = true;
         
     }
+    
+    /*
 
     void EnablePhysicsMovement()
     {
@@ -276,7 +287,7 @@ public:
         m_PhysicsBody.SetGravity( 0 );
 
     }
-
+*/
     float GetX() const
     {
 
@@ -336,7 +347,7 @@ public:
     {
 
         m_Position = v;
-        m_bExplicitPhysicsBodyPosSet = true;
+        //m_bExplicitPhysicsBodyPosSet = true;
         
         m_bMoved = true;
 
@@ -346,7 +357,7 @@ public:
     {
 
         m_Position.Set( x, y );
-        m_bExplicitPhysicsBodyPosSet = true;
+        //m_bExplicitPhysicsBodyPosSet = true;
         
         m_bMoved = true;
 
@@ -357,7 +368,7 @@ public:
     {
 
         m_Position.Set( x, y, z );
-        m_bExplicitPhysicsBodyPosSet = true;
+        //m_bExplicitPhysicsBodyPosSet = true;
         
         m_bMoved = true;
 
@@ -367,7 +378,7 @@ public:
     void SetPos( Vector2< float > & v ) {
      
         m_Position.Set( v.GetX(), v.GetY() );
-        m_bExplicitPhysicsBodyPosSet = true;
+        //m_bExplicitPhysicsBodyPosSet = true;
         
         m_bMoved = true;
         
@@ -400,7 +411,7 @@ public:
 
 	}
 
-    void CreatePhysicsBody( b2World *, float, float );
+    //void CreatePhysicsBody( b2World *, float, float );
 
     void UpdateSprite();
     void DrawSprite();
@@ -459,7 +470,7 @@ public:
         
     }
 
-    CWorldEntity() : CEntity(), m_bPhysicsBodyInit( false ), m_bExplicitPhysicsBodyPosSet( false ), m_bFollowPhysics( true ), m_pQuadTreeEntity( NULL ), m_bMoved( false ), m_pCollisionBody( NULL )
+    CWorldEntity() : CEntity(), m_pQuadTreeEntity( NULL ), m_bMoved( false ), m_pCollisionBody( NULL )
     {
 
 

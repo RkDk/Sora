@@ -76,6 +76,15 @@ public:
         
     }
     
+    void FitFromCenter( float w1, float h1, float w2, float h2 ) {
+     
+        float x = w1 * .5f - w2 * .5f;
+        float y = h1 * .5f - h2 * .5f;
+        
+        SetBox( x, y, w2, h2 );
+        
+    }
+    
     void SetBox( float x, float y, float w, float h ) {
      
         m_ColOffset.push_back( Vector3< float >( x, y ) );

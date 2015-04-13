@@ -43,7 +43,7 @@ void CInstancedParticleEngine::BindVertexBuffers( bool genbuffer, bool bufferdat
    
     if( bufferdata )
         glBufferData( GL_ARRAY_BUFFER, sizeof( float ) * m_MaxParticles * 16, m_ViewMat, GL_DYNAMIC_DRAW );
-    
+
     for( int j = 0; j < 4; j++ )
     {
         glEnableVertexAttribArray( j + m_ShaderOffset );
@@ -105,6 +105,12 @@ void CInstancedParticleEngine::Draw() {
     
     glDrawElementsInstancedBaseVertex( GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_SHORT, ( void * )0, m_MaxParticles, 0 );
 
+    //Hardcoded, maybe should not be.
+    glEnableVertexAttribArray( 0 );
+    glBindBuffer( GL_ARRAY_BUFFER, 1 );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 2 );
+    glVertexAttribPointer( 0, 2, GL_FLOAT, GL_FALSE, 0, ( void * )0 );
+    
     
 }
 

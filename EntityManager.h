@@ -93,7 +93,7 @@ public:
     void AddAllQueuedEntities();
     void RemoveAllDeletedEntities();
     
-    void DrawAllEntitiesAtDepth( int );
+    int DrawAllEntitiesAtDepth( int );
     void DrawAllEntities();
 };
 

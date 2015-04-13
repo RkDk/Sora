@@ -1,5 +1,7 @@
 #include "WorldEntity.h"
 
+/*
+
 bool CPhysBody::Initialize()
 {
     
@@ -49,6 +51,8 @@ CPhysBody::~CPhysBody()
     }
 
 }
+ 
+ 
 
 void CWorldEntity::CreatePhysicsBody( b2World * physWorld, float x, float y )
 {
@@ -64,7 +68,7 @@ void CWorldEntity::CreatePhysicsBody( b2World * physWorld, float x, float y )
 
     }
 }
-
+*/
 void CWorldEntity::BaseUpdate()
 {
     
@@ -82,7 +86,8 @@ void CWorldEntity::BaseUpdate()
     }
 
     m_Sprite.Think();
-
+    
+    /*
     //Either update the position of our entity depending on the physics, or update the physics body if explicitly set.
     if( m_bPhysicsBodyInit )
     {
@@ -101,7 +106,7 @@ void CWorldEntity::BaseUpdate()
 
         }
 
-    }
+    }*/
 
 }
 

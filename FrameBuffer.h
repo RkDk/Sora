@@ -14,7 +14,7 @@ private:
     GLuint m_fboTexture;
     
     int m_Width, m_Height;
-    
+  
 public:
     
     CFrameBufferObject() : m_Width( 0 ), m_Height( 0 )
