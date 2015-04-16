@@ -64,6 +64,11 @@ void CDrawContext::DrawGLTexture( GLuint texture, float x, float y, float width,
     
 }
 
+void CDrawContext::DrawMaterial( CTextureImage & material, int frame, float x, float y, float width, float height, float r, float g, float b, float a ) {
+    
+    DrawGLTexture( material.GetFrame( frame ).GetTexture(), x, y, width, height, r, g, b, a );
+}
+
 void CDrawContext::DrawMaterial( CTextureImage & material, float x, float y, float width, float height, float r, float g, float b, float a ) {
     
     DrawGLTexture( material.GetFrame( 0 ).GetTexture(), x, y, width, height, r, g, b, a );
