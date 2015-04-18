@@ -1,17 +1,25 @@
 #include "FrameBuffer.h"
 
+void CFrameBufferObject::Init( int width, int height ) {
+ 
+    Init( width, height, 1.0f, 1.0f );
+    
+}
 
-void CFrameBufferObject::Init( int width, int height )
+void CFrameBufferObject::Init( int width, int height, float wscale, float hscale )
 {
     
-    m_Width = width;
-    m_Height = height;
+    m_Width = ( float )width * wscale;
+    m_Height = ( float )height * hscale;
+    m_WidthScale = wscale;
+    m_HeightScale = hscale;
+    m_Offset.Set( 0.0f, ( float )height * ( 1.0f - hscale ) );
     
     glGenTextures( 1, &m_fboTexture );
     
     glBindTexture( GL_TEXTURE_2D, m_fboTexture );
     
-    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL );
+    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL );
     
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );

@@ -38,6 +38,8 @@ private:
 	void InitializeOpenGL();
 
 public:
+    
+    void UseShader( int );
 
     void SetDrawContext( CDrawContext * pDrawContext )
     {

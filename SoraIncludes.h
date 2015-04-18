@@ -56,5 +56,6 @@
 #include "FontFactory.h"
 #include "QuadTree.h"
 #include "CollisionEngine.h"
+#include "TrailsEffect.h"
 
 #endif

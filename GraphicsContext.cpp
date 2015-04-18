@@ -81,6 +81,17 @@ void CGraphicsContext::InitializeOpenGL()
 
 }
 
+void CGraphicsContext::UseShader( int i ) {
+ 
+    if( m_pDrawContext ) {
+        
+        m_pDrawContext->UseShaderProgram( GetShaderIDFromIndex( i ) );
+        m_pDrawContext->Bind2DVertexBuffer();
+        
+    }
+    
+}
+
 void CGraphicsContext::SetDrawMode( int mode )
 {
     
