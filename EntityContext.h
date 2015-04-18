@@ -119,6 +119,8 @@ public:
         return m_pFontFactory->GetFont( t, s );
         
     }
+    
+    virtual bool GetBoolean( std::string b ) = 0;
 
 	virtual void HandleEntityContact( void * pEntityA, int entTypeA, void * pEntityB, int entTypeB )
 	{

@@ -39,6 +39,18 @@ CFrameBufferObject::~CFrameBufferObject()
     
 }
 
+
+void CFrameBufferObject::DrawTextureDontForceSize( CDrawContext * pDrawContext, CMatrix< float > * pModelMat )
+{
+    
+    BindTexture();
+    pDrawContext->SetTexCoord( 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f );
+    pDrawContext->UpdateModelMatrix( pModelMat );
+    pDrawContext->Draw2DVertexBuffer();
+    
+}
+
+
 void CFrameBufferObject::DrawTexture( CDrawContext * pDrawContext, CMatrix< float > * pModelMat )
 {
     
@@ -46,10 +58,7 @@ void CFrameBufferObject::DrawTexture( CDrawContext * pDrawContext, CMatrix< floa
     pModelMat->GetScale( &sx, &sy, &sz );
     pModelMat->ScaleMul( m_Width, -m_Height, 1.0f );
     
-    BindTexture();
-    pDrawContext->SetTexCoord( 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f );
-    pDrawContext->UpdateModelMatrix( pModelMat );
-    pDrawContext->Draw2DVertexBuffer();
+    DrawTextureDontForceSize( pDrawContext, pModelMat );
     
     pModelMat->Scale( sx, -sy, sz );
     
