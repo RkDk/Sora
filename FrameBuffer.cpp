@@ -39,6 +39,15 @@ CFrameBufferObject::~CFrameBufferObject()
     
 }
 
+void CFrameBufferObject::DrawTexture( CDrawContext * pDrawContext ) {
+ 
+    CMatrix< float > mat;
+    mat.Identity();
+    mat.Translate( 0.0f, m_Height, 0.0f );
+    
+    DrawTexture( pDrawContext, &mat );
+    
+}
 
 void CFrameBufferObject::DrawTextureDontForceSize( CDrawContext * pDrawContext, CMatrix< float > * pModelMat )
 {

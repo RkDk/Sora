@@ -417,6 +417,7 @@ public:
     void DrawSprite();
 
     void BaseUpdate();
+    void BaseDraw( CMatrix< float > * );
     void BaseDraw();
 
     virtual void Update()

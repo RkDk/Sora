@@ -110,6 +110,17 @@ void CWorldEntity::BaseUpdate()
 
 }
 
+void CWorldEntity::BaseDraw( CMatrix< float > * mat ) {
+ 
+    if( m_Sprite.IsSet() ) {
+        
+        mat->Translate( m_Position.GetX(), m_Position.GetY(), 0.0f );
+        m_Sprite.Draw( m_pContext->DrawContext(), mat );
+        
+    }
+    
+}
+
 void CWorldEntity::BaseDraw()
 {
 
@@ -117,11 +128,11 @@ void CWorldEntity::BaseDraw()
 	{
 
 		CMatrix< float > mat;
-
 		mat.Identity();
-		mat.Translate( m_Position.GetX(), m_Position.GetY(), 0.0f );
-
-		m_Sprite.Draw( m_pContext->DrawContext(), &mat );
+        
+        mat.Translate( m_Position.GetX(), m_Position.GetY(), 0.0f );
+        m_Sprite.Draw( m_pContext->DrawContext(), &mat );
+		
 
 	}
 

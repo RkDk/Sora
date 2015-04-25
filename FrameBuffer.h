@@ -85,6 +85,7 @@ public:
     
     void DrawTextureDontForceSize( CDrawContext *, CMatrix< float > * );
     void DrawTexture( CDrawContext *, CMatrix< float > *);
+    void DrawTexture( CDrawContext * );
     
 };
 
