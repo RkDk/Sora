@@ -110,16 +110,25 @@ void CWorldEntity::BaseUpdate()
 
 }
 
-void CWorldEntity::BaseDraw( CMatrix< float > * mat ) {
+void CWorldEntity::BaseDraw( CMatrix< float > * mat, bool override ) {
  
     if( m_Sprite.IsSet() ) {
         
-        mat->Translate( m_Position.GetX(), m_Position.GetY(), 0.0f );
+        if( !override )
+            mat->Translate( m_Position.GetX(), m_Position.GetY(), 0.0f );
+        
         m_Sprite.Draw( m_pContext->DrawContext(), mat );
         
     }
     
 }
+
+void CWorldEntity::BaseDraw( CMatrix< float > * mat ) {
+    
+    BaseDraw( mat, false );
+    
+}
+
 
 void CWorldEntity::BaseDraw()
 {
