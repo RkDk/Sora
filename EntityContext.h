@@ -6,6 +6,8 @@
 #include "TextureFactory.h"
 #include "FreeTypeContext.h"
 #include "FontFactory.h"
+#include "SoundFactory.h"
+#include "SoundContext.h"
 
 class CEntityContext
 {
@@ -15,8 +17,10 @@ protected:
 	float m_FrameDelta;
     CGraphicsContext * m_pGraphicsContext;
     CFreeTypeContext * m_pFreeTypeContext;
+    CSoundContext * m_pSoundContext;
     CDrawContext * m_pDrawContext;
     CFontFactory * m_pFontFactory;
+    CSoundFactory * m_pSoundFactory;
     CTextureFactory * m_pTextureFactory;
 
 public:
@@ -34,6 +38,18 @@ public:
     }
     
     void LoadResources( std::string );
+    
+    void SetSoundFactory( CSoundFactory * pSoundFactory ) { 
+     
+        m_pSoundFactory = pSoundFactory;
+        
+    }
+    
+    void SetSoundContext( CSoundContext * pSoundContext ) {
+     
+        m_pSoundContext = pSoundContext;
+        
+    }
     
     void SetFontFactory( CFontFactory * pFontFactory ) {
      
@@ -67,6 +83,12 @@ public:
         m_pGraphicsContext = pGraphicsContext;
 
     }
+    
+    CSoundContext * SoundContext() {
+     
+        return m_pSoundContext;
+        
+    }
 
     CDrawContext * DrawContext()
     {
@@ -86,6 +108,12 @@ public:
 
         return m_pGraphicsContext;
 
+    }
+    
+    CSoundFactory * SoundFactory() {
+     
+        return m_pSoundFactory;
+        
     }
     
     CFontFactory * FontFactory() {

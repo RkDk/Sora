@@ -22,10 +22,15 @@ public:
     {
 
     }
+    
+    virtual void OnRelease() {
+        
+    }
 
 	virtual ~CFactoryObject()
 	{
 
+        OnRelease();
 		delete m_pContent;
 
 	}

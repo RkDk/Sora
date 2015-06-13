@@ -52,6 +52,12 @@ public:
         
     }
     
+    GLuint GetTexture() { 
+     
+        return m_fboTexture;
+        
+    }
+
     
     inline void BeginDrawingToFBO()
     {

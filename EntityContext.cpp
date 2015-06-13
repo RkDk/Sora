@@ -14,35 +14,47 @@ void CEntityContext::LoadResources( std::string filename ) {
         std::string cmd( "" );
         resfile >> cmd;
         
-        if( cmd == "TEXTURE" ) {
+        bool isTexture = false, isSound = false;
+        
+        if( cmd == "TEXTURE" )
+            isTexture = true;
+        
+        if( cmd == "SOUND" )
+            isSound = true;
+        
+        if( isTexture || isSound ) {
          
-            std::string textureInput( "" );
-            resfile >> textureInput;
+            std::string fileInput( "" );
+            resfile >> fileInput;
             
             bool wildcardSearch = false;
             std::string path( "" );
             std::vector< std::string > fileList;
 
-            int wcPos = textureInput.find( "*" );
+            int wcPos = fileInput.find( "*" );
             
             if( wcPos != std::string::npos ) {
                 
                 wildcardSearch = true;
-                path = textureInput.substr( 0, wcPos - 1 );
-                std::string extension = textureInput.substr( wcPos + 1 );
+                path = fileInput.substr( 0, wcPos - 1 );
+                std::string extension = fileInput.substr( wcPos + 1 );
                 
                 FileUtil::FindFilesInDirectory( path, extension, fileList,  false );
                 
             } else {
              
-                path = textureInput;
+                path = fileInput;
                 fileList.push_back( path );
                 
             }
             
             for( int j = 0; j < fileList.size(); j++ ) {
 
-                TextureFactory()->NewTexture( fileList[j] );
+                if( isTexture )
+                    TextureFactory()->NewTexture( fileList[j] );
+                else
+                    SoundFactory()->NewSound( fileList[j] );
+                
                 
             }
             

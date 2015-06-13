@@ -125,6 +125,19 @@ void CEntityManager::QueueEntity( CEntity * ent ) {
     
 }
 
+void CEntityManager::RemoveAllQueuedEntities() {
+   
+    BOOST_FOREACH( CEntity * e, m_pQueuedEntities )
+    {
+        
+        delete e;
+        
+    }
+    
+    m_pQueuedEntities.clear();
+    
+}
+
 void CEntityManager::RemoveAllEntities() {
     
     boost::ptr_vector< CEntityObject > & objs = GetEntityObjects();
