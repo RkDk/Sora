@@ -34,16 +34,30 @@ void CInstancedParticleEngine::BindVertexBuffers( bool genbuffer, bool bufferdat
      
         glGenVertexArrays( 1, &m_VertexArray );
         glGenBuffers( 1, &m_InstancedBuffer );
+        glGenBuffers( 1, &m_InstancedElementBuffer );
     
     }
     
     glBindVertexArray( m_VertexArray );
     
     glBindBuffer( GL_ARRAY_BUFFER, m_InstancedBuffer );
-   
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_InstancedElementBuffer );
+    
+    if( genbuffer ) {
+     
+        GLushort element_buffer_data[] = {
+            
+            3, 0, 1, 3, 2, 1
+            
+        };
+        
+        glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( element_buffer_data ), element_buffer_data, GL_STATIC_DRAW );
+        
+    }
+    
     if( bufferdata )
         glBufferData( GL_ARRAY_BUFFER, sizeof( float ) * m_MaxParticles * 16, m_ViewMat, GL_DYNAMIC_DRAW );
-
+        
     for( int j = 0; j < 4; j++ )
     {
         glEnableVertexAttribArray( j + m_ShaderOffset );
@@ -119,7 +133,8 @@ CInstancedParticleEngine::~CInstancedParticleEngine() {
     
     glDeleteBuffers( 1, &m_InstancedBuffer );
     glDeleteBuffers( 1, &m_InstancedRGBABuffer );
-
+    glDeleteBuffers( 1, &m_InstancedElementBuffer );
+    
     glDeleteVertexArrays( 1, &m_VertexArray );
     
     delete [] m_ViewMat;

@@ -6,6 +6,9 @@ void CFontMaterial::DrawString( CDrawContext * pDrawContext, std::string text, f
     float xtrans = 0.0f, ytrans = 0.0f;
     float xoffset = 0.0f, yoffset = 0.0f;
     
+    x = ( int )x;
+    y = ( int )y;
+    
     pDrawContext->SetTexture( m_FontSheet.GetTexture() );
     pDrawContext->SetDrawColor( r, g, b, a );
     
@@ -26,6 +29,9 @@ void CFontMaterial::DrawString( CDrawContext * pDrawContext, std::string text, f
         }
         
     }
+    
+    xoffset = ( int )xoffset;
+    yoffset = ( int )yoffset;
     
     
     for( int i = 0; i < text.length(); i++ ) {

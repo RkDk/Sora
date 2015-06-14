@@ -5,10 +5,14 @@
 CTextureFrame::~CTextureFrame()
 {
     
-    delete [] m_pData;
+    if( m_pData ) {
+    
+        delete [] m_pData;
 
-    glDeleteTextures( 1, &m_Texture );
+        glDeleteTextures( 1, &m_Texture );
 
+    }
+        
 }
 
 

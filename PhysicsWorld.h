@@ -2,13 +2,13 @@
 #define PHYSICSWORLD_H_
 
 #include "SDL_includes.h"
-#include <Box2D/Box2D.h>
-
+#
 //Run physics simulation every <TIMESTEP> ms
 #define TIMESTEP 16.667f
 #define DEFAULT_VEL_ITERATIONS 8
 #define DEFAULT_POS_ITERATIONS 3
 
+/*
 class CPhysicsWorld
 {
 
@@ -52,6 +52,6 @@ public:
 	~CPhysicsWorld();
 
 };
-
+*/
 #endif
 

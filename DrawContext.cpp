@@ -130,11 +130,11 @@ void CDrawContext::Bind2DVertexArray() {
 void CDrawContext::Bind2DVertexBuffer()
 {
     
+    Bind2DVertexArray();
+    
     glEnableVertexAttribArray( 0 );
     glEnableVertexAttribArray( 1 );
     glEnableVertexAttribArray( 2 );
-    
-    Bind2DVertexArray();
 
 	glBindBuffer( GL_ARRAY_BUFFER, m_2DVertexBuffer );
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_2DElementBuffer );

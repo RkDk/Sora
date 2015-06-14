@@ -1,6 +1,6 @@
 #include "PhysicsWorld.h"
 
-
+/*
 void CPhysicsWorld::Initialize( float x, float y )
 {
 
@@ -35,3 +35,4 @@ void CPhysicsWorld::Update( int velIter, int posIter )
         m_LastIteration = SDL_GetTicks();
 
 }
+*/

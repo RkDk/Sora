@@ -7,7 +7,6 @@
 #include "TextureImage.h"
 #include "Matrix.h"
 #include "CollisionBody.h"
-#include <Box2D/Box2D.h>
 
 class CBaseQuadTreeEntity {
     

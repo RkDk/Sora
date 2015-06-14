@@ -15,7 +15,7 @@ private:
     int m_MaxParticles, m_ShaderOffset;
     
     GLuint m_VertexArray;
-    GLuint m_InstancedBuffer, m_InstancedRGBABuffer;
+    GLuint m_InstancedBuffer, m_InstancedRGBABuffer, m_InstancedElementBuffer;
     
     std::vector< Vector2< float > > m_Size;
     
