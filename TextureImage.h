@@ -27,6 +27,10 @@ private:
 
 public:
 
+	CTextureFrame() : m_pData( NULL ) {
+	
+	}
+
     void Load( std::string );
 
     int GetBytesPerPixel() {
@@ -97,6 +101,10 @@ private:
     int m_FrameCount;
 
 public:
+
+	CTextureImage() : m_pFrames( NULL ) {
+	
+	}
 
 	CTextureFrame & GetFrame( int i )
 	{

@@ -92,7 +92,8 @@ void CTextureFrame::Load( std::string file )
 CTextureImage::~CTextureImage()
 {
 
-	delete [] m_pFrames;
+	if( m_pFrames )
+		delete [] m_pFrames;
 
 }
 

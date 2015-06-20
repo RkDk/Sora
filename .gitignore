@@ -1,0 +1,8 @@
+*.obj
+*.tlog
+*.log
+Sora.vcxproj.filters
+*.user
+*.pdb
+*.lib
+Sora.vcxproj
