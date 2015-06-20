@@ -1,5 +1,6 @@
 #include "GameInput.h"
-
+#include <sstream>
+#include "Logging.h"
 void CGameInput::Poll()
 {
 
@@ -15,7 +16,7 @@ int CGameInput::PollEvent() {
     
     m_EventType = ev.type;
     m_KeyDown = ev.key.keysym.sym;
-    
+
     return i; 
     
 }
