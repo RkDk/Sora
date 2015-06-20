@@ -1,4 +1,5 @@
 #include "GraphicsContext.h"
+#include <sstream>
 
 CGraphicsContext::~CGraphicsContext()
 {
@@ -133,6 +134,25 @@ void CGraphicsContext::CreateHandle( std::string wndTitle )
 
 }
 
+void CGraphicsContext::SetFullScreen( bool b ) {
+
+	if( m_pWndHandle ) {
+	
+		m_bFullScreen = b;
+		Uint32 flags = ( b )? SDL_WINDOW_FULLSCREEN : 0;
+
+		if( SDL_SetWindowFullscreen( m_pWndHandle, flags ) < 0 ) {
+		
+			std::stringstream ss;
+			ss << "Failed to toggle between window/fullscreen because: " << SDL_GetError();
+			Log::Debug( ss.str() );
+		
+		} else
+			Log::Debug( "Successfully toggled between window/fullscreen" );
+	}
+
+}
+
 void CGraphicsContext::CreateHandle( std::string wndTitle, int x, int y, int width, int height, bool fullscreen )
 {
 
@@ -160,8 +180,10 @@ void CGraphicsContext::CreateHandle( std::string wndTitle, int x, int y, int wid
 
 	int flags = SDL_WINDOW_OPENGL;
 
-	if( fullscreen )
+	if( fullscreen ) 
 		flags |= SDL_WINDOW_FULLSCREEN;
+
+	m_bFullScreen = fullscreen;
 
 	if( !( m_pWndHandle = SDL_CreateWindow( wndTitle.c_str(), x, y, width, height, flags ) ) )
 	{

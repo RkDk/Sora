@@ -31,6 +31,12 @@ public:
         
     }
 
+	SDL_Keycode GetKeyDown() {
+	
+		return m_KeyDown;
+
+	}
+
 	bool KeyDown( int i )
 	{
 

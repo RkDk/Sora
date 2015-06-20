@@ -30,6 +30,7 @@ private:
 	SDL_Window * m_pWndHandle;
 	SDL_Renderer * m_pSDLRenderer;
 	SDL_GLContext m_OGLContext;
+	bool m_bFullScreen;
 
     Vector4< float > m_ClearColor;
     
@@ -47,6 +48,14 @@ public:
         m_pDrawContext = pDrawContext;
 
     }
+
+	bool IsFullScreen() { 
+	
+		return m_bFullScreen;
+
+	}
+
+	void SetFullScreen( bool );
 
 	CDrawContext * GetDrawContext()
 	{
@@ -90,7 +99,7 @@ public:
 
 	}
 
-	CGraphicsContext() : m_pWndHandle( NULL ), m_pSDLRenderer( NULL ), m_pDrawContext( NULL )
+	CGraphicsContext() : m_pWndHandle( NULL ), m_pSDLRenderer( NULL ), m_pDrawContext( NULL ), m_bFullScreen( false )
 	{
 
 	}
