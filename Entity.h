@@ -27,7 +27,7 @@ protected:
     bool m_bActive, m_bIsTracked, m_bKillMe;
     std::vector< std::string > m_TrackedTypes;
 
-    int m_DrawDepth;
+    int m_DrawDepth, m_OldDrawDepth;
 
 public:
 
@@ -38,9 +38,22 @@ public:
 
     }
 
+	int GetOldDrawDepth() {
+	
+		return m_OldDrawDepth;
+	
+	}
+
+	void SetOldDrawDepthToNew() {
+	
+		m_OldDrawDepth = m_DrawDepth;
+	
+	}
+
     void SetDrawDepth( int d )
     {
 
+		m_OldDrawDepth = m_DrawDepth;
         m_DrawDepth = d;
 
     }
@@ -179,7 +192,7 @@ public:
     
 
 
-    CEntity() : m_ClassType( "ENTITY" ), m_bActive( true ), m_bIsTracked( false ), m_GlobalCount( 0 ), m_ClassTypeID( 0 ), m_bOverrideEntityManagerDraw( false ), m_DrawDepth( 0 )
+    CEntity() : m_ClassType( "ENTITY" ), m_bActive( true ), m_bIsTracked( false ), m_GlobalCount( 0 ), m_ClassTypeID( 0 ), m_bOverrideEntityManagerDraw( false ), m_DrawDepth( 0 ), m_OldDrawDepth( 0 )
     {
 
         SetGlobalCount();

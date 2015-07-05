@@ -4,6 +4,7 @@
 #include "Factory.h"
 #include "WorldEntity.h"
 #include "Entity.h"
+#include <unordered_map>
 
 #define DRAW_DEPTH_MAX 10
 
@@ -44,30 +45,17 @@ protected:
 
     std::vector< CEntity * > m_pQueuedEntities;
     std::vector< CEntity * > m_pDeletedEntities;
-    std::vector< CWorldEntity * > m_pDrawList[DRAW_DEPTH_MAX];
-    std::map< std::string, std::vector< CEntity * > > m_pTrackedEntityList;
+    std::vector< std::vector< CWorldEntity * > > m_vDrawList;
+    std::unordered_map< std::string, std::vector< CEntity * > > m_vEntityLists;
 
 public:
 
-    std::vector< CEntity * > & GetTrackedEntityList( std::string type )
+    std::vector< CEntity * > & GetEntityList( std::string type )
     {
 
-        return m_pTrackedEntityList[type];
+        return m_vEntityLists[type];
 
     }
-
-    boost::ptr_vector< CEntityObject >::iterator BeginIterate() {
-     
-        return m_pRawEntityList.GetEntityObjects().begin();
-        
-    }
-    
-    boost::ptr_vector< CEntityObject >::iterator EndIterate() {
-     
-        return m_pRawEntityList.GetEntityObjects().end();
-        
-    }
-    
     
     boost::ptr_vector< CEntityObject > & GetEntityObjects()
     {
@@ -78,24 +66,32 @@ public:
     
     void QueueEntity( CEntity * );
 
+	void UpdateAllEntities();
+
     void RemoveFromDrawList( CWorldEntity *, int );
     void SortDrawEntitiesBasedOnPosition( int );
     void UpdateDrawListLayersForEntity( CWorldEntity *, int );
     void UpdateDrawListLayers();
 
-    void TrackEntity( std::string, CEntity * );
-    void AddEntity( CEntity * );
+	void NewEntityList( std::string );
+    void AddEntityToList( std::string, CEntity * );
+    
+	void AddEntity( CEntity * );
 
     void RemoveEntity( CEntity * );
-
-    void RemoveAllQueuedEntities();
     void RemoveAllEntities();
-    void DeleteEntity( CEntity * );
-    void AddAllQueuedEntities();
+    
+	void AddAllQueuedEntities();
+	void RemoveAllQueuedEntities();
+
+	void DeleteEntity( CEntity * );
     void RemoveAllDeletedEntities();
     
     int DrawAllEntitiesAtDepth( int );
     void DrawAllEntities();
+
+	CEntityManager( int );
+	CEntityManager();
 };
 
 #endif

@@ -1,5 +1,23 @@
  #include "EntityManager.h"
 
+CEntityManager::CEntityManager( int numDrawLists ) {
+ 
+	m_vDrawList.resize( numDrawLists );
+
+}
+
+ CEntityManager::CEntityManager() { 
+ 
+	m_vDrawList.resize( DRAW_DEPTH_MAX );	
+
+}
+
+void CEntityManager::NewEntityList( std::string entListName ) {
+
+	m_vEntityLists.insert( std::make_pair( entListName, std::vector< CEntity * >() ) );
+
+}
+
 void CEntityFactory::AddEntity( CEntity * ent )
 {
 
@@ -21,21 +39,42 @@ bool EntPositionSort( const CWorldEntity * l, const CWorldEntity * r )
 void CEntityManager::SortDrawEntitiesBasedOnPosition( int depth )
 {
 
-    std::sort( m_pDrawList[depth].begin(), m_pDrawList[depth].end(), EntPositionSort );
+    std::sort( m_vDrawList[depth].begin(), m_vDrawList[depth].end(), EntPositionSort );
 
 }
 
-void CEntityManager::RemoveFromDrawList( CWorldEntity * ent, int depth )
+void CEntityManager::UpdateAllEntities()
 {
 
-    for( std::vector< CWorldEntity * >::iterator iter = m_pDrawList[depth].begin();
-         iter != m_pDrawList[depth].end(); iter++ )
+    boost::ptr_vector< CEntityObject > * entityObjs = &m_pRawEntityList.GetEntityObjects();
+
+	for( boost::ptr_vector< CEntityObject >::iterator i = entityObjs->begin();
+		 i != entityObjs->end(); i++ )
+    {
+
+        CEntity * e = ( *i ).GetContent();
+
+        if( e->IsActive() )
+            e->Update();
+
+        if( e->KillMe() )
+            DeleteEntity( e );
+
+    }
+
+}
+
+
+void CEntityManager::RemoveFromDrawList( CWorldEntity * ent, int depth ) {
+
+    for( std::vector< CWorldEntity * >::iterator iter = m_vDrawList[depth].begin();
+         iter != m_vDrawList[depth].end(); iter++ )
     {
 
         if( ( *iter )->GetGlobalCount() == ent->GetGlobalCount() )
         {
 
-            m_pDrawList[depth].erase( iter );
+            m_vDrawList[depth].erase( iter );
             return;
 
         }
@@ -50,42 +89,43 @@ void CEntityManager::UpdateDrawListLayersForEntity( CWorldEntity * ent, int dept
     RemoveFromDrawList( ent, depth );
 
     int curdepth = ent->GetDrawDepth();
-    m_pDrawList[curdepth].push_back( static_cast< CWorldEntity * >( ent ) );
+    m_vDrawList[curdepth].push_back( static_cast< CWorldEntity * >( ent ) );
 
 }
 
 void CEntityManager::UpdateDrawListLayers()
 {
 
-    for( int j = 0; j < DRAW_DEPTH_MAX; j++ )
-    {
+	for( int j = 0; j < m_vDrawList.size(); j++ ) {
 
-        for( std::vector< CWorldEntity * >::iterator iter = m_pDrawList[j].begin();
-             iter != m_pDrawList[j].end(); iter++ )
-        {
-            int depth = ( *iter )->GetDrawDepth();
+		for( std::vector< CWorldEntity * >::iterator iter = m_vDrawList[j].begin();
+				iter != m_vDrawList[j].end(); iter++ )
+		{
+			int depth = ( *iter )->GetDrawDepth();
 
-            if( depth != j )
-            {
+			if( depth != j )
+			{
 
-                CWorldEntity * e = ( *iter );
-                m_pDrawList[j].erase( iter );
-                m_pDrawList[depth].push_back( static_cast< CWorldEntity * >( e ) );
+				CWorldEntity * e = ( *iter );
+				e->SetOldDrawDepthToNew();
+				m_vDrawList[j].erase( iter );
+				m_vDrawList[depth].push_back( static_cast< CWorldEntity * >( e ) );
 
-            }
+			}
 
-        }
+		}
 
-    }
+	}
+
 
 }
 
 int CEntityManager::DrawAllEntitiesAtDepth( int i ) {
     
-    std::vector< CWorldEntity * >::iterator iter = m_pDrawList[i].begin();
+    std::vector< CWorldEntity * >::iterator iter = m_vDrawList[i].begin();
     int c = 0;
     
-    for( ; iter != m_pDrawList[i].end(); iter++ )
+    for( ; iter != m_vDrawList[i].end(); iter++ )
     {
         
         CWorldEntity * e = ( *iter );
@@ -107,12 +147,12 @@ int CEntityManager::DrawAllEntitiesAtDepth( int i ) {
 void CEntityManager::DrawAllEntities()
 {
 
-	for( int i = 0; i < DRAW_DEPTH_MAX; i++ )
+	for( int i = 0; i < m_vDrawList.size(); i++ )
     {
 
         DrawAllEntitiesAtDepth( i );
 
-    //    m_pDrawList[i].clear();
+    //    m_vDrawList[i].clear();
 
 
     }
@@ -196,13 +236,13 @@ void CEntityManager::DeleteEntity( CEntity * pEntity )
 }
 
 
-void CEntityManager::TrackEntity( std::string type, CEntity * ent )
+void CEntityManager::AddEntityToList( std::string type, CEntity * ent )
 {
 
     ent->SetBeingTracked( true );
     ent->TrackedAs( type );
 
-    m_pTrackedEntityList[type].push_back( ent );
+    m_vEntityLists[type].push_back( ent );
 
 }
 
@@ -215,7 +255,7 @@ void CEntityManager::AddEntity( CEntity * ent )
     {
 
         int depth = ent->GetDrawDepth();
-        m_pDrawList[depth].push_back( static_cast< CWorldEntity * >( ent ) );
+        m_vDrawList[depth].push_back( static_cast< CWorldEntity * >( ent ) );
 
     }
 
@@ -234,14 +274,14 @@ void CEntityManager::RemoveEntity( CEntity * ent )
 
             std::string type = trackedTypes[j];
 
-            for( std::vector< CEntity * >::iterator iter = m_pTrackedEntityList[type].begin();
-                 iter != m_pTrackedEntityList[type].end(); iter++ )
+            for( std::vector< CEntity * >::iterator iter = m_vEntityLists[type].begin();
+                 iter != m_vEntityLists[type].end(); iter++ )
             {
 
                 if( ( *iter )->GetGlobalCount() == ent->GetGlobalCount() )
                 {
 
-                    m_pTrackedEntityList[type].erase( iter );
+                    m_vEntityLists[type].erase( iter );
                     break;
 
                 }

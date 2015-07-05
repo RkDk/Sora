@@ -7,6 +7,8 @@
 #include "TextureImage.h"
 #include "Matrix.h"
 #include "CollisionBody.h"
+#include "SpatialTree.h"
+#include "BaseSpatialTreeEntity.h"
 
 class CBaseQuadTreeEntity {
     
@@ -196,7 +198,7 @@ protected:
     //bool m_bPhysicsBodyInit, m_bExplicitPhysicsBodyPosSet, m_bFollowPhysics;
     //CPhysBody m_PhysicsBody;
     CCollisionBody * m_pCollisionBody;
-    CBaseQuadTreeEntity * m_pQuadTreeEntity;
+    CBaseSpatialTreeEntity * m_pSpatialTreeEntity;
 
 public:
     
@@ -448,37 +450,37 @@ public:
 
     }
     
-    void UpdateQuadTreeEntityPos() {
+    void UpdateSpatialTreeEntityPos() {
      
         Vector3< float > origin;
         
         if( m_pCollisionBody )
             origin = m_pCollisionBody->GetOrigin();
         
-        m_pQuadTreeEntity->SetPos( m_Position.GetX() + origin.GetX(), m_Position.GetY() + origin.GetY() ) ;
+        m_pSpatialTreeEntity->SetPos( m_Position.GetX() + origin.GetX(), m_Position.GetY() + origin.GetY() ) ;
         
     }
 
-    void UpdateQuadTreeEntitySize() {
+    void UpdateSpatialTreeEntitySize() {
         
         Vector3< float > size;
         
         if( m_pCollisionBody )
             size = m_pCollisionBody->GetSize();
         
-        m_pQuadTreeEntity->SetSize( size.GetX(), size.GetY() ) ;
+        m_pSpatialTreeEntity->SetSize( size.GetX(), size.GetY() ) ;
         
     }
     
     
-    void SetQuadTreeEntity( CBaseQuadTreeEntity * pQuadTreeEntity ) {
+    void SetSpatialTreeEntity( CBaseSpatialTreeEntity * pQuadTreeEntity ) {
         
-        m_pQuadTreeEntity = pQuadTreeEntity;
-        m_pQuadTreeEntity->SetEntityID( GetGlobalCount() );
+        m_pSpatialTreeEntity = pQuadTreeEntity;
+        m_pSpatialTreeEntity->SetEntityID( GetGlobalCount() );
         
     }
 
-    CWorldEntity() : CEntity(), m_pQuadTreeEntity( NULL ), m_bMoved( false ), m_pCollisionBody( NULL )
+    CWorldEntity() : CEntity(), m_pSpatialTreeEntity( NULL ), m_bMoved( false ), m_pCollisionBody( NULL )
     {
 
 
@@ -486,8 +488,8 @@ public:
 
     virtual ~CWorldEntity() {
     
-        if( m_pQuadTreeEntity )
-            m_pQuadTreeEntity->SetShouldKill( true );
+        if( m_pSpatialTreeEntity )
+            m_pSpatialTreeEntity->SetShouldKill( true );
         
         if( m_pCollisionBody )
             delete m_pCollisionBody;
