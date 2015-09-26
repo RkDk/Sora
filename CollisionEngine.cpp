@@ -1,6 +1,6 @@
 #include "CollisionEngine.h"
 
-void CCollisionEngine::CheckForQuadTreeCollisions( CQuadTree * pQuadTree, CCollisionListener * pListener ) {
+void CCollisionEngine::CheckForQuadTreeCollisions( CSpatialTree * pQuadTree, CCollisionListener * pListener ) {
     
     std::vector< CNodeList > nodeList;
     
@@ -10,14 +10,14 @@ void CCollisionEngine::CheckForQuadTreeCollisions( CQuadTree * pQuadTree, CColli
         nodeListIter != nodeList.end(); nodeListIter++ ) {
      
         CNodeList & nodeList = ( *nodeListIter );
-        for( std::vector< CQuadTreeObject * >::iterator nodeObjIter = nodeList.m_pNodeObjects.begin();
+        for( std::vector< CSpatialTreeObject * >::iterator nodeObjIter = nodeList.m_pNodeObjects.begin();
             nodeObjIter != nodeList.m_pNodeObjects.end(); ) {
          
-            for( std::vector< CQuadTreeObject * >::iterator nodeObjIter2 = ++nodeList.m_pNodeObjects.begin();
+            for( std::vector< CSpatialTreeObject * >::iterator nodeObjIter2 = ++nodeList.m_pNodeObjects.begin();
                 nodeObjIter2 != nodeList.m_pNodeObjects.end(); nodeObjIter2++ ) {
                 
-                CQuadTreeObject * qtObj1 = ( *nodeObjIter );
-                CQuadTreeObject * qtObj2 = ( *nodeObjIter2 );
+                CSpatialTreeObject * qtObj1 = ( *nodeObjIter );
+                CSpatialTreeObject * qtObj2 = ( *nodeObjIter2 );
                 
                 CWorldEntity * ent1 = qtObj1->GetEntity();
                 CWorldEntity * ent2 = qtObj2->GetEntity();

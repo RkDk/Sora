@@ -139,16 +139,23 @@ void CGraphicsContext::SetFullScreen( bool b ) {
 	if( m_pWndHandle ) {
 	
 		m_bFullScreen = b;
-		Uint32 flags = ( b )? SDL_WINDOW_FULLSCREEN : 0;
+		Uint32 fsFlag = SDL_WINDOW_FULLSCREEN;
 
-		if( SDL_SetWindowFullscreen( m_pWndHandle, flags ) < 0 ) {
+        if( SDL_SetWindowFullscreen( m_pWndHandle, ( b )? fsFlag : 0 ) < 0 ) {
 		
 			std::stringstream ss;
 			ss << "Failed to toggle between window/fullscreen because: " << SDL_GetError();
 			Log::Debug( ss.str() );
 		
-		} else
-			Log::Debug( "Successfully toggled between window/fullscreen" );
+        } else {
+            
+            SDL_SetWindowSize( m_pWndHandle, m_WindowWidth, m_WindowHeight );
+            
+            if( b )
+                Log::Debug( "Successfully  went full screen" );
+            else    
+                Log::Debug( "Successfully  went windowed" );
+        }
 	}
 
 }

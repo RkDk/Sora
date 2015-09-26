@@ -1,5 +1,5 @@
 #include "QuadTree.h"
-
+/*
 void CQuadTree::Init( int x, int y, int size, int layer ) {
 
     m_Pos.Set( x, y );
@@ -263,3 +263,5 @@ CQuadTree::~CQuadTree() {
     m_pQTObjects.clear();
     
 }
+
+*/

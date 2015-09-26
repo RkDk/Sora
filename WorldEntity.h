@@ -7,7 +7,6 @@
 #include "TextureImage.h"
 #include "Matrix.h"
 #include "CollisionBody.h"
-#include "SpatialTree.h"
 #include "BaseSpatialTreeEntity.h"
 
 class CBaseQuadTreeEntity {

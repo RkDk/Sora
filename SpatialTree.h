@@ -4,9 +4,9 @@
 #include <utility>
 #include <unordered_map>
 
+#include "WorldEntity.h"
 #include "Vector.h"
 #include "BaseSpatialTreeEntity.h"
-#include "WorldEntity.h"
 #include "DrawContext.h"
 
 #define MINIMUM_QT_SIZE 200
@@ -135,8 +135,8 @@ class CSpatialOctree : public CSpatialTree {
 
 protected:
 
-	void CreateTree( int, int, int, int, int );
-
+	void Draw( CDrawContext * );
+    
 	bool ContainsObject( CSpatialTreeObject * o ) {
 	
 		int x, y, z;
@@ -148,14 +148,19 @@ protected:
 		return ContainsSpace3D( x, y, z, w, h, d );
 	
 	}
+    
+public:
+    
+    void CreateTree( int, int, int, int, int );
+    
+    
 };
 
 class CSpatialQuadTree : public CSpatialTree {
 
 protected:
 
-	virtual void CreateTree( int, int, int, int );
-	void Draw( CDrawContext * );
+    void Draw( CDrawContext * );
 
 	bool ContainsObject( CSpatialTreeObject * o ) {
 	
@@ -168,6 +173,11 @@ protected:
 		return ContainsSpace2D( x, y, w, h );
 	
 	}
+    
+public:
+    
+    virtual void CreateTree( int, int, int, int );
+
 
 };
 

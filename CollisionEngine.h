@@ -1,7 +1,7 @@
 #ifndef COLLISIONENGINE_H_
 #define COLLISIONENGINE_H_
 
-#include "QuadTree.h"
+#include "SpatialTree.h"
 #include "WorldEntity.h"
 #include "CollisionBody.h"
 
@@ -64,7 +64,7 @@ private:
     
 public:
     
-    void CheckForQuadTreeCollisions( CQuadTree *, CCollisionListener * );
+    void CheckForQuadTreeCollisions( CSpatialTree *, CCollisionListener * );
     
 };
 

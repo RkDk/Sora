@@ -1,5 +1,5 @@
 #include "SpatialTree.h"
-
+#include <sstream>
 void CSpatialTree::RemoveIfObjectHasMoved( CSpatialTreeObject * obj ) {
     
     if( m_pChildNodes ) {
@@ -29,7 +29,7 @@ void CSpatialTree::RemoveIfObjectHasMoved( CSpatialTreeObject * obj ) {
 
 void CSpatialTree::InsertObject( CSpatialTreeObject * obj ) {
 
-    if( ContainsObject( obj )|| !m_pParentNode ) {
+    if( ContainsObject( obj ) || !m_pParentNode ) {
     
         m_pQTObjects.insert( std::make_pair( obj->GetEntityID(), obj ) );
  
@@ -193,9 +193,16 @@ CSpatialTree::~CSpatialTree() {
     
 }
 
-void CSpatialOctree::CreateTree( int x, int y, int z, int size, int layer ) {
 
-	m_Pos.Set( x, y, z );
+void CSpatialOctree::Draw( CDrawContext * pDrawContext ) {
+    
+    
+}
+
+
+void CSpatialOctree::CreateTree( int px, int py, int pz, int size, int layer ) {
+
+	m_Pos.Set( px, py, pz );
 	m_Size.Set( size, size, size );
 
 	int halfsize = size / 2;
@@ -231,9 +238,9 @@ void CSpatialQuadTree::Draw( CDrawContext * pDrawContext ) {
 
 }
 
-void CSpatialQuadTree::CreateTree( int x, int y, int size, int layer ) {
+void CSpatialQuadTree::CreateTree( int px, int py, int size, int layer ) {
 
-	m_Pos.Set( x, y );
+	m_Pos.Set( px, py );
 	m_Size.Set( size, size );
 
 	int halfsize = size / 2;

@@ -1,6 +1,6 @@
 #ifndef QUADTREE_H_
 #define QUADTREE_H_
-
+/*
 #include <utility>
 #include <unordered_map>
 
@@ -36,22 +36,6 @@ public:
     
 };
 
-class CNodeList {
-  
-public:
-    
-    int m_NodeID;
-    std::vector< CQuadTreeObject * > m_pNodeObjects;
-    
-    CNodeList( int id ) : m_NodeID( id ) {
-        
-    }
-    
-    CNodeList() : m_NodeID( -1 ) {
-        
-    }
-    
-};
 
 
 class CQuadTree {
@@ -121,5 +105,5 @@ public:
     
     
 };
-
+*/
 #endif

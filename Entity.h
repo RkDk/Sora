@@ -86,6 +86,12 @@ public:
 
     }
 
+    void SetKillMe( bool b ) {
+     
+        m_bKillMe = b;
+        
+    }
+
     void TrackedAs( std::string type )
     {
 

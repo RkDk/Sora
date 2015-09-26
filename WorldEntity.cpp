@@ -70,7 +70,7 @@ void CWorldEntity::CreatePhysicsBody( b2World * physWorld, float x, float y )
 }
 */
 void CWorldEntity::BaseUpdate()
-{
+{/*
     
     if( m_bMoved ) {
         
@@ -84,7 +84,7 @@ void CWorldEntity::BaseUpdate()
         m_bMoved = false;
         
     }
-
+*/
     m_Sprite.Think();
     
     /*

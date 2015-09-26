@@ -8,7 +8,7 @@ class CBaseSpatialTreeEntity {
 protected:
     
     
-    Vector3< float > m_Pos, m_Size;
+    Vector3< int > m_Pos, m_Size;
     int m_EntityID;
     bool m_bShouldKill;
     bool m_bShouldUpdate;
@@ -32,25 +32,25 @@ public:
         
     }
     
-    void SetPos( float x, float y ) {
+    void SetPos( int x, int y ) {
         
         m_Pos.Set( x, y );
         
     }
 
-	void SetPos( float x, float y, float z ) {
+	void SetPos( int x, int y, int z ) {
 	
 		m_Pos.Set( x, y, z );
 	
 	}
     
-    void SetSize( float x, float y ) {
+    void SetSize( int x, int y ) {
         
         m_Size.Set( x, y );
         
     }
 
-	void GetPos( float * x, float * y, float * z ) {
+	void GetPos( int * x, int * y, int * z ) {
 	
 		*x = m_Pos.GetX();
 		*y = m_Pos.GetY();
@@ -58,14 +58,14 @@ public:
 
 	}
     
-    void GetPos( float * x, float * y ) {
+    void GetPos( int * x, int * y ) {
         
         *x = m_Pos.GetX();
         *y = m_Pos.GetY();
         
     }
 
-	void GetSize( float * x, float * y, float * z ) {
+	void GetSize( int * x, int * y, int * z ) {
 	
 		*x = m_Size.GetX();
 		*y = m_Size.GetY();
@@ -73,7 +73,7 @@ public:
 	
 	}
     
-    void GetSize( float * x, float * y ) {
+    void GetSize( int * x, int * y ) {
         
         *x = m_Size.GetX();
         *y = m_Size.GetY();
