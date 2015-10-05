@@ -148,6 +148,8 @@ public:
         
     }
     
+    void InitAllShaders();
+    
     virtual bool GetBoolean( std::string b ) = 0;
 
 	virtual void HandleEntityContact( void * pEntityA, int entTypeA, void * pEntityB, int entTypeB )

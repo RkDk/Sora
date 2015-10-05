@@ -3,6 +3,7 @@
 CEntityManager::CEntityManager( int numDrawLists ) {
  
 	m_vDrawList.resize( numDrawLists );
+    m_pEntContext = nullptr;
 
 }
 

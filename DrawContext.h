@@ -38,7 +38,7 @@ public:
     void Bind2DVertexArray();
     void Bind2DVertexBuffer();
 	void Unbind2DVertexBuffer();
-    
+ 
     void SetPos( float, float );
     void SetScale( float, float );
     void SetGlobalScale( float, float );

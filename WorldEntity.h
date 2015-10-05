@@ -225,6 +225,22 @@ public:
         
     }
     
+    void SetCollisionBodyToBoxSprite() {
+        
+        if( !m_Sprite.IsSet() )
+            return;
+            
+        if( !m_pCollisionBody )
+            m_pCollisionBody = new CBoxCollisionBody;        
+
+        CBoxCollisionBody * colBox = static_cast< CBoxCollisionBody * >( m_pCollisionBody );
+        auto v = m_Sprite.GetScaledSize();
+        colBox->SetBox( 0.0f, 0.0f, v.GetX(), v.GetY() );
+        
+    
+        
+    }
+    
     CSprite & GetSprite() {
      
         return m_Sprite;

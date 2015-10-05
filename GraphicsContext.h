@@ -40,6 +40,12 @@ private:
 
 public:
     
+    int GetShaderCount() {
+    
+        return m_pShaderPrograms.size();
+    
+    }
+    
     void UseShader( int );
 
     void SetDrawContext( CDrawContext * pDrawContext )

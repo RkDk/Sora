@@ -53,8 +53,10 @@ std::string FileUtil::ReadContentIntoString( std::string dir )
 
 }
 
-
-void FileUtil::FindFilesInDirectory( std::string dir, std::string ext, std::vector< std::string > & fileList, bool recursive ) {
+void FileUtil::FindFilesInDirectory( std::string dir, std::string ext, std::vector< std::string > & fileList, bool recursive, bool includepathinfilename ) {
+    
+    if( dir[dir.length()-1] != '/' )
+        dir = dir + '/';
     
     boost::filesystem::directory_iterator end_itr;
     for( boost::filesystem::directory_iterator i( dir ); i != end_itr; ++i )
@@ -64,17 +66,25 @@ void FileUtil::FindFilesInDirectory( std::string dir, std::string ext, std::vect
         if( boost::filesystem::is_directory( i->status() ) ) {
             
             if( recursive )
-                FindFilesInDirectory( dir + filename + "/", ext, fileList, recursive );
-        
+                FindFilesInDirectory( dir + filename + "/", ext, fileList, recursive, includepathinfilename );
+            
         } else if( ext == "" || filename.find( ext ) != std::string::npos )
-            fileList.push_back( filename );
+            fileList.push_back( ( ( includepathinfilename )? dir : "" ) + filename );
+        
         
     }
     
 }
 
+
+void FileUtil::FindFilesInDirectory( std::string dir, std::string ext, std::vector< std::string > & fileList, bool recursive ) {
+    
+    FileUtil::FindFilesInDirectory( dir, ext, fileList, recursive, false );
+    
+}
+
 void FileUtil::FindFilesInDirectory( std::string dir, std::vector< std::string > & fileList ) {
 
-    FindFilesInDirectory( dir, "", fileList , false );
+    FindFilesInDirectory( dir, "", fileList , false, false );
     
 }

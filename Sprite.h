@@ -109,6 +109,18 @@ public:
         
     }
     
+    Vector2< float > GetScaledSize() {
+        
+        int sx = m_Size.GetX(), sy = m_Size.GetY();
+        float scx = m_Scale.GetX(), scy = m_Scale.GetY();
+
+        Vector2< float > size;
+        size.Set( sx * scx, sy * scy );
+        
+        return size;
+        
+    }
+    
 	const Vector2< int > & GetSize() const
 	{
 

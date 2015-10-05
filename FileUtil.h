@@ -16,6 +16,7 @@ namespace FileUtil
 	bool FileExists( std::string );
     void FindFilesInDirectory( std::string, std::vector< std::string > & );
     void FindFilesInDirectory( std::string, std::string, std::vector< std::string > &, bool );
+    void FindFilesInDirectory( std::string, std::string, std::vector< std::string > &, bool, bool );
 	std::string ReadContentIntoString( std::string );
 
 };
