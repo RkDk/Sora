@@ -70,21 +70,21 @@ void CWorldEntity::CreatePhysicsBody( b2World * physWorld, float x, float y )
 }
 */
 void CWorldEntity::BaseUpdate()
-{/*
+{
     
     if( m_bMoved ) {
         
-        if( m_pQuadTreeEntity ) {
+        if( m_pSpatialTreeEntity ) {
             
-            UpdateQuadTreeEntityPos();
-            m_pQuadTreeEntity->SetShouldUpdate( true );
+            UpdateSpatialTreeEntityPos();
+            m_pSpatialTreeEntity->SetShouldUpdate( true );
             
         }
         
         m_bMoved = false;
         
     }
-*/
+
     m_Sprite.Think();
     
     /*

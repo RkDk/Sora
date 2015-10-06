@@ -160,8 +160,7 @@ class CSpatialQuadTree : public CSpatialTree {
 
 protected:
 
-    void Draw( CDrawContext * );
-
+    
 	bool ContainsObject( CSpatialTreeObject * o ) {
 	
 		int x, y;
@@ -175,6 +174,9 @@ protected:
 	}
     
 public:
+    
+    void Draw( CDrawContext * );
+
     
     virtual void CreateTree( int, int, int, int );
 

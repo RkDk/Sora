@@ -235,6 +235,35 @@ void CSpatialOctree::CreateTree( int px, int py, int pz, int size, int layer ) {
 
 void CSpatialQuadTree::Draw( CDrawContext * pDrawContext ) {
 
+    
+    float r = 1.0f, g = 1.0f, b = 1.0f, a = 1.0f;
+    
+    if( !m_pChildNodes ) {
+        
+        if( ContainsEntityCount( 1 ) ) {
+            
+            pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY(), m_Size.GetX(), m_Size.GetY(), 1.0f, 0.0f, 0.0f, .3f );
+            
+        }
+        
+    }
+    
+    pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY(), m_Size.GetX(), 2.0f, r, g, b, a );
+    pDrawContext->DrawGLTexture( 0, m_Pos.GetX() + m_Size.GetX(), m_Pos.GetY(), 2.0f, m_Size.GetY(), r, g, b, a );
+    pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY(), 2.0f, m_Size.GetY(), r, g, b, a );
+    pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY() + m_Size.GetY(), m_Size.GetX(), 2.0f, r, g, b, a );
+    
+    if( m_pChildNodes ) {
+        
+        for( int i = 0; i < 4; i++ ) {
+            
+            m_pChildNodes[i].Draw( pDrawContext );
+            
+        }
+        
+    }
+    
+
 
 }
 
@@ -245,6 +274,8 @@ void CSpatialQuadTree::CreateTree( int px, int py, int size, int layer ) {
 
 	int halfsize = size / 2;
 	m_CurLayer = layer;
+    
+    m_NumNodes = 4;
 
 	if( size > MINIMUM_QT_SIZE ) {
 
@@ -255,7 +286,7 @@ void CSpatialQuadTree::CreateTree( int px, int py, int size, int layer ) {
 			for( int x = 0; x < 2; x++ ) {
 			
 				CSpatialQuadTree * qtNodes = static_cast< CSpatialQuadTree * > ( m_pChildNodes );
-				qtNodes[x + y * 2].CreateTree( halfsize * x, halfsize * y, halfsize, layer + 1 );
+				qtNodes[x + y * 2].CreateTree( px + x * halfsize, py + y * halfsize, halfsize, layer + 1 );
 				qtNodes[x + y * 2].m_pParentNode = this;
 
 			}

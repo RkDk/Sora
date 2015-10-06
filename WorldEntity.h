@@ -190,6 +190,7 @@ class CWorldEntity : public CEntity
 protected:
 
     CSprite m_Sprite;
+    std::vector< CTextureImage * > m_vTextures;
 
     bool m_bMoved;
     
@@ -200,6 +201,22 @@ protected:
     CBaseSpatialTreeEntity * m_pSpatialTreeEntity;
 
 public:
+    
+    void AddTexture( CTextureImage * t ) {
+        
+        m_vTextures.push_back( t );
+        
+    }
+    
+    void SetMaterialToTexture( int i ) {
+        
+        if( m_vTextures.size() > i ) {
+            
+            SetMaterial( m_vTextures[i] );
+            
+        }
+        
+    }
     
     void FitIn( float x1, float y1, float x2, float y2 ) {
      
