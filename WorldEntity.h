@@ -382,6 +382,12 @@ public:
         
     }
 
+    Vector2< float > GetScaledSize() {
+        
+        return m_Sprite.GetScaledSize();
+        
+    }
+    
     void SetPos( Vector3< float > & v )
     {
 

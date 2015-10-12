@@ -96,6 +96,12 @@ public:
 
 	}
 
+    void BindFrame( int frame = -1 ) {
+        
+        m_pTexture->Bind( frame == -1? m_CurFrameIndex : frame );
+        
+    }
+    
     Vector2< float > GetRealSize( CDrawContext * pDrawContext ) {
     
         int sx = m_Size.GetX(), sy = m_Size.GetY();
