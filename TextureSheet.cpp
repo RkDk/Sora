@@ -83,8 +83,11 @@ void CTextureSheet::CreateGLTexture() {
 
 CTextureSheet::~CTextureSheet() {
 
-    delete [] m_pPixels;
-    
-    glDeleteTextures( 1, &m_SheetTexture );
+    if( m_pPixels ) {
+        
+        delete [] m_pPixels;
+        glDeleteTextures( 1, &m_SheetTexture );
+        
+    }
     
 }

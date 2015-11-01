@@ -16,9 +16,18 @@ private:
     
 public:
     
+    CTextureSheet() : m_pPixels( nullptr ) { }
+    
     ~CTextureSheet();
     
     GLuint GetTexture() { return m_SheetTexture; }
+    
+    void GetSize( int * width, int * height ) {
+        
+        *width = m_Width;
+        *height = m_Height;
+        
+    }
     
     void InitPixels( int, int );
     void CreateGLTexture();

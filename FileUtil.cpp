@@ -69,7 +69,7 @@ void FileUtil::FindFilesInDirectory( std::string dir, std::string ext, std::vect
                 FindFilesInDirectory( dir + filename + "/", ext, fileList, recursive, includepathinfilename );
             
         } else if( ext == "" || filename.find( ext ) != std::string::npos )
-            fileList.push_back( ( ( includepathinfilename )? dir : "" ) + filename );
+            fileList.push_back( ( ( includepathinfilename && dir != "./" )? dir : "" ) + filename );
         
         
     }

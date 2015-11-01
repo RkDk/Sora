@@ -60,5 +60,6 @@
 #include "SoundFactory.h"
 #include "SoundContext.h"
 #include "TrailsEffect.h"
+#include "Level.h"
 
 #endif
