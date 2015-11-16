@@ -42,13 +42,23 @@ CFrameBufferObject::~CFrameBufferObject()
     
 }
 
+void CFrameBufferObject::DrawTextureNoFlip( CDrawContext * pDrawContext ) {
+    
+    CMatrix< float > mat;
+    mat.Identity();
+    mat.Translate( 0.0f, m_Height, 0.0f );
+    
+    DrawTexture( pDrawContext, &mat, false );
+    
+}
+
 void CFrameBufferObject::DrawTexture( CDrawContext * pDrawContext ) {
  
     CMatrix< float > mat;
     mat.Identity();
     mat.Translate( 0.0f, m_Height, 0.0f );
     
-    DrawTexture( pDrawContext, &mat );
+    DrawTexture( pDrawContext, &mat, true );
     
 }
 
@@ -62,16 +72,23 @@ void CFrameBufferObject::DrawTextureDontForceSize( CDrawContext * pDrawContext, 
     
 }
 
+void CFrameBufferObject::DrawTexture( CDrawContext * pDrawContext, CMatrix< float > * pModelMat ) {
+    
+    DrawTexture( pDrawContext, pModelMat, true );
+    
+}
 
-void CFrameBufferObject::DrawTexture( CDrawContext * pDrawContext, CMatrix< float > * pModelMat )
+void CFrameBufferObject::DrawTexture( CDrawContext * pDrawContext, CMatrix< float > * pModelMat, bool b )
 {
+    
+    float mul = ( b )? -1.0f : 1.0f;
     
     float sx, sy, sz;
     pModelMat->GetScale( &sx, &sy, &sz );
-    pModelMat->ScaleMul( m_Width, -m_Height, 1.0f );
+    pModelMat->ScaleMul( m_Width, mul * m_Height, 1.0f );
     
     DrawTextureDontForceSize( pDrawContext, pModelMat );
     
-    pModelMat->Scale( sx, -sy, sz );
+    pModelMat->Scale( sx, mul * sy, sz );
     
 }

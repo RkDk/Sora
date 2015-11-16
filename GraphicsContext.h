@@ -98,6 +98,12 @@ public:
 
 	int LoadShaderProgram( std::string, std::string );
 
+    int GetShaderUniformLocation( int i, std::string name ) {
+        
+        return glGetUniformLocation( m_pShaderPrograms[i].GetProgramID(), name.c_str() );
+        
+    }
+    
 	int GetShaderIDFromIndex( int i )
 	{
 

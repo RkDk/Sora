@@ -66,12 +66,18 @@ public:
         
     }
     
-    void Clear() {
+    void Clear( float r, float g, float b, float a ) {
      
         BeginDrawingToFBO();
-            glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+            glClearColor( r, g, b, a );
             glClear( GL_COLOR_BUFFER_BIT );
         EndDrawingToFBO();
+        
+    }
+    
+    void Clear() {
+        
+        Clear( 0.0f, 0.0f, 0.0f, 0.0f );
         
     }
     
@@ -90,8 +96,10 @@ public:
     }
     
     void DrawTextureDontForceSize( CDrawContext *, CMatrix< float > * );
+    void DrawTexture( CDrawContext *, CMatrix< float > *, bool );
     void DrawTexture( CDrawContext *, CMatrix< float > *);
     void DrawTexture( CDrawContext * );
+    void DrawTextureNoFlip( CDrawContext * );
     
 };
 
