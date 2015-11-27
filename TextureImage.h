@@ -16,6 +16,7 @@ class CTextureFrame
 private:
 
     Vector2< float > m_Offset;
+    std::string m_Path;
     
  	int m_FrameWidth, m_FrameHeight;
  	int m_FrameDelay;
@@ -30,6 +31,10 @@ public:
 	CTextureFrame() : m_pData( NULL ) {
 	
 	}
+    
+    std::string GetPath() {
+        return m_Path;
+    }
 
     void Load( std::string );
 
@@ -99,6 +104,7 @@ private:
 
     CTextureFrame * m_pFrames;
     int m_FrameCount;
+    std::string m_Path;
 
 public:
 
@@ -106,6 +112,10 @@ public:
 	
 	}
 
+    std::string GetPath() {
+        return m_Path;
+    }
+    
 	CTextureFrame & GetFrame( int i )
 	{
 

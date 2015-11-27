@@ -31,6 +31,8 @@ void CTextureFrame::Load( std::string file )
     } else
             Log::Log( "Successfully loaded material: " + file );
 
+    m_Path = file;
+    
     int bpp = i->format->BytesPerPixel;
     int rgbtype = GL_RGBA;
     int fmt = 0;
@@ -120,6 +122,8 @@ void CTextureImage::Load( std::string file )
     std::vector< int > spritedelay;
     std::vector< Vector2< float > > spriteoffset;
 
+    m_Path = file;
+    
     if( file.find( ".txt" ) != std::string::npos )
     {
 

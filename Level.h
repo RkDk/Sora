@@ -21,9 +21,25 @@ class CLevelTile {
   
 public:
     
+    int texID;
     float x, y;
     float w, h;
     float s, t, n, m;
+    
+};
+
+class CTextureInfo {
+    
+public:
+    
+    int textureListIndex, tileFlags;
+    Vector2< int > worldPos;
+    
+    CTextureInfo() { }
+    
+    CTextureInfo( int id, int x, int y ) : textureListIndex( id ), worldPos( x, y ) {
+        
+    }
     
 };
 
@@ -32,10 +48,30 @@ class CLevel {
 private:
     
     CTextureSheet m_LevelTextureSheet;
+    std::vector< CTextureInfo > m_textureInfoList;
     boost::ptr_vector< CLevelTile > m_vTiles;
+    
+    std::unordered_map< int, std::string > m_textureList;
+    std::unordered_map< int, CTextureImage * > m_textureData;
+    std::unordered_map< int, Vector4< float > > m_textureCoord;
+    
+    int m_LastTextureKey;
+    
+    void CreateNewTile( int, int, int );
     
 public:
     
+    void UpdatePackedTextureCoords();
+    void CreatePackedTexture();
+    bool HasLevelTexture( std::string );
+    void AddLevelTexture( std::string, CTextureImage * image );
+    int GetLevelTextureCount( std::string );
+    void RemoveLevelTexture( std::string );
+    
+    void SetTileAt( std::string, int, int );
+    void RemoveTileAt( int, int );
+    
+    void Save( std::string );
     void Load( std::string, CTextureFactory * );
     void Draw( CDrawContext * );
     

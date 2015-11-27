@@ -2,6 +2,12 @@
 
 void CTextureSheet::InitPixels( int width, int height ) {
  
+    if( m_pPixels ) {
+        
+        Free();
+        
+    }
+    
     m_Width = width;
     m_Height = height;
     
@@ -11,6 +17,34 @@ void CTextureSheet::InitPixels( int width, int height ) {
     
     for( long int i = 0; i < m_MaxIndices; i++ )
         m_pPixels[i] = 0;
+}
+
+void CTextureSheet::Resize( int width, int height ) {
+    /* unfinished
+    int oldWidth = m_Width;
+    int oldHeight = m_Height;
+    int oldMaxIndices = m_MaxIndices;
+    
+    m_Width = width;
+    m_Height = height;
+    m_MaxIndices = width * height * 4;
+    
+    GLubyte * newPixels = new GLubyte[m_MaxIndices];
+    
+    for( int i = 0; i < oldHeight; i++ ) {
+        for( int j = 0; j < oldWidth; j++ ) {
+            int srcindex = 4 * ( j + i * oldWidth );
+            int dstindex = 4 * ( j + i * width );
+            for( int o = 0; o < 4; o++ )
+                if( dstindex + o < m_MaxIndices )
+                    newPixels[dstindex + o] = m_pPixels[srcindex + o];
+        }
+    }
+    
+    Free();
+    m_pPixels = newPixels;
+    */
+    
 }
 
 void CTextureSheet::AddPixelDataLuminance( GLubyte * pData, int x, int y, int width, int height ) {

@@ -29,7 +29,16 @@ public:
         
     }
     
+    void Free() {
+        if( m_pPixels ) {
+            delete [] m_pPixels;
+            m_pPixels = nullptr;
+            glDeleteTextures( 1, &m_SheetTexture );
+        }
+    }
+    
     void InitPixels( int, int );
+    void Resize( int, int );
     void CreateGLTexture();
     void AddPixelData( GLubyte *, int, int, int, int );
     void AddPixelDataLuminance( GLubyte *, int, int, int, int );
