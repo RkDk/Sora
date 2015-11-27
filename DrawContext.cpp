@@ -101,6 +101,8 @@ void CDrawContext::UpdateModelMatrix( CMatrix< float > * modelMat )
     if( m_ModelMatUniform < 0 )
         m_ModelMatUniform = glGetUniformLocation( m_ShaderProgramID, "ModelMat" );
 
+    modelMat->Translate( m_ModelTranslate.GetX(), m_ModelTranslate.GetY(), 0.0f );
+    
 	glUniformMatrix4fv( m_ModelMatUniform, 1, GL_FALSE, modelMat->GetRawMatrix() );
 
 }

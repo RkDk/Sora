@@ -4,7 +4,9 @@
 #include "Level.h"
 #include "GameInput.h"
 #include "DrawContext.h"
+#include "Camera.h"
 
+#define CAMERA_TRANSLATE_SPEED 500.0f
 #define GRIDLINE_THICKNESS 2
 
 class CLevelEditorTileMenu {
@@ -39,10 +41,12 @@ private:
     
     Vector2< int > m_WindowSize;
     
+    CCamera * m_pCamera;
     CLevel * m_pCurLevel;
     bool m_bEditorOn;
     int m_CurTileMenu;
     int m_CurTileIndex, m_SelectedTileIndex;
+    long int m_LastSaveTime;
     
     CTextureImage * m_pPixel;
     
@@ -62,6 +66,10 @@ public:
     
     }
     
+    void SetCamera( CCamera * pCamera ) {
+        m_pCamera = pCamera;
+    }
+    
     bool IsOn() {
         
         return m_bEditorOn;
@@ -71,8 +79,11 @@ public:
     void Toggle() {
     
         m_bEditorOn = !m_bEditorOn;
-        
         SDL_ShowCursor( ( m_bEditorOn )? 1 : 0 );
+        
+        if( m_pCamera ) {
+            m_pCamera->SetCameraFixed( m_bEditorOn );
+        }
         
     }
     
@@ -82,7 +93,7 @@ public:
     
     void NewTileMenu( CTextureFactory * , std::string, std::string );
     
-    void Input( CGameInput * );
+    void Input( CGameInput * , float );
     void Think();
     void Draw( CDrawContext * );
 

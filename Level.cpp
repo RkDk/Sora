@@ -39,6 +39,8 @@ void CLevel::Load( std::string path, CTextureFactory * pTextureFactory ) {
         ENDTEXTUREMAP
     */
     
+    m_Path = path;
+    
     if( !Util::DoesFileExist( path ) ) {
         
         Log::Error( "Attempted to load non-existent level: " + path );
@@ -108,9 +110,6 @@ void CLevel::Load( std::string path, CTextureFactory * pTextureFactory ) {
                         
                         isstream >> texID >> tX >> tY;
                         
-                        CTextureInfo texInfo( texID, tX, tY );
-                        m_textureInfoList.push_back( texInfo );
-                        
                         CreateNewTile( texID, tX * TEXTURE_RENDER_WIDTH, tY * TEXTURE_RENDER_HEIGHT );
      
                         
@@ -143,6 +142,7 @@ void CLevel::RemoveTileAt( int x, int y ) {
         if( x > ( *iter ).x && y > ( *iter ).y ) {
             
             if( x < x2 && y < y2 ) {
+               
                 
                 iter = m_vTiles.erase( iter );
                 erase = true;
@@ -152,6 +152,26 @@ void CLevel::RemoveTileAt( int x, int y ) {
         }
         
         if( !erase )
+            iter++;
+        
+    }
+    
+    int tX = x / TEXTURE_RENDER_WIDTH;
+    int tY = y / TEXTURE_RENDER_HEIGHT;
+    
+    if( x < 0 )
+        tX--;
+    
+    if( y < 0 )
+        tY--;
+    
+    for( std::vector< CTextureInfo >::iterator iter = m_textureInfoList.begin(); iter != m_textureInfoList.end(); ) {
+        
+        if( ( *iter ).worldPos.GetX() == tX && ( *iter ).worldPos.GetY() == tY ) {
+            
+            iter = m_textureInfoList.erase( iter );
+            
+        } else
             iter++;
         
     }
@@ -178,6 +198,10 @@ void CLevel::CreateNewTile( int texID, int x, int y ) {
     newTile->n = c.GetW();
     
     m_vTiles.push_back( newTile );
+    
+    CTextureInfo texInfo( texID, x / TEXTURE_RENDER_WIDTH, y / TEXTURE_RENDER_HEIGHT );
+    m_textureInfoList.push_back( texInfo );
+    
     
 }
 

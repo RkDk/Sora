@@ -19,6 +19,7 @@ private:
 	CMatrix< float > * m_pViewMatrix, * m_pModelMatrix;
 
     Vector2< float > m_DrawScale;
+    Vector2< float > m_ModelTranslate;
     
 	void Create2DVertexBuffer();
 
@@ -51,6 +52,12 @@ public:
     const Vector2< float > & GetGlobalScale() {
      
         return m_DrawScale;
+        
+    }
+    
+    void SetModelTranslate( float x, float y ) {
+        
+        m_ModelTranslate.Set( x, y );
         
     }
 

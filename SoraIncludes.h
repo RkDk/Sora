@@ -61,6 +61,7 @@
 #include "SoundContext.h"
 #include "TrailsEffect.h"
 #include "Level.h"
+#include "Camera.h"
 #include "LevelEditor.h"
 
 #endif

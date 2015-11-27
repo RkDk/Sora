@@ -55,11 +55,17 @@ private:
     std::unordered_map< int, CTextureImage * > m_textureData;
     std::unordered_map< int, Vector4< float > > m_textureCoord;
     
+    std::string m_Path;
+    
     int m_LastTextureKey;
     
     void CreateNewTile( int, int, int );
     
 public:
+    
+    std::string GetPath() {
+        return m_Path;
+    }
     
     void UpdatePackedTextureCoords();
     void CreatePackedTexture();

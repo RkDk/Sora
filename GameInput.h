@@ -13,10 +13,14 @@ private:
  
     SDL_Keycode m_KeyDown;
     Uint32 m_EventType;
+    bool m_bShiftMod;
     
 public:
+    
+    CGameInput();
 
 	void Poll();
+    void Poll2();
     int PollEvent();
 
 	bool KeyDownOnce( SDL_Keycode i ) {
@@ -24,6 +28,12 @@ public:
 		return ( m_KeyDown == i );
 
 	}
+    
+    bool ShiftMod() {
+        
+        return m_bShiftMod;
+        
+    }
     
     Uint32 EventType() {
      

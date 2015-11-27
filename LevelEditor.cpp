@@ -3,10 +3,12 @@
 CLevelEditor::CLevelEditor() {
     
     m_pCurLevel = nullptr;
+    m_pCamera = nullptr;
     m_bEditorOn = false;
     m_CurTileIndex = -1;
     m_SelectedTileIndex = -1;
     m_CurTileMenu = 0;
+    m_LastSaveTime = -5000;
     
 }
 
@@ -50,13 +52,35 @@ void CLevelEditor::PlaceTile( int tileIndex, int x, int y ) {
     
 }
 
-void CLevelEditor::Input( CGameInput * pGameInput ) {
+void CLevelEditor::Input( CGameInput * pGameInput, float dps ) {
     
     if( !m_bEditorOn || !m_pCurLevel )
         return;
     
     int mx, my;
     auto mouseState = SDL_GetMouseState( &mx, &my );
+    
+    
+    Vector2< float > cameraTranslate;
+    
+    if( m_pCamera ) {
+        
+        cameraTranslate = m_pCamera->GetTranslate();
+        
+    }
+    
+    int tX = ( mx - cameraTranslate.GetX() ) / TEXTURE_RENDER_WIDTH;
+    int tY = ( my - cameraTranslate.GetY() ) / TEXTURE_RENDER_HEIGHT;
+    
+    if( mx - cameraTranslate.GetX() < 0 )
+        tX--;
+    
+    if( my - cameraTranslate.GetY() < 0 )
+        tY--;
+    
+    int x = tX * TEXTURE_RENDER_WIDTH;
+    int y = tY * TEXTURE_RENDER_HEIGHT;
+
     
     if( mouseState & SDL_BUTTON( SDL_BUTTON_LEFT ) ) {
         
@@ -66,16 +90,70 @@ void CLevelEditor::Input( CGameInput * pGameInput ) {
         
         } else if( m_SelectedTileIndex > -1 ) {
             
-            int tX = mx / TEXTURE_RENDER_WIDTH;
-            int tY = my / TEXTURE_RENDER_HEIGHT;
-            int x = tX * TEXTURE_RENDER_WIDTH;
-            int y = tY * TEXTURE_RENDER_HEIGHT;
-            
-            m_pCurLevel->RemoveTileAt( mx, my );
+            m_pCurLevel->RemoveTileAt( mx - cameraTranslate.GetX(), my - cameraTranslate.GetY() );
             PlaceTile( m_SelectedTileIndex, x, y );
                 
         }
             
+    }
+    
+    if( m_pCamera ) {
+    
+        if( pGameInput->KeyDown( SDL_SCANCODE_UP ) ) {
+         
+            m_pCamera->Translate( 0.0f, -CAMERA_TRANSLATE_SPEED * dps );
+            
+        }
+
+        if( pGameInput->KeyDown( SDL_SCANCODE_DOWN ) ) {
+            
+            m_pCamera->Translate( 0.0f, CAMERA_TRANSLATE_SPEED * dps );
+            
+        }
+      
+        if( pGameInput->KeyDown( SDL_SCANCODE_LEFT ) ) {
+            
+            m_pCamera->Translate( -CAMERA_TRANSLATE_SPEED * dps, 0.0f );
+            
+        }
+        
+        if( pGameInput->KeyDown( SDL_SCANCODE_RIGHT ) ) {
+            
+            m_pCamera->Translate( CAMERA_TRANSLATE_SPEED * dps, 0.0f );
+            
+        }
+
+    }
+    
+    
+    if( pGameInput->KeyDown( SDL_SCANCODE_1 ) ) {
+        
+        if( m_SelectedTileIndex > -1 ) {
+            
+            m_pCurLevel->RemoveTileAt( mx - cameraTranslate.GetX(), my - cameraTranslate.GetY() );
+            PlaceTile( m_SelectedTileIndex, x, y );
+        
+        }
+        
+    }
+    
+    if( pGameInput->KeyDown( SDL_SCANCODE_3 ) ) {
+        
+        
+        m_pCurLevel->RemoveTileAt( mx - cameraTranslate.GetX(), my - cameraTranslate.GetY() );
+
+        
+    }
+    
+    if( pGameInput->ShiftMod() && pGameInput->KeyDownOnce( SDLK_0 ) ) {
+        
+        if( m_pCurLevel ) {
+            
+            m_LastSaveTime = SDL_GetTicks();
+            m_pCurLevel->Save( m_pCurLevel->GetPath() );
+        
+        }
+        
     }
     
 }
@@ -95,20 +173,34 @@ void CLevelEditor::Draw( CDrawContext * pDrawContext ) {
     int mx, my;
     SDL_GetMouseState( &mx, &my );
     
-    int tileX = mx / TEXTURE_RENDER_WIDTH;
-    int tileY = my / TEXTURE_RENDER_HEIGHT;
+    Vector2< float > cameraTranslate;
     
-    pDrawContext->DrawMaterial( *m_pPixel, tileX * TEXTURE_RENDER_WIDTH, tileY * TEXTURE_RENDER_HEIGHT, TEXTURE_RENDER_WIDTH, TEXTURE_RENDER_HEIGHT, 0.5f, 0.5f, 1.0f, 0.5f );
+    if( m_pCamera ) {
+     
+        cameraTranslate = m_pCamera->GetTranslate();
+    
+    }
+    
+    float gridOffsetX = cameraTranslate.GetX() - ( ( int )( cameraTranslate.GetX() / TEXTURE_RENDER_WIDTH ) * TEXTURE_RENDER_WIDTH );
+    float gridOffsetY = cameraTranslate.GetY() - ( ( int )( cameraTranslate.GetY() / TEXTURE_RENDER_HEIGHT ) * TEXTURE_RENDER_HEIGHT );
+    
+    int selectedTileX = mx / TEXTURE_RENDER_WIDTH;
+    int selectedTileY = my / TEXTURE_RENDER_HEIGHT;
+    
+    int tileX = ( mx - gridOffsetX ) / TEXTURE_RENDER_WIDTH;
+    int tileY = ( my - gridOffsetY ) / TEXTURE_RENDER_HEIGHT;
+    
+    pDrawContext->DrawMaterial( *m_pPixel, tileX * TEXTURE_RENDER_WIDTH + gridOffsetX, tileY * TEXTURE_RENDER_HEIGHT + gridOffsetY, TEXTURE_RENDER_WIDTH, TEXTURE_RENDER_HEIGHT, 0.5f, 0.5f, 1.0f, 0.5f );
 
     
     int numLinesHoriz = m_WindowSize.GetX() / TEXTURE_RENDER_WIDTH;
     int numLinesVert = m_WindowSize.GetY() / TEXTURE_RENDER_HEIGHT;
     
-    for( int j = 0; j < numLinesHoriz; j++ )
-        pDrawContext->DrawMaterial( *m_pPixel, j * TEXTURE_RENDER_WIDTH, 0, GRIDLINE_THICKNESS, m_WindowSize.GetY(), 1.0f, 1.0f, 1.0f, 1.0f );
+    for( int j = 0; j < numLinesHoriz + 1; j++ )
+        pDrawContext->DrawMaterial( *m_pPixel, j * TEXTURE_RENDER_WIDTH + gridOffsetX, gridOffsetY - TEXTURE_RENDER_HEIGHT, GRIDLINE_THICKNESS, m_WindowSize.GetY() + TEXTURE_RENDER_HEIGHT * 2, 1.0f, 1.0f, 1.0f, 1.0f );
 
-    for( int j = 0; j < numLinesVert; j++ )
-        pDrawContext->DrawMaterial( *m_pPixel, 0, j * TEXTURE_RENDER_HEIGHT, m_WindowSize.GetX(), GRIDLINE_THICKNESS, 1.0f, 1.0f, 1.0f, 1.0f );
+    for( int j = 0; j < numLinesVert + 1; j++ )
+        pDrawContext->DrawMaterial( *m_pPixel, gridOffsetX - TEXTURE_RENDER_WIDTH, j * TEXTURE_RENDER_HEIGHT + gridOffsetY, m_WindowSize.GetX() + TEXTURE_RENDER_WIDTH * 2, GRIDLINE_THICKNESS, 1.0f, 1.0f, 1.0f, 1.0f );
     
     if( m_CurTileMenu < m_pTileMenus.size() ) {
         
@@ -139,10 +231,16 @@ void CLevelEditor::Draw( CDrawContext * pDrawContext ) {
         
         if( mx < tileMenuWidth && my < tileMenuHeight ) {
             
-            m_CurTileIndex = tileX + tileY * tileMenuNumColumns;
-            pDrawContext->DrawMaterial( *m_pPixel, tileX * TEXTURE_RENDER_WIDTH, tileY * TEXTURE_RENDER_HEIGHT, TEXTURE_RENDER_WIDTH, TEXTURE_RENDER_HEIGHT, 1.0f, 1.0f, 1.0f, 0.3f );
+            m_CurTileIndex = selectedTileX + selectedTileY * tileMenuNumColumns;
+            pDrawContext->DrawMaterial( *m_pPixel, selectedTileX * TEXTURE_RENDER_WIDTH, selectedTileY * TEXTURE_RENDER_HEIGHT, TEXTURE_RENDER_WIDTH, TEXTURE_RENDER_HEIGHT, 1.0f, 1.0f, 1.0f, 0.3f );
         
         }
+        
+    }
+    
+    if( SDL_GetTicks() - m_LastSaveTime < 1000 ) {
+        
+        pDrawContext->DrawMaterial( *m_pPixel, 0.0f, 0.0f, m_WindowSize.GetX(), m_WindowSize.GetY() * .1f, 0.0f, 1.0f, 0.0f, 0.5f );
         
     }
     
