@@ -194,7 +194,7 @@ protected:
 
     bool m_bMoved;
     
-    Vector3< float > m_Position;
+    Vector3< float > m_Position, m_FrameDisplacement;// m_LastFrameDisplacement;
     //bool m_bPhysicsBodyInit, m_bExplicitPhysicsBodyPosSet, m_bFollowPhysics;
     //CPhysBody m_PhysicsBody;
     CCollisionBody * m_pCollisionBody;
@@ -238,22 +238,52 @@ public:
     
     void SetCollisionBody( CCollisionBody * pCollisionBody ) {
      
+        if( m_pCollisionBody != nullptr &&
+            m_pCollisionBody != pCollisionBody ) {
+            delete m_pCollisionBody;
+        }
+        
         m_pCollisionBody = pCollisionBody;
         
     }
+    
+    void SetCollisionBodyToBox( int x, int y, int w, int h ) {
+        
+        if( !m_pCollisionBody )
+            m_pCollisionBody = new CBoxCollisionBody;
+        
+        CBoxCollisionBody * colBox = static_cast< CBoxCollisionBody * >( m_pCollisionBody );
+        colBox->SetBox( x, y, w, h );
+        
+        
+    
+    }
+
+    void SetCollisionBodyToBox( int w, int h ) {
+        
+        SetCollisionBodyToBox( 0, 0, w, h );
+        
+    }
+    
+    void SetCollisionBodyToBoxSpritePercentOffsetFromBottom( float x, float y ) {
+        
+        if( !m_Sprite.IsSet() )
+            return;
+        
+        auto v = m_Sprite.GetScaledSize();
+        SetCollisionBodyToBox( v.GetX() * ( 1.0f - x ), v.GetY() * ( 1.0f - y ), v.GetX() * x, v.GetY() * y );
+        
+        
+    }
+
     
     void SetCollisionBodyToBoxSprite() {
         
         if( !m_Sprite.IsSet() )
             return;
-            
-        if( !m_pCollisionBody )
-            m_pCollisionBody = new CBoxCollisionBody;        
-
-        CBoxCollisionBody * colBox = static_cast< CBoxCollisionBody * >( m_pCollisionBody );
-        auto v = m_Sprite.GetScaledSize();
-        colBox->SetBox( 0.0f, 0.0f, v.GetX(), v.GetY() );
         
+        auto v = m_Sprite.GetScaledSize();
+        SetCollisionBodyToBox( 0, 0, v.GetX(), v.GetY() );
     
         
     }
@@ -284,7 +314,28 @@ public:
      
      
     }*/
+    
+    /*
 
+    float GetDisplacementRadians() {
+        
+        return Util::AngleFromOriginRadians( m_LastFrameDisplacement.GetX(), m_LastFrameDisplacement.GetY() );
+        
+    }
+    
+    Vector3< float > & GetLastFrameDisplacement() {
+        
+        return m_LastFrameDisplacement;
+        
+    }
+    
+    void Undisplace() {
+        
+        Displace( -m_LastFrameDisplacement.GetX(), -m_LastFrameDisplacement.GetY() );
+        
+    }
+     */
+    
     void Displace2( float x, float y )
     {
         x *= m_pContext->GetFrameDelta();
@@ -296,12 +347,17 @@ public:
 
     void Displace( float x, float y )
     {
-
+        
+        m_FrameDisplacement.Set( m_FrameDisplacement.GetX() + x, m_FrameDisplacement.GetY() + y );
         m_Position.Set( m_Position.GetX() + x, m_Position.GetY() + y );
  //     m_bExplicitPhysicsBodyPosSet = true;
 
         m_bMoved = true;
         
+    }
+    
+    void ClearFrameDisplacement() {
+        m_FrameDisplacement.Set( 0.0f, 0.0f );
     }
     
     /*
@@ -518,7 +574,7 @@ public:
         
     }
 
-    CWorldEntity() : CEntity(), m_pSpatialTreeEntity( NULL ), m_bMoved( false ), m_pCollisionBody( NULL )
+    CWorldEntity() : CEntity(), m_pSpatialTreeEntity( nullptr ), m_bMoved( false ), m_pCollisionBody( nullptr )
     {
 
 

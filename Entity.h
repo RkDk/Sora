@@ -8,6 +8,9 @@
 #include <boost/lexical_cast.hpp>
 
 
+#define WORLD_ENTITY_WALL_ID 0x08
+
+
 class CEntity
 {
 

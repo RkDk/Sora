@@ -118,11 +118,45 @@ float Util::Dist( Vector2< float > p1, Vector2< float > p2 ) {
     
 }
 
+float Util::AngleBetweenPointsRadians( float x1, float y1, float x2,  float y2 ) {
+    
+    
+    return std::atan2( y2 - y1, x2 - x1 );
+    
+}
+
+float Util::AngleFromOriginRadians( float x, float y ) {
+    
+    return std::atan2( y, x );
+    
+}
 
 float Util::AngleBetweenPoints( float x1, float y1, float x2,  float y2 ) {
  
 
-    return ( std::atan2( y2 - y1, x2 - x1 ) ) * RAD2DEG;
+    return Util::AngleBetweenPointsRadians( x1, y1, x2, y2 ) * RAD2DEG;
+    
+}
+
+float Util::AngleFromOrigin( float x, float y ) {
+    
+    return Util::AngleFromOriginRadians( x, y ) * RAD2DEG;
+    
+}
+
+bool Util::SignsEqual( float x, float y ) {
+    
+    if( x == 0.0f && y == 0.0f )
+        return true;
+        
+    if( ( x > 0.0f && y > 0.0f ) ||
+       ( x < 0.0f && y < 0.0f ) ) {
+        
+        return true;
+        
+    }
+    
+    return false;
     
 }
 

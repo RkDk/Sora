@@ -9,6 +9,11 @@
 #define CAMERA_TRANSLATE_SPEED 500.0f
 #define GRIDLINE_THICKNESS 2
 
+
+#define TEXTURE_RENDER_WIDTH_EDITOR 64
+#define TEXTURE_RENDER_HEIGHT_EDITOR 64
+
+
 class CLevelEditorTileMenu {
     
 private:

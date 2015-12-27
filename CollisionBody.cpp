@@ -1,4 +1,5 @@
 #include "CollisionBody.h"
+#include <sstream>
 
 void CCollisionBody::FindSATMinMax( const std::vector< Vector3< float > > & colOffset, Vector3< float > & pos, Vector3< float > & axis, float * min, float * max ) {
     
@@ -50,11 +51,15 @@ bool CCollisionBody::CheckSATCollision( CCollisionInfo & info, Vector3< float > 
         
         double d;
         
+        int t = 0;
+        
         if( minA < minB )
             d = minB - maxA;
-        else
-            d = minA - maxB;
+        else {
+            t = 1;
         
+            d = minA - maxB;
+        }
         if( d > 0 ) {
             
             
@@ -63,16 +68,20 @@ bool CCollisionBody::CheckSATCollision( CCollisionInfo & info, Vector3< float > 
             
         } else {
             
-            if( fabs( d ) < info.minTransDist ) {
-                
-                info.minTransDist = fabs( d );
-                
-                if( minA < minB )
-                    info.minTransAxis = curAxis * -1.0;
-                else
+            if( minA < minB )
+                curAxis = curAxis * -1.0;
+            
+            //Ensure second colliding object has this normal
+            if( c->HasNormal( curAxis.GetX(), curAxis.GetY(), curAxis.GetZ() ) ) {
+            
+                if( fabs( d ) < info.minTransDist ) {
+                    
+                    info.minTransDist = fabs( d );
                     info.minTransAxis = curAxis;
-                
-                
+                    
+                    
+                }
+            
             }
             
         }

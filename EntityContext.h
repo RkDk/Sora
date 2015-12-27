@@ -8,6 +8,7 @@
 #include "FontFactory.h"
 #include "SoundFactory.h"
 #include "SoundContext.h"
+#include "CollisionInfo.h"
 
 class CEntityContext
 {
@@ -152,6 +153,13 @@ public:
     
     virtual bool GetBoolean( std::string b ) = 0;
 
+    
+    virtual void HandleEntityContact( void * pEntityA, int entTypeA, void * pEntityB, int entTypeB, CCollisionInfo * data )
+    {
+        
+        
+    }
+    
 	virtual void HandleEntityContact( void * pEntityA, int entTypeA, void * pEntityB, int entTypeB )
 	{
 

@@ -9,7 +9,7 @@
 #include "BaseSpatialTreeEntity.h"
 #include "DrawContext.h"
 
-#define MINIMUM_QT_SIZE 200
+#define MINIMUM_QT_SIZE 150
 
 class CSpatialTreeObject : public CBaseSpatialTreeEntity {
     
@@ -111,11 +111,12 @@ public:
         
     }
     
-    virtual void Draw( CDrawContext * ) = 0;
+    virtual void Draw( CDrawContext * d, float cx, float cy ) { }
 
     void Think();
     void GetObjectsInLayer( std::vector< CNodeList > &, int  );
     
+    void RemoveObject( int, bool );
     CSpatialTreeObject * AddEntity( CWorldEntity * );
     
     bool HasEntity( CSpatialTreeObject * );
@@ -175,7 +176,7 @@ protected:
     
 public:
     
-    void Draw( CDrawContext * );
+    void Draw( CDrawContext *, float, float );
 
     
     virtual void CreateTree( int, int, int, int );

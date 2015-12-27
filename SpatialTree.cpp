@@ -144,8 +144,43 @@ void CSpatialTree::Think() {
    
 }
 
+void CSpatialTree::RemoveObject( int entID, bool deleteObj ) {
+    
+    std::unordered_map< int, CSpatialTreeObject * >::iterator end = m_pQTObjects.end();
+    std::unordered_map< int, CSpatialTreeObject * >::iterator target = m_pQTObjects.find( entID );
+    
+    if( target != end ) {
+        
+        if( m_pChildNodes ) {
+            
+            for( int j = 0; j < m_NumNodes; j++ ) {
+                
+                m_pChildNodes[j].RemoveObject( entID, deleteObj );
+                
+            }
+            
+        }
+        
+        CSpatialTreeObject * pSpatialTreeObject = target->second;
+        m_pQTObjects.erase( target );
+        
+        if( !m_pParentNode && deleteObj ) {
+            
+            delete pSpatialTreeObject;
+            
+        }
+        
+        
+    }
+    
+    
+}
+
 void CSpatialTree::RemoveObject( CSpatialTreeObject * pSpatialTreeObject, bool deleteObj ) {
 
+    RemoveObject( pSpatialTreeObject->GetEntityID(), deleteObj );
+    
+    /* defunct
     std::unordered_map< int, CSpatialTreeObject * >::iterator end = m_pQTObjects.end();
     std::unordered_map< int, CSpatialTreeObject * >::iterator target = m_pQTObjects.find( pSpatialTreeObject->GetEntityID() );
     
@@ -171,6 +206,7 @@ void CSpatialTree::RemoveObject( CSpatialTreeObject * pSpatialTreeObject, bool d
 
 
     }
+    */
 
     
 }
@@ -233,31 +269,35 @@ void CSpatialOctree::CreateTree( int px, int py, int pz, int size, int layer ) {
 
 }
 
-void CSpatialQuadTree::Draw( CDrawContext * pDrawContext ) {
+void CSpatialQuadTree::Draw( CDrawContext * pDrawContext, float cx, float cy ) {
 
     
-    float r = 1.0f, g = 1.0f, b = 1.0f, a = 1.0f;
+    //float r = 1.0f, g = 1.0f, b = 1.0f, a = 1.0f;
     
     if( !m_pChildNodes ) {
         
+        float x = m_Pos.GetX() + cx;
+        float y = m_Pos.GetY() + cy;
+        
         if( ContainsEntityCount( 1 ) ) {
             
-            pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY(), m_Size.GetX(), m_Size.GetY(), 1.0f, 0.0f, 0.0f, .3f );
+            pDrawContext->DrawGLTexture( 0, x, y, m_Size.GetX(), m_Size.GetY(), 1.0f, 0.0f, 0.0f, .3f );
             
-        }
+        } else
+            pDrawContext->DrawGLTexture( 0, x, y, m_Size.GetX(), m_Size.GetY(), 0.0f, 0.0f, 1.0f, .3f );
         
     }
     
-    pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY(), m_Size.GetX(), 2.0f, r, g, b, a );
-    pDrawContext->DrawGLTexture( 0, m_Pos.GetX() + m_Size.GetX(), m_Pos.GetY(), 2.0f, m_Size.GetY(), r, g, b, a );
-    pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY(), 2.0f, m_Size.GetY(), r, g, b, a );
-    pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY() + m_Size.GetY(), m_Size.GetX(), 2.0f, r, g, b, a );
+    //pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY(), m_Size.GetX(), 2.0f, r, g, b, a );
+    //pDrawContext->DrawGLTexture( 0, m_Pos.GetX() + m_Size.GetX(), m_Pos.GetY(), 2.0f, m_Size.GetY(), r, g, b, a );
+    //pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY(), 2.0f, m_Size.GetY(), r, g, b, a );
+    //pDrawContext->DrawGLTexture( 0, m_Pos.GetX(), m_Pos.GetY() + m_Size.GetY(), m_Size.GetX(), 2.0f, r, g, b, a );
     
     if( m_pChildNodes ) {
         
         for( int i = 0; i < 4; i++ ) {
             
-            m_pChildNodes[i].Draw( pDrawContext );
+            m_pChildNodes[i].Draw( pDrawContext, cx, cy );
             
         }
         

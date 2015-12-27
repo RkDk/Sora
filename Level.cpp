@@ -15,6 +15,14 @@ void CLevel::Save( std::string path ) {
         newMapData << iter.textureListIndex << " " << iter.worldPos.GetX() << " " << iter.worldPos.GetY() << "\n";
     }
     newMapData << "ENDTEXTUREMAP\n";
+    
+    newMapData << "ENTITYMAP\n";
+    for( auto iter : m_entityInfoList ) {
+        newMapData << iter.entID << " " << iter.x << " " << iter.y << " " << iter.entValue1 << " " << iter.entValue2 << " " << iter.entValue3 << "\n";
+    }
+    newMapData << "ENDENTITYMAP\n";
+    
+
 
     Log::Log( "Saving map: "  + path );
 
@@ -37,13 +45,23 @@ void CLevel::Load( std::string path, CTextureFactory * pTextureFactory ) {
         TEXTUREMAP
         <#Texture> <x> <y> (flag) (flag) (...) END
         ENDTEXTUREMAP
+        ENTITYMAP
+        <#Entity ID> <x> <y> <Value1> <Value2> <Value3>
+        ENDENTITYMAP
     */
     
     m_Path = path;
     
     if( !Util::DoesFileExist( path ) ) {
         
-        Log::Error( "Attempted to load non-existent level: " + path );
+        Log::Log( "Attempted to load non-existent level: " + path );
+        Log::Log( "Creating level: " + path );
+        
+        std::ofstream newLevel( path );
+        newLevel <<  "TEXTURELIST\nENDTEXTURELIST\nTEXTUREMAP\nENDTEXTUREMAP\nENTITYMAP\nENDENTITYMAP\n";
+        newLevel.close();
+        
+        Load( path, pTextureFactory );
         
     } else {
         
@@ -110,7 +128,13 @@ void CLevel::Load( std::string path, CTextureFactory * pTextureFactory ) {
                         
                         isstream >> texID >> tX >> tY;
                         
-                        CreateNewTile( texID, tX * TEXTURE_RENDER_WIDTH, tY * TEXTURE_RENDER_HEIGHT );
+                        int flag = 0;
+                        
+                        if( m_textureData[texID]->GetPath().find( "floor" ) == std::string::npos ) {
+                            flag = TILE_FLAG_WALL;
+                        }
+  
+                        CreateNewTile( texID, tX * TEXTURE_RENDER_WIDTH, tY * TEXTURE_RENDER_HEIGHT, flag );
      
                         
                     } else
@@ -128,6 +152,68 @@ void CLevel::Load( std::string path, CTextureFactory * pTextureFactory ) {
         
     }
     
+    
+}
+
+void CLevel::UpdateSpatialTree( CSpatialQuadTree * pQuadTree ) {
+    
+    //Clear all current spatial tree tiles
+    for( boost::ptr_vector< CLevelTileEntity >::iterator iter = m_vSpatialTiles.begin(); iter != m_vSpatialTiles.end(); ) {
+        
+        pQuadTree->RemoveObject( ( *iter ).GetGlobalCount(), false );
+        iter = m_vSpatialTiles.erase( iter );
+        
+    }
+    
+    //Rebuild spatial tree tiles list
+    for( auto iter : m_vTiles ) {
+
+        if( m_textureInfoList[iter.tileInfoIndex].tileFlags & TILE_FLAG_WALL ) {
+            CLevelTileEntity * pTile = new CLevelTileEntity;
+            pTile->SetPos( iter.x, iter.y );
+            pTile->SetCollisionBodyToBox( 0, 0, iter.w, iter.h );
+            m_vSpatialTiles.push_back( pTile );
+            
+        }
+        
+    }
+    
+    float tW = TEXTURE_RENDER_WIDTH;
+    float tH = TEXTURE_RENDER_HEIGHT;
+    
+    //Set normals appropriately
+    BOOST_FOREACH( CLevelTileEntity & tile, m_vSpatialTiles )
+    {
+
+        CCollisionBody * colBody = tile.GetCollisionBody();
+        
+        colBody->ClearNormals();
+        
+        float x = tile.GetX() + tW * .5f;
+        float y = tile.GetY() + tH * .5f;
+        
+        if( GetSpatialTile( x - tW, y ) == nullptr )
+            colBody->AddNormal( -1.0f, 0.0f, 0.0f );
+        
+        if( GetSpatialTile( x, y - tH ) == nullptr )
+            colBody->AddNormal( 0.0f, -1.0f, 0.0f );
+
+        if( GetSpatialTile( x + tW, y ) == nullptr )
+            colBody->AddNormal( 1.0f, 0.0f, 0.0f );
+        
+        if( GetSpatialTile( x, y + tH ) == nullptr )
+            colBody->AddNormal( 0.0f, 1.0f, 0.0f );
+        
+    }
+    
+    //Re-add spatial tree tiles
+    BOOST_FOREACH( CLevelTileEntity & tile, m_vSpatialTiles )
+    {
+        
+        pQuadTree->AddEntity( &tile );
+        
+        
+    }
     
 }
 
@@ -180,17 +266,61 @@ void CLevel::RemoveTileAt( int x, int y ) {
 
 void CLevel::CreateNewTile( int texID, int x, int y ) {
     
+    CreateNewTile( texID, x, y, 0 );
+    
+}
+
+void CLevel::CreateNewEntity( int entID, float x, float y, int entValue1, int entValue2, int entValue3 ) {
+    
+    
+    CLevelEntityInfo entInfo( entID, x, y, entValue1, entValue2, entValue3 );
+    
+    m_entityInfoList.push_back( entInfo );
+    
+    if( m_pEditorCallback ) {
+        
+        m_pEditorCallback->HandleEntityCreation( entInfo );
+        
+    }
+    
+    
+}
+
+CLevelTileEntity * CLevel::GetSpatialTile( float x, float y ) {
+    
+    BOOST_FOREACH( CLevelTileEntity & tile, m_vSpatialTiles ) {
+        
+        if( x >= tile.GetX() && y >= tile.GetY() ) {
+            
+            if( x <= tile.GetX() + TEXTURE_RENDER_WIDTH &&
+               y <= tile.GetY() + TEXTURE_RENDER_HEIGHT ) {
+                
+                return &tile;
+                
+            }
+            
+        }
+        
+        
+    }
+    
+    return nullptr;
+    
+}
+
+void CLevel::CreateNewTile( int texID, int x, int y, int flag ) {
+    
     CLevelTile * newTile = new CLevelTile;
     Vector4< float > & c = m_textureCoord[texID];
     
     newTile->texID = texID;
+    newTile->tileInfoIndex = m_textureInfoList.size();
     
     newTile->x = x;
     newTile->y = y;
     
     newTile->w = TEXTURE_RENDER_WIDTH;
     newTile->h = TEXTURE_RENDER_HEIGHT;
-    
     
     newTile->s = c.GetX();
     newTile->t = c.GetY();
@@ -200,7 +330,13 @@ void CLevel::CreateNewTile( int texID, int x, int y ) {
     m_vTiles.push_back( newTile );
     
     CTextureInfo texInfo( texID, x / TEXTURE_RENDER_WIDTH, y / TEXTURE_RENDER_HEIGHT );
+    texInfo.tileFlags = flag;
+    
     m_textureInfoList.push_back( texInfo );
+    
+    if( m_pEditorCallback ) {
+        m_pEditorCallback->HandleTileCreation( texInfo );
+    }
     
     
 }

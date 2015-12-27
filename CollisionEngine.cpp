@@ -22,23 +22,37 @@ void CCollisionEngine::CheckForQuadTreeCollisions( CSpatialTree * pQuadTree, CCo
                 CWorldEntity * ent1 = qtObj1->GetEntity();
                 CWorldEntity * ent2 = qtObj2->GetEntity();
                 
-                CCollisionBody * colBody1 = ent1->GetCollisionBody();
-                CCollisionBody * colBody2 = ent2->GetCollisionBody();
+                //Avoid wall & wall collision tests
+                if( !( ent1->GetClassTypeID() & WORLD_ENTITY_WALL_ID ) ||
+                    !( ent2->GetClassTypeID() & WORLD_ENTITY_WALL_ID )  ) {
                 
-                if( colBody1 && colBody2 ) {
-                
-                    Vector3< float > ent1Pos = Vector3< float >( ent1->GetX(), ent1->GetY(), 0.0f );
-                    Vector3< float > ent2Pos = Vector3< float >( ent2->GetX(), ent2->GetY(), 0.0f );
+                    //Entity 1 should never be a wall, swap if this is the case
+                    if( ent1->GetClassTypeID() & WORLD_ENTITY_WALL_ID ) {
+                        CWorldEntity * t = ent2;
+                        ent2 = ent1;
+                        ent1 = t;
+                    }
+                  
                     
-                    CCollisionInfo colInfo;
+                    CCollisionBody * colBody1 = ent1->GetCollisionBody();
+                    CCollisionBody * colBody2 = ent2->GetCollisionBody();
                     
-                    if( colBody1->CheckSATCollision( colInfo, ent1Pos, colBody2, ent2Pos ) ) {
-                     
-                        CCollisionContact contact;
-                        contact.SetCollisionInfo( &colInfo );
-                        contact.SetObjects( ent1, ent2 );
-                        pListener->BeginContact( contact );
+                    if( colBody1 && colBody2 ) {
+                    
+                        Vector3< float > ent1Pos = Vector3< float >( ent1->GetX(), ent1->GetY(), 0.0f );
+                        Vector3< float > ent2Pos = Vector3< float >( ent2->GetX(), ent2->GetY(), 0.0f );
                         
+                        CCollisionInfo colInfo;
+                        
+                        if( colBody1->CheckSATCollision( colInfo, ent1Pos, colBody2, ent2Pos ) ) {
+                            
+                            CCollisionContact contact;
+                            contact.SetCollisionInfo( &colInfo );
+                            contact.SetObjects( ent1, ent2 );
+                            pListener->BeginContact( contact );
+                            
+                            
+                        }
                         
                     }
                     

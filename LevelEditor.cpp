@@ -184,8 +184,8 @@ void CLevelEditor::Draw( CDrawContext * pDrawContext ) {
     float gridOffsetX = cameraTranslate.GetX() - ( ( int )( cameraTranslate.GetX() / TEXTURE_RENDER_WIDTH ) * TEXTURE_RENDER_WIDTH );
     float gridOffsetY = cameraTranslate.GetY() - ( ( int )( cameraTranslate.GetY() / TEXTURE_RENDER_HEIGHT ) * TEXTURE_RENDER_HEIGHT );
     
-    int selectedTileX = mx / TEXTURE_RENDER_WIDTH;
-    int selectedTileY = my / TEXTURE_RENDER_HEIGHT;
+    int selectedTileX = mx / TEXTURE_RENDER_WIDTH_EDITOR;
+    int selectedTileY = my / TEXTURE_RENDER_HEIGHT_EDITOR;
     
     int tileX = ( mx - gridOffsetX ) / TEXTURE_RENDER_WIDTH;
     int tileY = ( my - gridOffsetY ) / TEXTURE_RENDER_HEIGHT;
@@ -208,19 +208,19 @@ void CLevelEditor::Draw( CDrawContext * pDrawContext ) {
         std::vector< CTextureImage * > pTiles = m_pTileMenus[m_CurTileMenu].GetTiles();
         int numTilesInMenu = pTiles.size();
         const int tileMenuNumColumns = 3;
-        int tileMenuNumRows = ( ( float ) numTilesInMenu / ( float )tileMenuNumColumns + .5f );
+        int tileMenuNumRows = ( ( float ) numTilesInMenu / ( float )tileMenuNumColumns + .99f );
         int curTileIndex = 0;
         
-        int tileMenuWidth = tileMenuNumColumns * TEXTURE_RENDER_WIDTH;
-        int tileMenuHeight = tileMenuNumRows * TEXTURE_RENDER_HEIGHT;
+        int tileMenuWidth = tileMenuNumColumns * TEXTURE_RENDER_WIDTH_EDITOR;
+        int tileMenuHeight = tileMenuNumRows * TEXTURE_RENDER_HEIGHT_EDITOR;
         
         pDrawContext->DrawMaterial( *m_pPixel, 0, 0, tileMenuWidth, tileMenuHeight, 0.5f, 0.5f, 1.0f, 0.2f );
         
         for( int y = 0; y < tileMenuNumRows; y++ ) {
             for( int x = 0; x < tileMenuNumColumns; x++ ) {
-                pDrawContext->DrawMaterial( *pTiles[curTileIndex], x * TEXTURE_RENDER_WIDTH, y * TEXTURE_RENDER_HEIGHT, TEXTURE_RENDER_WIDTH, TEXTURE_RENDER_HEIGHT, 1.0f, 1.0f, 1.0f, 1.0f );
+                pDrawContext->DrawMaterial( *pTiles[curTileIndex], x * TEXTURE_RENDER_WIDTH_EDITOR, y * TEXTURE_RENDER_HEIGHT_EDITOR, TEXTURE_RENDER_WIDTH_EDITOR, TEXTURE_RENDER_HEIGHT_EDITOR, 1.0f, 1.0f, 1.0f, 1.0f );
                 if( curTileIndex == m_SelectedTileIndex ) {
-                    pDrawContext->DrawMaterial( *m_pPixel, x * TEXTURE_RENDER_WIDTH, y * TEXTURE_RENDER_HEIGHT, TEXTURE_RENDER_WIDTH, TEXTURE_RENDER_HEIGHT, 1.0f, 0.0f, 1.0f, 0.2f );
+                    pDrawContext->DrawMaterial( *m_pPixel, x * TEXTURE_RENDER_WIDTH_EDITOR, y * TEXTURE_RENDER_HEIGHT_EDITOR, TEXTURE_RENDER_WIDTH_EDITOR, TEXTURE_RENDER_HEIGHT_EDITOR, 1.0f, 0.0f, 1.0f, 0.2f );
                 }
                 if( ++curTileIndex >= numTilesInMenu )
                     break;
@@ -232,7 +232,7 @@ void CLevelEditor::Draw( CDrawContext * pDrawContext ) {
         if( mx < tileMenuWidth && my < tileMenuHeight ) {
             
             m_CurTileIndex = selectedTileX + selectedTileY * tileMenuNumColumns;
-            pDrawContext->DrawMaterial( *m_pPixel, selectedTileX * TEXTURE_RENDER_WIDTH, selectedTileY * TEXTURE_RENDER_HEIGHT, TEXTURE_RENDER_WIDTH, TEXTURE_RENDER_HEIGHT, 1.0f, 1.0f, 1.0f, 0.3f );
+            pDrawContext->DrawMaterial( *m_pPixel, selectedTileX * TEXTURE_RENDER_WIDTH_EDITOR, selectedTileY * TEXTURE_RENDER_HEIGHT_EDITOR, TEXTURE_RENDER_WIDTH_EDITOR, TEXTURE_RENDER_HEIGHT_EDITOR, 1.0f, 1.0f, 1.0f, 0.3f );
         
         }
         

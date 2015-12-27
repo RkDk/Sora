@@ -26,6 +26,12 @@ namespace Util
     float MinF( float, float, float );
     float MinMaxF( float, float, float );
     float AngleBetweenPoints( float, float, float, float );
+    float AngleFromOrigin( float, float );
+    float AngleBetweenPointsRadians( float, float, float, float );
+    float AngleFromOriginRadians( float, float );
+    
+
+    bool SignsEqual( float, float );
     
     Vector2< int > ConvertTicksIntoMS( long int );
     

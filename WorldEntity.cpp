@@ -72,6 +72,10 @@ void CWorldEntity::CreatePhysicsBody( b2World * physWorld, float x, float y )
 void CWorldEntity::BaseUpdate()
 {
     
+    m_pCollisionBody->SetDisplacement( m_FrameDisplacement );
+    m_FrameDisplacement.Set( 0.0f, 0.0f, 0.0f );
+    
+    
     if( m_bMoved ) {
         
         if( m_pSpatialTreeEntity ) {
